@@ -1,20 +1,20 @@
 <template>
   <div>
-    <zaikok-header></zaikok-header>
-    <zaikok-sidebar></zaikok-sidebar>
+    <div v-if="isGuest">ゲストです</div>
   </div>
 </template>
 
 <script>
-import { ZaikokHeader, ZaikokSidebar } from './components'
+import * as Api from './api'
 
 export default {
-  mounted() {
-    console.log('Component mounted.')
+  data() {
+    return {
+      isGuest: true,
+    }
   },
-  components: {
-    ZaikokHeader,
-    ZaikokSidebar,
+  created() {
+    Api.isGuest().then(({ data }) => (this.isGuest = data))
   },
 }
 </script>

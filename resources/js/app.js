@@ -15,11 +15,11 @@ import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont'
 
 Vue.use(Vuetify)
-Object.keys(Components).forEach(k => {
-  Vue.component(k, Components)
-})
+// Object.keys(Components).forEach(k => {
+//   Vue.component(k, Components)
+// })
 
-// new Vue({
-//   router,
-//   render: h => h(App),
-// }).$mount('#app')
+new Vue({
+  router,
+  render: h => h(App),
+}).$mount('#app')

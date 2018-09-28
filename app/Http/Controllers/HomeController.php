@@ -3,6 +3,7 @@
 namespace Zaikok\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -13,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     /**
@@ -23,6 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if (Auth::guest()) {
+            var_dump('guest');
+        } else {
+            var_dump('login');
+        }
         return view('home');
     }
 }
