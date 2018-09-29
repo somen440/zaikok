@@ -1,7 +1,14 @@
 <template>
   <div>
-    <zaikok-header></zaikok-header>
-    <div v-if="isGuest">ゲストです</div>
+    <zaikok-header
+      :isGuest="isGuest"
+    ></zaikok-header>
+    <v-content>
+      <v-container fluid>
+        <div v-if="isGuest">ゲストです</div>
+        <router-view></router-view>
+      </v-container>
+    </v-content>
   </div>
 </template>
 
