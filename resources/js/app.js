@@ -11,6 +11,7 @@ import Vuetify from 'vuetify'
 import App from './App.vue'
 import * as Components from './components'
 import router from './router'
+import store from './store'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont'
 
@@ -19,7 +20,18 @@ Object.keys(Components).forEach(k => {
   Vue.component(k, Components[k])
 })
 
+router.beforeEach((to, from, next) => {
+  if (store.state.isGuest) {
+    console.log('is guest')
+    if (!to.meta.ignoreAuth) {
+      next({ path: '/guest' })
+    }
+  }
+  next()
+})
+
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')
