@@ -26413,6 +26413,10 @@ __WEBPACK_IMPORTED_MODULE_4__router__["a" /* default */].beforeEach(function (to
     if (!to.meta.ignoreAuth) {
       next({ path: '/guest' });
     }
+  } else {
+    if (to.meta.ignoreAuth) {
+      next({ path: '/home' });
+    }
   }
   next();
 });
@@ -70327,9 +70331,73 @@ var render = function() {
     "v-container",
     { attrs: { fluid: "", "fill-height": "" } },
     [
-      _c("v-layout", { attrs: { "justify-center": "", "align-center": "" } }, [
-        _vm._v("\n    Login Page\n  ")
-      ])
+      _c(
+        "v-layout",
+        { attrs: { "align-center": "", "justify-center": "" } },
+        [
+          _c(
+            "v-flex",
+            { attrs: { xs12: "", sm8: "", md4: "" } },
+            [
+              _c(
+                "v-card",
+                { staticClass: "elevation-12" },
+                [
+                  _c(
+                    "v-toolbar",
+                    { attrs: { dark: "", color: "info" } },
+                    [_c("v-toolbar-title", [_vm._v("Login form")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-text",
+                    [
+                      _c(
+                        "v-form",
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              "prepend-icon": "person",
+                              label: "Login",
+                              type: "text"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "prepend-icon": "lock",
+                              label: "Password",
+                              type: "password"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c("v-btn", { attrs: { color: "primary" } }, [
+                        _vm._v("Login")
+                      ])
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -70351,7 +70419,7 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(78)
 /* template */
 var __vue_template__ = __webpack_require__(55)
 /* template functional */
@@ -70403,9 +70471,136 @@ var render = function() {
     "v-container",
     { attrs: { fluid: "", "fill-height": "" } },
     [
-      _c("v-layout", { attrs: { "justify-center": "", "align-center": "" } }, [
-        _vm._v("\n    register page\n  ")
-      ])
+      _c(
+        "v-layout",
+        { attrs: { "align-center": "", "justify-center": "" } },
+        [
+          _c(
+            "v-flex",
+            { attrs: { xs12: "", sm8: "", md4: "" } },
+            [
+              _c(
+                "v-card",
+                { staticClass: "elevation-12" },
+                [
+                  _c(
+                    "v-toolbar",
+                    { attrs: { dark: "", color: "info" } },
+                    [_c("v-toolbar-title", [_vm._v("登録情報")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-text",
+                    [
+                      _c(
+                        "v-form",
+                        {
+                          ref: "form",
+                          attrs: { "lazy-validation": "" },
+                          model: {
+                            value: _vm.valid,
+                            callback: function($$v) {
+                              _vm.valid = $$v
+                            },
+                            expression: "valid"
+                          }
+                        },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              "prepend-icon": "person",
+                              label: "Name",
+                              type: "text",
+                              nameRules: [
+                                function(v) {
+                                  return !!v || "Name is required"
+                                }
+                              ],
+                              required: ""
+                            },
+                            model: {
+                              value: _vm.name,
+                              callback: function($$v) {
+                                _vm.name = $$v
+                              },
+                              expression: "name"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "prepend-icon": "person",
+                              label: "LoginID",
+                              type: "text",
+                              loginIdRules: [
+                                function(v) {
+                                  return !!v || "LoginID is required"
+                                }
+                              ],
+                              required: ""
+                            },
+                            model: {
+                              value: _vm.email,
+                              callback: function($$v) {
+                                _vm.email = $$v
+                              },
+                              expression: "email"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "prepend-icon": "lock",
+                              label: "Password",
+                              type: "password",
+                              passwordRules: [
+                                function(v) {
+                                  return !!v || "Password is required"
+                                }
+                              ],
+                              required: ""
+                            },
+                            model: {
+                              value: _vm.password,
+                              callback: function($$v) {
+                                _vm.password = $$v
+                              },
+                              expression: "password"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "primary", disabled: !_vm.valid },
+                          on: { click: _vm.register }
+                        },
+                        [_vm._v("登録")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -73880,12 +74075,16 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = isGuest;
+/* harmony export (immutable) */ __webpack_exports__["b"] = registerUser;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
 
 function isGuest() {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('api/is_guest');
+}
+function registerUser(param) {
+  return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('api/user/register', param);
 }
 
 /***/ }),
@@ -74142,6 +74341,97 @@ module.exports = "/fonts/vendor/material-design-icons-icondist/MaterialIcons-Reg
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 77 */,
+/* 78 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__api__ = __webpack_require__(63);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      valid: false,
+      name: '',
+      email: '',
+      password: ''
+    };
+  },
+
+  methods: {
+    register: function register() {
+      var _this = this;
+
+      if (!this.$refs.form.validate()) {
+        return;
+      }
+      __WEBPACK_IMPORTED_MODULE_0__api__["b" /* registerUser */]({
+        name: this.name,
+        email: this.email,
+        password: this.password
+      }).then(function (response) {
+        if (200 === response.status) {
+          _this.$store.dispatch('fetchIsGuest').then(function (res) {
+            return _this.$router.push('home');
+          });
+        }
+      }).catch(function (error) {
+        alert('登録ずみ');
+      });
+    }
+  }
+});
 
 /***/ })
 /******/ ]);

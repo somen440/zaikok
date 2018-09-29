@@ -26,6 +26,10 @@ router.beforeEach((to, from, next) => {
     if (!to.meta.ignoreAuth) {
       next({ path: '/guest' })
     }
+  } else {
+    if (to.meta.ignoreAuth) {
+      next({ path: '/home' })
+    }
   }
   next()
 })
