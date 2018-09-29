@@ -1,5 +1,6 @@
 <template>
   <div>
+    <zaikok-header></zaikok-header>
     <div v-if="isGuest">ゲストです</div>
   </div>
 </template>

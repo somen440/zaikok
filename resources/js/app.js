@@ -15,9 +15,9 @@ import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont'
 
 Vue.use(Vuetify)
-// Object.keys(Components).forEach(k => {
-//   Vue.component(k, Components)
-// })
+Object.keys(Components).forEach(k => {
+  Vue.component(k, Components[k])
+})
 
 new Vue({
   router,
