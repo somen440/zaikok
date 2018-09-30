@@ -16,6 +16,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <zaikok-app>
+            @yield('content')
+        </zaikok-app>
+    </div>
 </body>
 </html>

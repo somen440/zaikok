@@ -17,10 +17,10 @@
       </v-list>
     </v-navigation-drawer>
     <v-toolbar color="indigo" dark fixed app>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer" v-if="!isGuest"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>在庫管理　-zaikok-</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items v-if="isGuest">
+      <v-toolbar-items>
         <v-btn flat>
           <router-link to="/login" tag="span">Login</router-link>
         </v-btn>
@@ -30,25 +30,17 @@
       </v-toolbar-items>
     </v-toolbar>
     <v-content>
-      <router-view></router-view>
+      <slot></slot>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
   data() {
     return {
       drawer: null,
     }
-  },
-  computed: mapState({
-    isGuest: state => state.isGuest,
-  }),
-  created() {
-    this.$store.dispatch('fetchIsGuest')
   },
 }
 </script>

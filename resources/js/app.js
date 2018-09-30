@@ -8,7 +8,6 @@ require('./bootstrap')
 
 import Vue from 'vue'
 import Vuetify from 'vuetify'
-import App from './App.vue'
 import * as Components from './components'
 import router from './router'
 import store from './store'
@@ -20,22 +19,8 @@ Object.keys(Components).forEach(k => {
   Vue.component(k, Components[k])
 })
 
-router.beforeEach((to, from, next) => {
-  if (store.state.isGuest) {
-    console.log('is guest')
-    if (!to.meta.ignoreAuth) {
-      next({ path: '/guest' })
-    }
-  } else {
-    if (to.meta.ignoreAuth) {
-      next({ path: '/home' })
-    }
-  }
-  next()
-})
-
 new Vue({
+  el: '#app',
   router,
   store,
-  render: h => h(App),
-}).$mount('#app')
+})

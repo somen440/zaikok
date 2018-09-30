@@ -162,11 +162,5 @@
 </template>
 
 <script>
-export default {
-  methods: {
-    transitionRegisterPage() {
-      this.$router.push('register')
-    },
-  },
-}
+export default {}
 </script>

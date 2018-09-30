@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <p>guest</p>
+    <zaikok-guest></zaikok-guest>
 @endsection
