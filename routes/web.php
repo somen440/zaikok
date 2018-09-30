@@ -12,7 +12,14 @@
 */
 
 Route::get('/', function () {
+    if (\Illuminate\Support\Facades\Auth::guest()) {
+        var_dump('guest');
+    } else {
+        var_dump('login');
+    }
     return view('guest');
 });
 
 Auth::routes();
+
+Route::get('/home', 'HomeController@index');

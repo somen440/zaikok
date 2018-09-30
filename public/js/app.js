@@ -24982,7 +24982,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = isGuest;
-/* harmony export (immutable) */ __webpack_exports__["b"] = registerUser;
+/* unused harmony export registerUser */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
@@ -70497,6 +70497,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -70510,28 +70511,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
 
-  methods: {
-    register: function register() {
-      var _this = this;
-
-      if (!this.$refs.form.validate()) {
-        return;
-      }
-      __WEBPACK_IMPORTED_MODULE_0__api__["b" /* registerUser */]({
-        name: this.name,
-        email: this.email,
-        password: this.password
-      }).then(function (response) {
-        if (200 === response.status) {
-          _this.$store.dispatch('fetchIsGuest').then(function (res) {
-            return _this.$router.push('home');
-          });
-        }
-      }).catch(function (error) {
-        alert('登録ずみ');
-      });
-    }
-  }
+  methods: {}
 });
 
 /***/ }),
@@ -70572,7 +70552,7 @@ var render = function() {
                         "v-form",
                         {
                           ref: "form",
-                          attrs: { "lazy-validation": "" },
+                          attrs: { method: "GET", "lazy-validation": "" },
                           model: {
                             value: _vm.valid,
                             callback: function($$v) {
@@ -70643,7 +70623,16 @@ var render = function() {
                               },
                               expression: "password"
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { color: "primary", disabled: !_vm.valid },
+                              on: { click: _vm.register }
+                            },
+                            [_vm._v("登録")]
+                          )
                         ],
                         1
                       )
@@ -70954,8 +70943,7 @@ var render = function() {
                   "v-btn",
                   {
                     staticClass: "blue lighten-2 mt-5",
-                    attrs: { dark: "", large: "" },
-                    on: { click: _vm.transitionRegisterPage }
+                    attrs: { dark: "", large: "", href: "/register" }
                   },
                   [_vm._v("\n          はじめる\n        ")]
                 )
@@ -71211,8 +71199,7 @@ var render = function() {
                   "v-btn",
                   {
                     staticClass: "blue lighten-2 mt-5",
-                    attrs: { dark: "", large: "" },
-                    on: { click: _vm.transitionRegisterPage }
+                    attrs: { dark: "", large: "", href: "/register" }
                   },
                   [_vm._v("\n          はじめる\n        ")]
                 )

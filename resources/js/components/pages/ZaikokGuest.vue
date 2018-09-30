@@ -15,7 +15,7 @@
             class="blue lighten-2 mt-5"
             dark
             large
-            @click="transitionRegisterPage"
+            href="/register"
           >
             はじめる
           </v-btn>
@@ -98,7 +98,7 @@
             class="blue lighten-2 mt-5"
             dark
             large
-            @click="transitionRegisterPage"
+            href="/register"
           >
             はじめる
           </v-btn>

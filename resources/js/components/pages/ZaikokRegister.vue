@@ -7,7 +7,7 @@
             <v-toolbar-title>登録情報</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-form ref="form" v-model="valid" lazy-validation>
+            <v-form ref="form" method="GET" v-model="valid" lazy-validation>
               <v-text-field
                 prepend-icon="person"
                 label="Name"
@@ -32,6 +32,7 @@
                 :passwordRules="[v => !!v || 'Password is required']"
                 required
               ></v-text-field>
+              <v-btn color="primary" @click="register" :disabled="!valid">登録</v-btn>
             </v-form>
           </v-card-text>
           <v-card-actions>
@@ -56,27 +57,6 @@ export default {
       password: '',
     }
   },
-  methods: {
-    register() {
-      if (!this.$refs.form.validate()) {
-        return
-      }
-      API.registerUser({
-        name: this.name,
-        email: this.email,
-        password: this.password,
-      })
-        .then(response => {
-          if (200 === response.status) {
-            this.$store
-              .dispatch('fetchIsGuest')
-              .then(res => this.$router.push('home'))
-          }
-        })
-        .catch(error => {
-          alert('登録ずみ')
-        })
-    },
-  },
+  methods: {},
 }
 </script>
