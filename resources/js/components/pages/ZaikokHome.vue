@@ -11,8 +11,7 @@
 
 <script>
 export default {
-  mounted() {
-    console.log(this.$store)
+  created() {
     this.$store.dispatch('login')
   },
 }

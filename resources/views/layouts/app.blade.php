@@ -17,7 +17,7 @@
 </head>
 <body>
     <div id="app">
-        <zaikok-app>
+        <zaikok-app rootUrl="{{ route('root') }}">
             @yield('content')
         </zaikok-app>
     </div>

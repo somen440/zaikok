@@ -2,6 +2,8 @@
 
 namespace Zaikok\Http\Controllers\Auth;
 
+use Illuminate\Log\Logger;
+use Illuminate\Support\Facades\Log;
 use Zaikok\User;
 use Zaikok\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -50,7 +52,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }

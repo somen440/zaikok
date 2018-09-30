@@ -7,7 +7,7 @@
             <v-toolbar-title>登録情報</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-form ref="form" method="GET" v-model="valid" lazy-validation>
+            <v-form ref="form" v-model="valid" lazy-validation>
               <v-text-field
                 prepend-icon="person"
                 label="Name"
@@ -32,12 +32,29 @@
                 :passwordRules="[v => !!v || 'Password is required']"
                 required
               ></v-text-field>
-              <v-btn color="primary" @click="register" :disabled="!valid">登録</v-btn>
+              <v-text-field
+                prepend-icon="lock"
+                label="Password Confirmation"
+                type="password"
+                v-model="passwordConfirmation"
+                :passwordRules="[v => !!v || 'Password is required']"
+                required
+              ></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" @click="register" :disabled="!valid">登録</v-btn>
+            <p>{{sendName}}</p>
+            <p>{{sendEmail}}</p>
+            <p>{{sendPassword}}</p>
+            <form ref="registerForm" method="POST" action="register" v-show="false">
+              <input type="hidden" name="_token" :value="csrf" />
+              <input type="hidden" name="name" :value="sendName" />
+              <input type="hidden" name="email" :value="sendEmail" />
+              <input type="hidden" name="password" :value="sendPassword" />
+              <input type="hidden" name="password_confirmation" :value="sendPasswordConfirmation" />
+            </form>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -46,7 +63,8 @@
 </template>
 
 <script>
-import * as API from '../../api'
+import Util from '../../util'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -55,8 +73,33 @@ export default {
       name: '',
       email: '',
       password: '',
+      passwordConfirmation: '',
     }
   },
-  methods: {},
+  computed: {
+    sendName() {
+      return this.name
+    },
+    sendEmail() {
+      return this.email
+    },
+    sendPassword() {
+      return this.password
+    },
+    sendPasswordConfirmation() {
+      return this.passwordConfirmation
+    },
+    registerUrl() {
+      return Util.createRoutePath('register')
+    },
+    ...mapGetters({
+      csrf: 'getCsrf',
+    }),
+  },
+  methods: {
+    register() {
+      this.$refs.registerForm.submit()
+    },
+  },
 }
 </script>

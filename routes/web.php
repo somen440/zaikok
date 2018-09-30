@@ -19,7 +19,7 @@ Route::get('/', function () {
     } else {
         return redirect('home');
     }
-});
+})->name('root');
 
 Auth::routes();
 

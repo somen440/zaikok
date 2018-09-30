@@ -21,17 +21,16 @@
       <v-toolbar-title>在庫管理　-zaikok-</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="isGuest">
-        <v-btn flat>
-          <router-link to="/login" tag="span">Login</router-link>
-        </v-btn>
-        <v-btn flat>
-          <router-link to="/register" tag="span">Register</router-link>
-        </v-btn>
+        <v-btn flat href="login">Login</v-btn>
+        <v-btn flat href="register">Register</v-btn>
       </v-toolbar-items>
       <v-toolbar-items v-else>
-        <v-btn flat>
-          <router-link to="/register" tag="span">Logout</router-link>
+        <v-btn flat @click="logout">
+          Logout
         </v-btn>
+        <form ref="logoutForm" action="logout" method="POST" v-show="false">
+          <input type="hidden" name="_token" :value="csrf">
+        </form>
       </v-toolbar-items>
     </v-toolbar>
     <v-content>
@@ -41,7 +40,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -49,6 +48,16 @@ export default {
       drawer: null,
     }
   },
-  computed: mapState(['isGuest']),
+  computed: {
+    ...mapState(['isGuest']),
+    ...mapGetters({
+      csrf: 'getCsrf',
+    }),
+  },
+  methods: {
+    logout() {
+      this.$refs.logoutForm.submit()
+    },
+  },
 }
 </script>

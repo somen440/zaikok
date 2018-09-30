@@ -25001,9 +25001,9 @@ function registerUser(param) {
 "use strict";
 /* unused harmony export Store */
 /* unused harmony export install */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return mapState; });
 /* unused harmony export mapMutations */
-/* unused harmony export mapGetters */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapGetters; });
 /* unused harmony export mapActions */
 /* unused harmony export createNamespacedHelpers */
 /**
@@ -69994,7 +69994,8 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(16);
-//
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -70046,7 +70047,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
 
-  computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapState */])(['isGuest'])
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])(['isGuest']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+    csrf: 'getCsrf'
+  })),
+  methods: {
+    logout: function logout() {
+      this.$refs.logoutForm.submit();
+    }
+  }
 });
 
 /***/ }),
@@ -70121,31 +70129,13 @@ var render = function() {
             ? _c(
                 "v-toolbar-items",
                 [
-                  _c(
-                    "v-btn",
-                    { attrs: { flat: "" } },
-                    [
-                      _c(
-                        "router-link",
-                        { attrs: { to: "/login", tag: "span" } },
-                        [_vm._v("Login")]
-                      )
-                    ],
-                    1
-                  ),
+                  _c("v-btn", { attrs: { flat: "", href: "login" } }, [
+                    _vm._v("Login")
+                  ]),
                   _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    { attrs: { flat: "" } },
-                    [
-                      _c(
-                        "router-link",
-                        { attrs: { to: "/register", tag: "span" } },
-                        [_vm._v("Register")]
-                      )
-                    ],
-                    1
-                  )
+                  _c("v-btn", { attrs: { flat: "", href: "register" } }, [
+                    _vm._v("Register")
+                  ])
                 ],
                 1
               )
@@ -70154,15 +70144,30 @@ var render = function() {
                 [
                   _c(
                     "v-btn",
-                    { attrs: { flat: "" } },
+                    { attrs: { flat: "" }, on: { click: _vm.logout } },
+                    [_vm._v("\n        Logout\n      ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "form",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: false,
+                          expression: "false"
+                        }
+                      ],
+                      ref: "logoutForm",
+                      attrs: { action: "logout", method: "POST" }
+                    },
                     [
-                      _c(
-                        "router-link",
-                        { attrs: { to: "/register", tag: "span" } },
-                        [_vm._v("Logout")]
-                      )
-                    ],
-                    1
+                      _c("input", {
+                        attrs: { type: "hidden", name: "_token" },
+                        domProps: { value: _vm.csrf }
+                      })
+                    ]
                   )
                 ],
                 1
@@ -70297,7 +70302,7 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(81)
 /* template */
 var __vue_template__ = __webpack_require__(54)
 /* template functional */
@@ -70377,8 +70382,15 @@ var render = function() {
                           _c("v-text-field", {
                             attrs: {
                               "prepend-icon": "person",
-                              label: "Login",
+                              label: "Login ID",
                               type: "text"
+                            },
+                            model: {
+                              value: _vm.loginId,
+                              callback: function($$v) {
+                                _vm.loginId = $$v
+                              },
+                              expression: "loginId"
                             }
                           }),
                           _vm._v(" "),
@@ -70387,6 +70399,13 @@ var render = function() {
                               "prepend-icon": "lock",
                               label: "Password",
                               type: "password"
+                            },
+                            model: {
+                              value: _vm.password,
+                              callback: function($$v) {
+                                _vm.password = $$v
+                              },
+                              expression: "password"
                             }
                           })
                         ],
@@ -70401,9 +70420,47 @@ var render = function() {
                     [
                       _c("v-spacer"),
                       _vm._v(" "),
-                      _c("v-btn", { attrs: { color: "primary" } }, [
-                        _vm._v("Login")
-                      ])
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "primary" },
+                          on: { click: _vm.login }
+                        },
+                        [_vm._v("Login")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "form",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: false,
+                              expression: "false"
+                            }
+                          ],
+                          ref: "loginForm",
+                          attrs: { method: "POST", action: "login" }
+                        },
+                        [
+                          _c("input", {
+                            attrs: { type: "hidden", name: "_token" },
+                            domProps: { value: _vm.csrf }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            attrs: { type: "hidden", name: "email" },
+                            domProps: { value: _vm.sendLoginId }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            attrs: { type: "hidden", name: "password" },
+                            domProps: { value: _vm.sendPassword }
+                          }),
+                          _vm._v(">\n          ")
+                        ]
+                      )
                     ],
                     1
                   )
@@ -70483,7 +70540,10 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__api__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(16);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -70531,6 +70591,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -70540,11 +70618,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       valid: false,
       name: '',
       email: '',
-      password: ''
+      password: '',
+      passwordConfirmation: ''
     };
   },
 
-  methods: {}
+  computed: _extends({
+    sendName: function sendName() {
+      return this.name;
+    },
+    sendEmail: function sendEmail() {
+      return this.email;
+    },
+    sendPassword: function sendPassword() {
+      return this.password;
+    },
+    sendPasswordConfirmation: function sendPasswordConfirmation() {
+      return this.passwordConfirmation;
+    },
+    registerUrl: function registerUrl() {
+      return __WEBPACK_IMPORTED_MODULE_0__util__["a" /* default */].createRoutePath('register');
+    }
+  }, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])({
+    csrf: 'getCsrf'
+  })),
+  methods: {
+    register: function register() {
+      this.$refs.registerForm.submit();
+    }
+  }
 });
 
 /***/ }),
@@ -70585,7 +70687,7 @@ var render = function() {
                         "v-form",
                         {
                           ref: "form",
-                          attrs: { method: "GET", "lazy-validation": "" },
+                          attrs: { "lazy-validation": "" },
                           model: {
                             value: _vm.valid,
                             callback: function($$v) {
@@ -70658,14 +70760,26 @@ var render = function() {
                             }
                           }),
                           _vm._v(" "),
-                          _c(
-                            "v-btn",
-                            {
-                              attrs: { color: "primary", disabled: !_vm.valid },
-                              on: { click: _vm.register }
+                          _c("v-text-field", {
+                            attrs: {
+                              "prepend-icon": "lock",
+                              label: "Password Confirmation",
+                              type: "password",
+                              passwordRules: [
+                                function(v) {
+                                  return !!v || "Password is required"
+                                }
+                              ],
+                              required: ""
                             },
-                            [_vm._v("登録")]
-                          )
+                            model: {
+                              value: _vm.passwordConfirmation,
+                              callback: function($$v) {
+                                _vm.passwordConfirmation = $$v
+                              },
+                              expression: "passwordConfirmation"
+                            }
+                          })
                         ],
                         1
                       )
@@ -70685,6 +70799,57 @@ var render = function() {
                           on: { click: _vm.register }
                         },
                         [_vm._v("登録")]
+                      ),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(_vm.sendName))]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(_vm.sendEmail))]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(_vm.sendPassword))]),
+                      _vm._v(" "),
+                      _c(
+                        "form",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: false,
+                              expression: "false"
+                            }
+                          ],
+                          ref: "registerForm",
+                          attrs: { method: "POST", action: "register" }
+                        },
+                        [
+                          _c("input", {
+                            attrs: { type: "hidden", name: "_token" },
+                            domProps: { value: _vm.csrf }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            attrs: { type: "hidden", name: "name" },
+                            domProps: { value: _vm.sendName }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            attrs: { type: "hidden", name: "email" },
+                            domProps: { value: _vm.sendEmail }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            attrs: { type: "hidden", name: "password" },
+                            domProps: { value: _vm.sendPassword }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            attrs: {
+                              type: "hidden",
+                              name: "password_confirmation"
+                            },
+                            domProps: { value: _vm.sendPasswordConfirmation }
+                          })
+                        ]
                       )
                     ],
                     1
@@ -74125,7 +74290,6 @@ if (inBrowser && window.Vue) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mutations__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__getters__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__getters___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__getters__);
 
 
 
@@ -74136,11 +74300,12 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
   state: {
-    isGuest: true
+    isGuest: true,
+    csrf: ''
   },
   actions: __WEBPACK_IMPORTED_MODULE_2__actions__["a" /* default */],
   mutations: __WEBPACK_IMPORTED_MODULE_3__mutations__["a" /* default */],
-  getters: __WEBPACK_IMPORTED_MODULE_4__getters___default.a
+  getters: __WEBPACK_IMPORTED_MODULE_4__getters__["a" /* default */]
 }));
 
 /***/ }),
@@ -74178,9 +74343,14 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 /***/ }),
 /* 66 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+  getCsrf: function getCsrf() {
+    return document.head.querySelector('meta[name="csrf-token"]').content;
+  }
+});
 
 /***/ }),
 /* 67 */
@@ -74440,9 +74610,85 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log(this.$store);
+  created: function created() {
     this.$store.dispatch('login');
+  }
+});
+
+/***/ }),
+/* 80 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+  createRoutePath: function createRoutePath(action) {
+    return location.host + "/" + action;
+  }
+});
+
+/***/ }),
+/* 81 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(16);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      loginId: '',
+      password: ''
+    };
+  },
+
+  computed: _extends({
+    sendLoginId: function sendLoginId() {
+      return this.loginId;
+    },
+    sendPassword: function sendPassword() {
+      return this.password;
+    }
+  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+    csrf: 'getCsrf'
+  })),
+  methods: {
+    login: function login() {
+      this.$refs.loginForm.submit();
+    }
   }
 });
 
