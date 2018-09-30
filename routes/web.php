@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('guest');
 });
+
+Auth::routes();
