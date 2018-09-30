@@ -17,15 +17,20 @@
       </v-list>
     </v-navigation-drawer>
     <v-toolbar color="indigo" dark fixed app>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer" v-if="isGuest"></v-toolbar-side-icon>
       <v-toolbar-title>在庫管理　-zaikok-</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items>
+      <v-toolbar-items v-if="isGuest">
         <v-btn flat>
           <router-link to="/login" tag="span">Login</router-link>
         </v-btn>
         <v-btn flat>
           <router-link to="/register" tag="span">Register</router-link>
+        </v-btn>
+      </v-toolbar-items>
+      <v-toolbar-items v-else>
+        <v-btn flat>
+          <router-link to="/register" tag="span">Logout</router-link>
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -36,11 +41,14 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   data() {
     return {
       drawer: null,
     }
   },
+  computed: mapState(['isGuest']),
 }
 </script>

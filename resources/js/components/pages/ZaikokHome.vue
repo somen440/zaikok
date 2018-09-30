@@ -8,3 +8,12 @@
     </v-layout>
   </v-container>
 </template>
+
+<script>
+export default {
+  mounted() {
+    console.log(this.$store)
+    this.$store.dispatch('login')
+  },
+}
+</script>

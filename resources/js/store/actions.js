@@ -1,7 +1,11 @@
 import * as API from '../api'
 
 export default {
-  fetchIsGuest: ({ commit }) => {
-    API.isGuest().then(({ data }) => commit('SET_IS_GUEST', data))
+  login: ({ commit }) => {
+    commit('SET_IS_GUEST', false)
+  },
+
+  logout: ({ commit }) => {
+    commit('SET_IS_GUEST', true)
   },
 }

@@ -24981,7 +24981,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = isGuest;
+/* unused harmony export isGuest */
 /* unused harmony export registerUser */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
@@ -25001,7 +25001,7 @@ function registerUser(param) {
 "use strict";
 /* unused harmony export Store */
 /* unused harmony export install */
-/* unused harmony export mapState */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapState; });
 /* unused harmony export mapMutations */
 /* unused harmony export mapGetters */
 /* unused harmony export mapActions */
@@ -69993,6 +69993,12 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(16);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -70031,12 +70037,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       drawer: null
     };
-  }
+  },
+
+  computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapState */])(['isGuest'])
 });
 
 /***/ }),
@@ -70092,48 +70102,71 @@ var render = function() {
         "v-toolbar",
         { attrs: { color: "indigo", dark: "", fixed: "", app: "" } },
         [
-          _c("v-toolbar-side-icon", {
-            on: {
-              click: function($event) {
-                $event.stopPropagation()
-                _vm.drawer = !_vm.drawer
-              }
-            }
-          }),
+          _vm.isGuest
+            ? _c("v-toolbar-side-icon", {
+                on: {
+                  click: function($event) {
+                    $event.stopPropagation()
+                    _vm.drawer = !_vm.drawer
+                  }
+                }
+              })
+            : _vm._e(),
           _vm._v(" "),
           _c("v-toolbar-title", [_vm._v("在庫管理　-zaikok-")]),
           _vm._v(" "),
           _c("v-spacer"),
           _vm._v(" "),
-          _c(
-            "v-toolbar-items",
-            [
-              _c(
-                "v-btn",
-                { attrs: { flat: "" } },
-                [
-                  _c("router-link", { attrs: { to: "/login", tag: "span" } }, [
-                    _vm._v("Login")
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-btn",
-                { attrs: { flat: "" } },
+          _vm.isGuest
+            ? _c(
+                "v-toolbar-items",
                 [
                   _c(
-                    "router-link",
-                    { attrs: { to: "/register", tag: "span" } },
-                    [_vm._v("Register")]
+                    "v-btn",
+                    { attrs: { flat: "" } },
+                    [
+                      _c(
+                        "router-link",
+                        { attrs: { to: "/login", tag: "span" } },
+                        [_vm._v("Login")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    { attrs: { flat: "" } },
+                    [
+                      _c(
+                        "router-link",
+                        { attrs: { to: "/register", tag: "span" } },
+                        [_vm._v("Register")]
+                      )
+                    ],
+                    1
                   )
                 ],
                 1
               )
-            ],
-            1
-          )
+            : _c(
+                "v-toolbar-items",
+                [
+                  _c(
+                    "v-btn",
+                    { attrs: { flat: "" } },
+                    [
+                      _c(
+                        "router-link",
+                        { attrs: { to: "/register", tag: "span" } },
+                        [_vm._v("Logout")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
         ],
         1
       ),
@@ -70188,7 +70221,7 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(79)
 /* template */
 var __vue_template__ = __webpack_require__(52)
 /* template functional */
@@ -70896,7 +70929,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  created: function created() {
+    this.$store.dispatch('logout');
+  }
+});
 
 /***/ }),
 /* 60 */
@@ -74115,13 +74152,16 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-  fetchIsGuest: function fetchIsGuest(_ref) {
+  login: function login(_ref) {
     var commit = _ref.commit;
 
-    __WEBPACK_IMPORTED_MODULE_0__api__["a" /* isGuest */]().then(function (_ref2) {
-      var data = _ref2.data;
-      return commit('SET_IS_GUEST', data);
-    });
+    commit('SET_IS_GUEST', false);
+  },
+
+  logout: function logout(_ref2) {
+    var commit = _ref2.commit;
+
+    commit('SET_IS_GUEST', true);
   }
 });
 
@@ -74379,6 +74419,32 @@ module.exports = "/fonts/vendor/material-design-icons-icondist/MaterialIcons-Reg
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 78 */,
+/* 79 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    console.log(this.$store);
+    this.$store.dispatch('login');
+  }
+});
 
 /***/ })
 /******/ ]);

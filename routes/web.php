@@ -1,5 +1,7 @@
 <?php
 
+use \Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,12 +14,11 @@
 */
 
 Route::get('/', function () {
-    if (\Illuminate\Support\Facades\Auth::guest()) {
-        var_dump('guest');
+    if (Auth::guest()) {
+        return view('guest');
     } else {
-        var_dump('login');
+        return redirect('home');
     }
-    return view('guest');
 });
 
 Auth::routes();
