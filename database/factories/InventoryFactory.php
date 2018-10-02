@@ -19,7 +19,7 @@ $factory->define(\Zaikok\Inventory::class, function (Faker $faker) {
         'inventory_id' => mt_rand(1, 100),
         'inventory_group_id' => mt_rand(1, 10),
         'user_id' => 1,
-        'name' => $faker->words(),
+        'name' => $faker->word,
         'count' => mt_rand(0, 10),
         'created_at' => Carbon::today(),
         'updated_at' => Carbon::today(),
