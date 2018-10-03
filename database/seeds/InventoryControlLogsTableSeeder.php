@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class InventoriesTableSeeder extends Seeder
+class InventoryControlLogsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,6 @@ class InventoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\Zaikok\Inventory::class, 100)->create();
+        factory(\Zaikok\InventoryControlLog::class, 100)->create();
     }
 }
