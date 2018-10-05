@@ -69976,6 +69976,8 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -70022,6 +70024,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -70029,6 +70032,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     };
   },
 
+  props: {
+    token: {
+      type: String,
+      default: ''
+    }
+  },
   computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])(['isGuest']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
     csrf: 'getCsrf'
   })),
@@ -70036,6 +70045,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     logout: function logout() {
       this.$refs.logoutForm.submit();
     }
+  },
+  created: function created() {
+    console.log(this.token);
+    __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/api/user', {
+      headers: {
+        Authorization: 'Bearer ' + this.token
+      }
+    }).then(function (response) {
+      return console.log(response);
+    });
   }
 });
 

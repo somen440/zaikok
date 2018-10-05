@@ -41,12 +41,19 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import axios from 'axios'
 
 export default {
   data() {
     return {
       drawer: null,
     }
+  },
+  props: {
+    token: {
+      type: String,
+      default: '',
+    },
   },
   computed: {
     ...mapState(['isGuest']),
@@ -58,6 +65,16 @@ export default {
     logout() {
       this.$refs.logoutForm.submit()
     },
+  },
+  created() {
+    console.log(this.token)
+    axios
+      .get('/api/user', {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      })
+      .then(response => console.log(response))
   },
 }
 </script>

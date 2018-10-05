@@ -17,7 +17,7 @@
 </head>
 <body>
     <div id="app">
-        <zaikok-app rootUrl="{{ route('root') }}">
+        <zaikok-app token="{{ env('TOKEN') }}">
             @yield('content')
         </zaikok-app>
     </div>
