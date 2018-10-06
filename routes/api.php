@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use Zaikok\Http\Controllers\InventoryController;
+use Zaikok\Http\Controllers\UserController;
 use Zaikok\Inventory;
 
 /*
@@ -15,15 +17,15 @@ use Zaikok\Inventory;
 */
 
 Route::middleware(['auth:api'])->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
+    Route::prefix('user')->group(function () {
+        Route::get('', 'UserController@get');
     });
 
-    Route::get('/inventory', function (Request $request) {
-        return Inventory::where('user_id', $request->user()->user_id)
-            ->orderBy('inventory_id', 'asc')
-            ->get()
-            ->groupBy('inventory_group_id')
-        ;
+    Route::prefix('inventory')->group(function () {
+        Route::get('/{inventory_group_id}', 'InventoryController@show');
+        Route::post('', 'InventoryController@create');
+        Route::put('{id}', 'InventoryController@edit');
+        Route::delete('/{id}', 'InventoryController@delete');
+        Route::delete('', 'InventoryController@deleteAll');
     });
 });
