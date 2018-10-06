@@ -21,7 +21,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::get('/inventory', function (Request $request) {
         return Inventory::where('user_id', $request->user()->user_id)
-            ->orderBy('id', 'asc')
+            ->orderBy('inventory_id', 'asc')
             ->get()
             ->groupBy('inventory_group_id')
         ;

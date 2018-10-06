@@ -1,8 +1,9 @@
 import * as API from '../api'
 
 export default {
-  login: ({ commit }) => {
+  login: ({ commit, dispatch }) => {
     commit('SET_IS_GUEST', false)
+    dispatch('setUser')
   },
 
   logout: ({ commit }) => {
@@ -26,6 +27,6 @@ export default {
           Authorization: `Bearer ${state.token}`,
         },
       })
-      .then(({ data }) => console.log(data))
+      .then(({ data }) => commit('SET_INVENTORIES', data[1]))
   },
 }

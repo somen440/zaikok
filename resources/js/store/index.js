@@ -12,6 +12,7 @@ export default new Vuex.Store({
     csrf: '',
     token: '',
     user: null,
+    inventories: [],
   },
   actions,
   mutations,

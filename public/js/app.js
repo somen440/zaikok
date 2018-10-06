@@ -70259,29 +70259,47 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
-var _created$props$create;
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
-
-/* harmony default export */ __webpack_exports__["default"] = (_created$props$create = {
-  created: function created() {
-    this.$store.dispatch('login');
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      headers: [{ text: 'ID', value: 'inventory_id' }, { text: '品物', value: 'name' }, { text: '個数', value: 'count' }, { text: '更新日時', value: 'updated_at' }, { text: '追加日', value: 'created_at' }]
+    };
   },
 
   props: {
@@ -70289,15 +70307,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: String,
       default: ''
     }
-  }
-}, _defineProperty(_created$props$create, 'created', function created() {
-  this.$store.commit('SET_TOKEN', this.token);
-  this.$store.dispatch('setUser');
-  this.$store.dispatch('setInventory');
-}), _defineProperty(_created$props$create, 'computed', _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])(['user']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
-  userId: 'getUserId',
-  userName: 'getUserName'
-}))), _created$props$create);
+  },
+  created: function created() {
+    this.$store.commit('SET_TOKEN', this.token);
+    this.$store.dispatch('login');
+    this.$store.dispatch('setInventory');
+  },
+
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])(['user', 'inventories']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+    userId: 'getUserId',
+    userName: 'getUserName'
+  }))
+});
 
 /***/ }),
 /* 52 */
@@ -70309,11 +70330,86 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-container",
-    { attrs: { fluid: "", "fill-height": "" } },
+    { attrs: { "grid-list-md": "" } },
     [
-      _c("v-layout", { attrs: { "justify-center": "", "align-center": "" } }, [
-        _vm._v("\n    home\n  ")
-      ])
+      _c(
+        "v-layout",
+        { attrs: { row: "", wrap: "" } },
+        [
+          _c("v-flex", { attrs: { xs12: "", "text-xs-left": "" } }, [
+            _c("h2", [_vm._v(_vm._s(this.userName) + " さんの在庫管理")])
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-flex",
+            { attrs: { xs12: "", "text-xs-center": "" } },
+            [
+              _c(
+                "v-data-table",
+                {
+                  staticClass: "elevation-1",
+                  attrs: {
+                    headers: _vm.headers,
+                    items: _vm.inventories,
+                    "hide-actions": ""
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "items",
+                      fn: function(props) {
+                        return [
+                          _c("td", [_vm._v(_vm._s(props.item.inventory_id))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(props.item.name))]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-xs-right" }, [
+                            _vm._v(_vm._s(props.item.count))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-xs-right" }, [
+                            _vm._v(_vm._s(props.item.updated_at))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-xs-right" }, [
+                            _vm._v(_vm._s(props.item.created_at))
+                          ])
+                        ]
+                      }
+                    }
+                  ])
+                },
+                [
+                  _c(
+                    "template",
+                    { slot: "no-data" },
+                    [
+                      _c(
+                        "v-alert",
+                        {
+                          attrs: {
+                            value: true,
+                            color: "error",
+                            icon: "warning"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n            Sorry, nothing to display here :(\n          "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                2
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -74394,7 +74490,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
     isGuest: true,
     csrf: '',
     token: '',
-    user: null
+    user: null,
+    inventories: []
   },
   actions: __WEBPACK_IMPORTED_MODULE_2__actions__["a" /* default */],
   mutations: __WEBPACK_IMPORTED_MODULE_3__mutations__["a" /* default */],
@@ -74411,9 +74508,11 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   login: function login(_ref) {
-    var commit = _ref.commit;
+    var commit = _ref.commit,
+        dispatch = _ref.dispatch;
 
     commit('SET_IS_GUEST', false);
+    dispatch('setUser');
   },
 
   logout: function logout(_ref2) {
@@ -74446,7 +74545,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
       }
     }).then(function (_ref6) {
       var data = _ref6.data;
-      return console.log(data);
+      return commit('SET_INVENTORIES', data[1]);
     });
   }
 });
@@ -74485,6 +74584,11 @@ function registerUser(param) {
 
   SET_USER: function SET_USER(state, user) {
     state.user = user;
+  },
+
+  SET_INVENTORIES: function SET_INVENTORIES(state, inventories) {
+    state.inventories = inventories;
+    console.log(state);
   }
 });
 
@@ -74503,7 +74607,7 @@ function registerUser(param) {
   },
 
   getUserName: function getUserName(state) {
-    return state.user.name;
+    return null === state.user ? '' : state.user.name;
   }
 });
 

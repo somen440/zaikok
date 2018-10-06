@@ -10,4 +10,9 @@ export default {
   SET_USER: (state, user) => {
     state.user = user
   },
+
+  SET_INVENTORIES: (state, inventories) => {
+    state.inventories = inventories
+    console.log(state)
+  },
 }

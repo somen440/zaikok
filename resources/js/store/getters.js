@@ -8,6 +8,6 @@ export default {
   },
 
   getUserName: state => {
-    return state.user.name
+    return null === state.user ? '' : state.user.name
   },
 }
