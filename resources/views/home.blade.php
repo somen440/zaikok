@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <zaikok-home></zaikok-home>
+    <zaikok-home
+        token="{{ env('TOKEN') }}"
+    ></zaikok-home>
 @endsection

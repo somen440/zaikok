@@ -17,7 +17,7 @@
 </head>
 <body>
     <div id="app">
-        <zaikok-app token="{{ env('TOKEN') }}">
+        <zaikok-app>
             @yield('content')
         </zaikok-app>
     </div>

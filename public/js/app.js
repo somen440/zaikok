@@ -12424,6 +12424,12 @@ module.exports = Vue;
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(24);
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
@@ -12525,7 +12531,7 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15066,7 +15072,7 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -25437,12 +25443,6 @@ return jQuery;
 
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(24);
-
-/***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26419,7 +26419,7 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 /***/ (function(module, exports, __webpack_require__) {
 
 window._ = __webpack_require__(21);
-window.Popper = __webpack_require__(6).default;
+window.Popper = __webpack_require__(7).default;
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -26428,7 +26428,7 @@ window.Popper = __webpack_require__(6).default;
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(7);
+  window.$ = window.jQuery = __webpack_require__(8);
 
   __webpack_require__(23);
 } catch (e) {}
@@ -26439,7 +26439,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(8);
+window.axios = __webpack_require__(5);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -43627,7 +43627,7 @@ module.exports = function(module) {
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-   true ? factory(exports, __webpack_require__(7), __webpack_require__(6)) :
+   true ? factory(exports, __webpack_require__(8), __webpack_require__(7)) :
   typeof define === 'function' && define.amd ? define(['exports', 'jquery', 'popper.js'], factory) :
   (factory((global.bootstrap = {}),global.jQuery,global.Popper));
 }(this, (function (exports,$,Popper) { 'use strict';
@@ -47577,7 +47577,7 @@ module.exports = function(module) {
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(9);
 var Axios = __webpack_require__(26);
-var defaults = __webpack_require__(5);
+var defaults = __webpack_require__(6);
 
 /**
  * Create an instance of Axios
@@ -47660,7 +47660,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(5);
+var defaults = __webpack_require__(6);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(35);
 var dispatchRequest = __webpack_require__(36);
@@ -48199,7 +48199,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(37);
 var isCancel = __webpack_require__(13);
-var defaults = __webpack_require__(5);
+var defaults = __webpack_require__(6);
 var isAbsoluteURL = __webpack_require__(38);
 var combineURLs = __webpack_require__(39);
 
@@ -69976,7 +69976,7 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -70031,13 +70031,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       drawer: null
     };
   },
+  created: function created() {},
 
-  props: {
-    token: {
-      type: String,
-      default: ''
-    }
-  },
   computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])(['isGuest']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
     csrf: 'getCsrf'
   })),
@@ -70045,16 +70040,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     logout: function logout() {
       this.$refs.logoutForm.submit();
     }
-  },
-  created: function created() {
-    console.log(this.token);
-    __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/api/user', {
-      headers: {
-        Authorization: 'Bearer ' + this.token
-      }
-    }).then(function (response) {
-      return console.log(response);
-    });
   }
 });
 
@@ -70273,6 +70258,13 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
+var _created$props$create;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -70285,11 +70277,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = ({
+
+
+/* harmony default export */ __webpack_exports__["default"] = (_created$props$create = {
   created: function created() {
     this.$store.dispatch('login');
+  },
+
+  props: {
+    token: {
+      type: String,
+      default: ''
+    }
   }
-});
+}, _defineProperty(_created$props$create, 'created', function created() {
+  this.$store.commit('SET_TOKEN', this.token);
+  this.$store.dispatch('setUser');
+  this.$store.dispatch('setInventory');
+}), _defineProperty(_created$props$create, 'computed', _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])(['user']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+  userId: 'getUserId',
+  userName: 'getUserName'
+}))), _created$props$create);
 
 /***/ }),
 /* 52 */
@@ -71727,19 +71735,9 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
   mode: 'history',
-  routes: [{ path: '' }, { path: '/home', component: __WEBPACK_IMPORTED_MODULE_3__components__["ZaikokHome"] }, {
-    path: '/guest',
-    component: __WEBPACK_IMPORTED_MODULE_3__components__["ZaikokGuest"],
-    meta: { ignoreAuth: true }
-  }, {
-    path: '/login',
-    component: __WEBPACK_IMPORTED_MODULE_3__components__["ZaikokLogin"],
-    meta: { ignoreAuth: true }
-  }, {
-    path: '/register',
-    component: __WEBPACK_IMPORTED_MODULE_3__components__["ZaikokRegister"],
-    meta: { ignoreAuth: true }
-  }]
+  routes: [
+    // { path: '/home', component: Components.ZaikokHome },
+  ]
 }));
 
 /***/ }),
@@ -74394,7 +74392,9 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
   state: {
     isGuest: true,
-    csrf: ''
+    csrf: '',
+    token: '',
+    user: null
   },
   actions: __WEBPACK_IMPORTED_MODULE_2__actions__["a" /* default */],
   mutations: __WEBPACK_IMPORTED_MODULE_3__mutations__["a" /* default */],
@@ -74420,6 +74420,34 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
     var commit = _ref2.commit;
 
     commit('SET_IS_GUEST', true);
+  },
+
+  setUser: function setUser(_ref3) {
+    var commit = _ref3.commit,
+        state = _ref3.state;
+
+    axios.get('/api/user', {
+      headers: {
+        Authorization: 'Bearer ' + state.token
+      }
+    }).then(function (_ref4) {
+      var data = _ref4.data;
+      return commit('SET_USER', data);
+    });
+  },
+
+  setInventory: function setInventory(_ref5) {
+    var commit = _ref5.commit,
+        state = _ref5.state;
+
+    axios.get('/api/inventory', {
+      headers: {
+        Authorization: 'Bearer ' + state.token
+      }
+    }).then(function (_ref6) {
+      var data = _ref6.data;
+      return console.log(data);
+    });
   }
 });
 
@@ -74430,7 +74458,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 "use strict";
 /* unused harmony export isGuest */
 /* unused harmony export registerUser */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
 
@@ -74449,6 +74477,14 @@ function registerUser(param) {
 /* harmony default export */ __webpack_exports__["a"] = ({
   SET_IS_GUEST: function SET_IS_GUEST(state, is) {
     state.isGuest = is;
+  },
+
+  SET_TOKEN: function SET_TOKEN(state, token) {
+    state.token = token;
+  },
+
+  SET_USER: function SET_USER(state, user) {
+    state.user = user;
   }
 });
 
@@ -74460,6 +74496,14 @@ function registerUser(param) {
 /* harmony default export */ __webpack_exports__["a"] = ({
   getCsrf: function getCsrf() {
     return document.head.querySelector('meta[name="csrf-token"]').content;
+  },
+
+  getUserId: function getUserId(state) {
+    return state.user.user_id || null;
+  },
+
+  getUserName: function getUserName(state) {
+    return state.user.name;
   }
 });
 

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Zaikok\Inventory;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,15 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['auth:api'])->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::get('/inventory', function (Request $request) {
+        return Inventory::where('user_id', $request->user()->user_id)
+            ->orderBy('id', 'asc')
+            ->get()
+        ;
+    });
 });

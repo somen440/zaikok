@@ -10,6 +10,8 @@ export default new Vuex.Store({
   state: {
     isGuest: true,
     csrf: '',
+    token: '',
+    user: null,
   },
   actions,
   mutations,
