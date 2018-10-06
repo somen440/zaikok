@@ -23,6 +23,7 @@ Route::middleware(['auth:api'])->group(function () {
         return Inventory::where('user_id', $request->user()->user_id)
             ->orderBy('id', 'asc')
             ->get()
+            ->groupBy('inventory_group_id')
         ;
     });
 });
