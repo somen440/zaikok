@@ -13,6 +13,7 @@ export default new Vuex.Store({
     token: '',
     user: null,
     inventories: [],
+    inventoryGroups: [],
   },
   actions,
   mutations,

@@ -10,4 +10,12 @@ export default {
   getUserName: state => {
     return null === state.user ? '' : state.user.name
   },
+
+  nextInventoryGroupId: state => {
+    const length = state.inventoryGroups.length
+    if (0 < length) {
+      return state.inventoryGroups[length - 1].inventory_group_id + 1
+    }
+    return 1
+  },
 }

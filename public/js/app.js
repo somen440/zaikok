@@ -380,10 +380,10 @@ module.exports = {
 "use strict";
 /* unused harmony export Store */
 /* unused harmony export install */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return mapState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return mapState; });
 /* unused harmony export mapMutations */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapGetters; });
-/* unused harmony export mapActions */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return mapGetters; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapActions; });
 /* unused harmony export createNamespacedHelpers */
 /**
  * vuex v3.0.1
@@ -70021,6 +70021,50 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -70028,19 +70072,35 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      drawer: null
+      drawer: null,
+      addInventoryGroupDialog: false,
+      name: '',
+      nameRules: [function (v) {
+        return !!v || 'グループ名入力は必須です。';
+      }],
+      valid: false,
+      addButtonLoading: false
     };
   },
   created: function created() {},
 
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])(['isGuest']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])(['isGuest', 'inventoryGroups']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])({
     csrf: 'getCsrf'
   })),
-  methods: {
+  methods: _extends({
     logout: function logout() {
       this.$refs.logoutForm.submit();
+    },
+    execAdd: function execAdd() {
+      var _this = this;
+
+      this.addButtonLoading = true;
+      this.addInventoryGroup(this.name).then(function () {
+        _this.addButtonLoading = false;
+        _this.addInventoryGroupDialog = false;
+      });
     }
-  }
+  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['addInventoryGroup']))
 });
 
 /***/ }),
@@ -70069,24 +70129,66 @@ var render = function() {
         },
         [
           _c(
+            "v-toolbar",
+            { attrs: { color: "indigo", dark: "" } },
+            [_c("v-toolbar-title", [_vm._v("グループ一覧")])],
+            1
+          ),
+          _vm._v(" "),
+          _c(
             "v-list",
             { attrs: { dense: "" } },
             [
+              _vm._l(_vm.inventoryGroups, function(inventoryGroup) {
+                return _c(
+                  "v-list-tile",
+                  {
+                    key: inventoryGroup.name,
+                    on: { click: function($event) {} }
+                  },
+                  [
+                    _c("v-list-tile-action"),
+                    _vm._v(" "),
+                    _c(
+                      "v-list-tile-content",
+                      [
+                        _c("v-list-tile-title", [
+                          _vm._v(_vm._s(inventoryGroup.name))
+                        ])
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              }),
+              _vm._v(" "),
               _c(
                 "v-list-tile",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.addInventoryGroupDialog = true
+                    }
+                  }
+                },
                 [
-                  _c("v-list-tile-action", [_c("v-icon", [_vm._v("home")])], 1),
+                  _c(
+                    "v-list-tile-action",
+                    [_c("v-icon", [_vm._v("add_circle_outline")])],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
                     "v-list-tile-content",
-                    [_c("v-list-tile-title", [_vm._v("Home")])],
+                    [_c("v-list-tile-title", [_vm._v("グループを追加")])],
                     1
                   )
                 ],
                 1
               )
             ],
-            1
+            2
           )
         ],
         1
@@ -70162,7 +70264,87 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("v-content", [_vm._t("default")], 2)
+      _c("v-content", [_vm._t("default")], 2),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "500px" },
+          model: {
+            value: _vm.addInventoryGroupDialog,
+            callback: function($$v) {
+              _vm.addInventoryGroupDialog = $$v
+            },
+            expression: "addInventoryGroupDialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", [_vm._v("\n        グループ追加\n      ")]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-form",
+                    {
+                      model: {
+                        value: _vm.valid,
+                        callback: function($$v) {
+                          _vm.valid = $$v
+                        },
+                        expression: "valid"
+                      }
+                    },
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          rules: _vm.nameRules,
+                          label: "グループ名",
+                          required: ""
+                        },
+                        model: {
+                          value: _vm.name,
+                          callback: function($$v) {
+                            _vm.name = $$v
+                          },
+                          expression: "name"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: {
+                        color: "primary",
+                        flat: "",
+                        disabled: !_vm.valid,
+                        loading: _vm.addButtonLoading
+                      },
+                      on: { click: _vm.execAdd }
+                    },
+                    [_vm._v("追加")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -70292,6 +70474,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -70309,13 +70492,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     }
   },
   created: function created() {
-    console.log(this.token);
     this.$store.commit('SET_TOKEN', this.token);
     this.$store.dispatch('login');
     this.$store.dispatch('setInventory');
+    this.$store.dispatch('setInventoryGroups');
   },
 
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])(['user', 'inventories']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])(['user', 'inventories']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])({
     userId: 'getUserId',
     userName: 'getUserName'
   }))
@@ -70338,7 +70521,9 @@ var render = function() {
         { attrs: { row: "", wrap: "" } },
         [
           _c("v-flex", { attrs: { xs12: "", "text-xs-left": "" } }, [
-            _c("h2", [_vm._v(_vm._s(this.userName) + " さんの在庫管理")])
+            _c("h2", [_vm._v(_vm._s(this.userName) + " さんの在庫管理")]),
+            _vm._v(" "),
+            _c("h3", [_vm._v("グループ: 冷蔵庫")])
           ]),
           _vm._v(" "),
           _c(
@@ -70528,7 +70713,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     sendPassword: function sendPassword() {
       return this.password;
     }
-  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])({
     csrf: 'getCsrf'
   })),
   methods: {
@@ -70849,7 +71034,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     registerUrl: function registerUrl() {
       return __WEBPACK_IMPORTED_MODULE_0__util__["a" /* default */].createRoutePath('register');
     }
-  }, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])({
+  }, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])({
     csrf: 'getCsrf'
   })),
   methods: {
@@ -74492,7 +74677,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
     csrf: '',
     token: '',
     user: null,
-    inventories: []
+    inventories: [],
+    inventoryGroups: []
   },
   actions: __WEBPACK_IMPORTED_MODULE_2__actions__["a" /* default */],
   mutations: __WEBPACK_IMPORTED_MODULE_3__mutations__["a" /* default */],
@@ -74506,6 +74692,23 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__api__ = __webpack_require__(67);
 
+
+function _GetRequest(url, token) {
+  return axios.get('/api/' + url, {
+    headers: {
+      Authorization: 'Bearer ' + token
+    }
+  });
+}
+
+function _PostRequest(url, token, data) {
+  return axios.post('/api/' + url, data, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json'
+    }
+  });
+}
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   login: function login(_ref) {
@@ -74526,11 +74729,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
     var commit = _ref3.commit,
         state = _ref3.state;
 
-    axios.get('/api/user', {
-      headers: {
-        Authorization: 'Bearer ' + state.token
-      }
-    }).then(function (_ref4) {
+    _GetRequest('user', state.token).then(function (_ref4) {
       var data = _ref4.data;
       return commit('SET_USER', data);
     });
@@ -74540,13 +74739,35 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
     var commit = _ref5.commit,
         state = _ref5.state;
 
-    axios.get('/api/inventory', {
-      headers: {
-        Authorization: 'Bearer ' + state.token
-      }
-    }).then(function (_ref6) {
+    // todo: specified group
+    _GetRequest('inventory/1', state.token).then(function (_ref6) {
       var data = _ref6.data;
-      return commit('SET_INVENTORIES', data[1]);
+      return commit('SET_INVENTORIES', data);
+    });
+  },
+
+  setInventoryGroups: function setInventoryGroups(_ref7) {
+    var commit = _ref7.commit,
+        state = _ref7.state;
+
+    return _GetRequest('inventory_group', state.token).then(function (_ref8) {
+      var data = _ref8.data;
+      return commit('SET_INVENTORY_GROUPS', data);
+    });
+  },
+
+  addInventoryGroup: function addInventoryGroup(_ref9, name) {
+    var state = _ref9.state,
+        getters = _ref9.getters,
+        dispatch = _ref9.dispatch;
+
+    var newInventoryGroup = {
+      inventory_group_id: getters.nextInventoryGroupId,
+      user_id: getters.getUserId,
+      name: name
+    };
+    return _PostRequest('inventory_group', state.token, newInventoryGroup).then(function () {
+      return dispatch('setInventoryGroups');
     });
   }
 });
@@ -74589,7 +74810,10 @@ function registerUser(param) {
 
   SET_INVENTORIES: function SET_INVENTORIES(state, inventories) {
     state.inventories = inventories;
-    console.log(state);
+  },
+
+  SET_INVENTORY_GROUPS: function SET_INVENTORY_GROUPS(state, inventoryGroups) {
+    state.inventoryGroups = inventoryGroups;
   }
 });
 
@@ -74609,6 +74833,14 @@ function registerUser(param) {
 
   getUserName: function getUserName(state) {
     return null === state.user ? '' : state.user.name;
+  },
+
+  nextInventoryGroupId: function nextInventoryGroupId(state) {
+    var length = state.inventoryGroups.length;
+    if (0 < length) {
+      return state.inventoryGroups[length - 1].inventory_group_id + 1;
+    }
+    return 1;
   }
 });
 

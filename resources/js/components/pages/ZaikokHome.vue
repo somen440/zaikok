@@ -3,6 +3,7 @@
     <v-layout row wrap>
       <v-flex xs12 text-xs-left>
         <h2>{{ this.userName }} さんの在庫管理</h2>
+        <h3>グループ: 冷蔵庫</h3>
       </v-flex>
       <v-flex xs12 text-xs-center>
         <v-data-table
@@ -51,10 +52,10 @@ export default {
     },
   },
   created() {
-    console.log(this.token)
     this.$store.commit('SET_TOKEN', this.token)
     this.$store.dispatch('login')
     this.$store.dispatch('setInventory')
+    this.$store.dispatch('setInventoryGroups')
   },
   computed: {
     ...mapState(['user', 'inventories']),

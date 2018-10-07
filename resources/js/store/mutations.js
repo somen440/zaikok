@@ -13,6 +13,9 @@ export default {
 
   SET_INVENTORIES: (state, inventories) => {
     state.inventories = inventories
-    console.log(state)
+  },
+
+  SET_INVENTORY_GROUPS: (state, inventoryGroups) => {
+    state.inventoryGroups = inventoryGroups
   },
 }
