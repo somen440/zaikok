@@ -13,7 +13,7 @@
         <v-list-tile
           v-for="inventoryGroup in inventoryGroups"
           :key="inventoryGroup.name"
-          @click=""
+          @click="changeGroup"
         >
           <v-list-tile-action>
           </v-list-tile-action>
@@ -115,6 +115,10 @@ export default {
         this.addButtonLoading = false
         this.addInventoryGroupDialog = false
       })
+    },
+    changeGroup() {
+      // todo
+      console.log('change')
     },
     ...mapActions(['addInventoryGroup']),
   },

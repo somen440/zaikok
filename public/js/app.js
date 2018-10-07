@@ -70099,6 +70099,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         _this.addButtonLoading = false;
         _this.addInventoryGroupDialog = false;
       });
+    },
+    changeGroup: function changeGroup() {
+      // todo
+      console.log('change');
     }
   }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['addInventoryGroup']))
 });
@@ -70142,10 +70146,7 @@ var render = function() {
               _vm._l(_vm.inventoryGroups, function(inventoryGroup) {
                 return _c(
                   "v-list-tile",
-                  {
-                    key: inventoryGroup.name,
-                    on: { click: function($event) {} }
-                  },
+                  { key: inventoryGroup.name, on: { click: _vm.changeGroup } },
                   [
                     _c("v-list-tile-action"),
                     _vm._v(" "),
@@ -74710,7 +74711,23 @@ function _PostRequest(url, token, data) {
   });
 }
 
+function _PutRequest(url, token, data) {
+  return axios.put('/api/' + url, data, {
+    Authorization: 'Bearer ' + token,
+    'Content-Type': 'application/json'
+  });
+}
+
+function _DeleteRequest(url, token) {
+  return axios.delete('/api/' + url, {
+    Authorization: 'Bearer ' + token
+  });
+}
+
 /* harmony default export */ __webpack_exports__["a"] = ({
+  /**
+   * User
+   */
   login: function login(_ref) {
     var commit = _ref.commit,
         dispatch = _ref.dispatch;
@@ -74723,6 +74740,7 @@ function _PostRequest(url, token, data) {
     var commit = _ref2.commit;
 
     commit('SET_IS_GUEST', true);
+    commit('SET_USER', null);
   },
 
   setUser: function setUser(_ref3) {
@@ -74735,6 +74753,9 @@ function _PostRequest(url, token, data) {
     });
   },
 
+  /**
+   * Inventory
+   */
   setInventory: function setInventory(_ref5) {
     var commit = _ref5.commit,
         state = _ref5.state;
@@ -74746,6 +74767,9 @@ function _PostRequest(url, token, data) {
     });
   },
 
+  /**
+   * Inventory Group
+   */
   setInventoryGroups: function setInventoryGroups(_ref7) {
     var commit = _ref7.commit,
         state = _ref7.state;
@@ -74767,6 +74791,24 @@ function _PostRequest(url, token, data) {
       name: name
     };
     return _PostRequest('inventory_group', state.token, newInventoryGroup).then(function () {
+      return dispatch('setInventoryGroups');
+    });
+  },
+
+  editInventoryGroup: function editInventoryGroup(_ref10, id, data) {
+    var state = _ref10.state,
+        dispatch = _ref10.dispatch;
+
+    return _PutRequest('inventory_group/' + id, state.token, data).then(function () {
+      return dispatch('setInventoryGroups');
+    });
+  },
+
+  deleteInventoryGroup: function deleteInventoryGroup(_ref11, id) {
+    var state = _ref11.state,
+        dispatch = _ref11.dispatch;
+
+    return _DeleteRequest('inventory_group/' + id, state.token).then(function () {
       return dispatch('setInventoryGroups');
     });
   }

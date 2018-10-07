@@ -17,7 +17,23 @@ function _PostRequest(url, token, data) {
   })
 }
 
+function _PutRequest(url, token, data) {
+  return axios.put(`/api/${url}`, data, {
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  })
+}
+
+function _DeleteRequest(url, token) {
+  return axios.delete(`/api/${url}`, {
+    Authorization: `Bearer ${token}`,
+  })
+}
+
 export default {
+  /**
+   * User
+   */
   login: ({ commit, dispatch }) => {
     commit('SET_IS_GUEST', false)
     dispatch('setUser')
@@ -25,6 +41,7 @@ export default {
 
   logout: ({ commit }) => {
     commit('SET_IS_GUEST', true)
+    commit('SET_USER', null)
   },
 
   setUser: ({ commit, state }) => {
@@ -33,6 +50,9 @@ export default {
     )
   },
 
+  /**
+   * Inventory
+   */
   setInventory: ({ commit, state }) => {
     // todo: specified group
     _GetRequest('inventory/1', state.token).then(({ data }) =>
@@ -40,6 +60,9 @@ export default {
     )
   },
 
+  /**
+   * Inventory Group
+   */
   setInventoryGroups: ({ commit, state }) => {
     return _GetRequest('inventory_group', state.token).then(({ data }) =>
       commit('SET_INVENTORY_GROUPS', data),
@@ -57,5 +80,17 @@ export default {
         return dispatch('setInventoryGroups')
       },
     )
+  },
+
+  editInventoryGroup: ({ state, dispatch }, id, data) => {
+    return _PutRequest(`inventory_group/${id}`, state.token, data).then(() => {
+      return dispatch('setInventoryGroups')
+    })
+  },
+
+  deleteInventoryGroup: ({ state, dispatch }, id) => {
+    return _DeleteRequest(`inventory_group/${id}`, state.token).then(() => {
+      return dispatch('setInventoryGroups')
+    })
   },
 }
