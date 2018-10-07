@@ -8,7 +8,7 @@ CREATE TABLE `inventories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE inventory_group_id_inventory_id (`inventory_group_id`, `inventory_id`, `user_id`),
-  INDEX user_id_inventory_group_id (`user_id`, `inventory_group_id`),
+  UNIQUE KEY `inventory_group_id_inventory_id` (`inventory_group_id`,`inventory_id`,`user_id`),
+  KEY `user_id_inventory_group_id` (`user_id`,`inventory_group_id`),
   FOREIGN KEY (`user_id`) REFERENCES users(`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci

@@ -1,11 +1,10 @@
-CREATE TABLE `inventory_control_logs` (
+CREATE TABLE `inventory_groups` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `inventory_id` int(10) unsigned NOT NULL,
+  `inventory_group_id` int(10) unsigned NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
-  `type` tinyint(3) unsigned NOT NULL,
-  `count` tinyint(3) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
+  UNIQUE KEY `inventory_group_id_user_id` (`inventory_group_id`,`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
