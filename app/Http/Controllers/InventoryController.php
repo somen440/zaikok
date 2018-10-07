@@ -4,7 +4,6 @@ namespace Zaikok\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Zaikok\Inventory;
 
 class InventoryController extends Controller

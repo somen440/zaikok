@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Zaikok\Http\Controllers\InventoryController;
+use Zaikok\Http\Controllers\InventoryGroupController;
 use Zaikok\Http\Controllers\UserController;
 use Zaikok\Inventory;
 
@@ -27,5 +28,12 @@ Route::middleware(['auth:api'])->group(function () {
         Route::put('{id}', 'InventoryController@edit');
         Route::delete('/{id}', 'InventoryController@delete');
         Route::delete('', 'InventoryController@deleteAll');
+    });
+
+    Route::prefix('inventory_group')->group(function () {
+        Route::get('', 'InventoryGroupController@getList');
+        Route::post('', 'InventoryGroupController@create');
+        Route::put('/{id}', 'InventoryGroupController@edit');
+        Route::delete('/{id}', 'InventoryGroupController@delete');
     });
 });
