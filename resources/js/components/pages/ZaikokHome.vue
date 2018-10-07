@@ -51,6 +51,7 @@ export default {
     },
   },
   created() {
+    console.log(this.token)
     this.$store.commit('SET_TOKEN', this.token)
     this.$store.dispatch('login')
     this.$store.dispatch('setInventory')

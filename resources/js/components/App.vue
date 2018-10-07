@@ -17,7 +17,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-toolbar color="indigo" dark fixed app>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer" v-if="isGuest"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer" v-if="!isGuest"></v-toolbar-side-icon>
       <v-toolbar-title>在庫管理　-zaikok-</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="isGuest">

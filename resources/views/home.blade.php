@@ -2,6 +2,6 @@
 
 @section('content')
     <zaikok-home
-        token="{{ env('TOKEN') }}"
+        token="{{ $token }}"
     ></zaikok-home>
 @endsection
