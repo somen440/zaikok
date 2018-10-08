@@ -70857,7 +70857,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      headers: [{ text: 'ID', value: 'inventory_id' }, { text: '品物', value: 'name' }, { text: '個数', value: 'count' }, { text: '更新日時', value: 'updated_at' }, { text: '追加日', value: 'created_at' }],
+      headers: [{ text: 'ID', value: 'inventory_id', align: 'center' }, { text: '品物', value: 'name', align: 'center' }, { text: '個数', value: 'count', align: 'center' }, { text: '更新日時', value: 'updated_at', align: 'center' }, { text: '追加日', value: 'created_at', align: 'center' }],
       showGroupEditForm: false,
       editInventoryGroupName: '',
       editInventoryGroupNameRules: [function (v) {
