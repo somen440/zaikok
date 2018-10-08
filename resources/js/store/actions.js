@@ -62,13 +62,27 @@ export default {
     if (-1 === groupId) {
       return Promise.resolve()
     }
-    return _GetRequest(`inventory/${groupId}`, state.token).then(({ data }) =>
-      commit('SET_INVENTORIES', data),
-    )
+    return _GetRequest(`inventory/${groupId}`, state.token).then(({ data }) => {
+      let i = 1
+      for (const k in data) {
+        data[k].view_id = i++
+      }
+      commit('SET_INVENTORIES', data)
+    })
   },
 
   addInventory: ({ state, dispatch }, inventory) => {
     return _PostRequest('inventory', state.token, inventory).then(() => {
+      return dispatch('setInventory')
+    })
+  },
+
+  deleteInventory: ({ state, dispatch }, id) => {
+    if (!confirm('本当に削除してもよろしいですか？')) {
+      return Promise.resolve()
+    }
+    return _DeleteRequest(`inventory/${id}`, state.token).then(() => {
+      alert('削除が完了しました')
       return dispatch('setInventory')
     })
   },

@@ -69,11 +69,25 @@
           class="elevation-1"
         >
           <template slot="items" slot-scope="props">
-            <td>{{ props.item.inventory_id }}</td>
+            <td>{{ props.item.view_id }}</td>
             <td>{{ props.item.name }}</td>
             <td class="text-xs-right">{{ props.item.count }}</td>
             <td class="text-xs-right">{{ props.item.updated_at }}</td>
-            <td class="text-xs-right">{{ props.item.created_at }}</td>
+            <td class="justify-center layout px-0">
+              <v-btn
+                small
+                color="error"
+                @click="deleteInventory(props.item.id)"
+                :loading="deleteButtonLoading"
+              >
+                <v-icon
+                  small
+                >
+                  delete
+                </v-icon>
+                削除
+              </v-btn>
+            </td>
           </template>
           <template slot="no-data">
             <v-alert :value="true" color="error" icon="warning">
@@ -96,11 +110,11 @@ export default {
   data() {
     return {
       headers: [
-        { text: 'ID', value: 'inventory_id', align: 'center' },
+        { text: 'ID', value: 'view_id', align: 'center' },
         { text: '品物', value: 'name', align: 'center' },
         { text: '個数', value: 'count', align: 'center' },
         { text: '更新日時', value: 'updated_at', align: 'center' },
-        { text: '追加日', value: 'created_at', align: 'center' },
+        { text: '削除', value: 'name', sortable: false },
       ],
       showGroupEditForm: false,
       editInventoryGroupName: '',
@@ -117,6 +131,7 @@ export default {
       addInventoryValid: false,
       addInventoryRules: [v => !!v || '名前の入力は必須です'],
       addButtonLoading: false,
+      deleteButtonLoading: false,
     }
   },
   props: {
@@ -177,12 +192,23 @@ export default {
         this.addInventoryDialog = false
       })
     },
+    editIinventory(inventory) {
+      console.log('edit')
+      console.log(inventory)
+    },
+    deleteInventory(id) {
+      this.deleteButtonLoading = true
+      this.deleteInventory(id).then(() => {
+        this.deleteButtonLoading = false
+      })
+    },
     ...mapActions([
       'editInventoryGroup',
       'deleteInventoryGroup',
       'setInventoryGroups',
       'addInventory',
       'setInventory',
+      'deleteInventory',
     ]),
   },
 }

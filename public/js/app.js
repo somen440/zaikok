@@ -70851,13 +70851,27 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      headers: [{ text: 'ID', value: 'inventory_id', align: 'center' }, { text: '品物', value: 'name', align: 'center' }, { text: '個数', value: 'count', align: 'center' }, { text: '更新日時', value: 'updated_at', align: 'center' }, { text: '追加日', value: 'created_at', align: 'center' }],
+      headers: [{ text: 'ID', value: 'view_id', align: 'center' }, { text: '品物', value: 'name', align: 'center' }, { text: '個数', value: 'count', align: 'center' }, { text: '更新日時', value: 'updated_at', align: 'center' }, { text: '削除', value: 'name', sortable: false }],
       showGroupEditForm: false,
       editInventoryGroupName: '',
       editInventoryGroupNameRules: [function (v) {
@@ -70876,7 +70890,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       addInventoryRules: [function (v) {
         return !!v || '名前の入力は必須です';
       }],
-      addButtonLoading: false
+      addButtonLoading: false,
+      deleteButtonLoading: false
     };
   },
 
@@ -70937,8 +70952,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         _this.addButtonLoading = false;
         _this.addInventoryDialog = false;
       });
+    },
+    editIinventory: function editIinventory(inventory) {
+      console.log('edit');
+      console.log(inventory);
+    },
+    deleteInventory: function deleteInventory(id) {
+      var _this2 = this;
+
+      this.deleteButtonLoading = true;
+      this.deleteInventory(id).then(function () {
+        _this2.deleteButtonLoading = false;
+      });
     }
-  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['editInventoryGroup', 'deleteInventoryGroup', 'setInventoryGroups', 'addInventory', 'setInventory']))
+  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['editInventoryGroup', 'deleteInventoryGroup', 'setInventoryGroups', 'addInventory', 'setInventory', 'deleteInventory']))
 });
 
 /***/ }),
@@ -71179,7 +71206,7 @@ var render = function() {
                       key: "items",
                       fn: function(props) {
                         return [
-                          _c("td", [_vm._v(_vm._s(props.item.inventory_id))]),
+                          _c("td", [_vm._v(_vm._s(props.item.view_id))]),
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(props.item.name))]),
                           _vm._v(" "),
@@ -71191,9 +71218,37 @@ var render = function() {
                             _vm._v(_vm._s(props.item.updated_at))
                           ]),
                           _vm._v(" "),
-                          _c("td", { staticClass: "text-xs-right" }, [
-                            _vm._v(_vm._s(props.item.created_at))
-                          ])
+                          _c(
+                            "td",
+                            { staticClass: "justify-center layout px-0" },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    small: "",
+                                    color: "error",
+                                    loading: _vm.deleteButtonLoading
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.deleteInventory(props.item.id)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("v-icon", { attrs: { small: "" } }, [
+                                    _vm._v(
+                                      "\n                delete\n              "
+                                    )
+                                  ]),
+                                  _vm._v("\n              削除\n            ")
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
                         ]
                       }
                     }
@@ -75422,7 +75477,12 @@ function _DeleteRequest(url, token) {
     }
     return _GetRequest('inventory/' + groupId, state.token).then(function (_ref6) {
       var data = _ref6.data;
-      return commit('SET_INVENTORIES', data);
+
+      var i = 1;
+      for (var k in data) {
+        data[k].view_id = i++;
+      }
+      commit('SET_INVENTORIES', data);
     });
   },
 
@@ -75435,17 +75495,30 @@ function _DeleteRequest(url, token) {
     });
   },
 
+  deleteInventory: function deleteInventory(_ref8, id) {
+    var state = _ref8.state,
+        dispatch = _ref8.dispatch;
+
+    if (!confirm('本当に削除してもよろしいですか？')) {
+      return Promise.resolve();
+    }
+    return _DeleteRequest('inventory/' + id, state.token).then(function () {
+      alert('削除が完了しました');
+      return dispatch('setInventory');
+    });
+  },
+
   /**
    * Inventory Group
    */
-  setInventoryGroups: function setInventoryGroups(_ref8) {
-    var commit = _ref8.commit,
-        state = _ref8.state,
-        getters = _ref8.getters,
-        dispatch = _ref8.dispatch;
+  setInventoryGroups: function setInventoryGroups(_ref9) {
+    var commit = _ref9.commit,
+        state = _ref9.state,
+        getters = _ref9.getters,
+        dispatch = _ref9.dispatch;
 
-    return _GetRequest('inventory_group', state.token).then(function (_ref9) {
-      var data = _ref9.data;
+    return _GetRequest('inventory_group', state.token).then(function (_ref10) {
+      var data = _ref10.data;
 
       commit('SET_INVENTORY_GROUPS', data);
 
@@ -75456,10 +75529,10 @@ function _DeleteRequest(url, token) {
     });
   },
 
-  addInventoryGroup: function addInventoryGroup(_ref10, name) {
-    var state = _ref10.state,
-        getters = _ref10.getters,
-        dispatch = _ref10.dispatch;
+  addInventoryGroup: function addInventoryGroup(_ref11, name) {
+    var state = _ref11.state,
+        getters = _ref11.getters,
+        dispatch = _ref11.dispatch;
 
     var newInventoryGroup = {
       inventory_group_id: getters.nextInventoryGroupId,
@@ -75471,9 +75544,9 @@ function _DeleteRequest(url, token) {
     });
   },
 
-  editInventoryGroup: function editInventoryGroup(_ref11, group) {
-    var state = _ref11.state,
-        dispatch = _ref11.dispatch;
+  editInventoryGroup: function editInventoryGroup(_ref12, group) {
+    var state = _ref12.state,
+        dispatch = _ref12.dispatch;
 
     return _PutRequest('inventory_group/' + group.id, state.token, {
       name: group.name
@@ -75482,10 +75555,10 @@ function _DeleteRequest(url, token) {
     });
   },
 
-  deleteInventoryGroup: function deleteInventoryGroup(_ref12) {
-    var state = _ref12.state,
-        dispatch = _ref12.dispatch,
-        getters = _ref12.getters;
+  deleteInventoryGroup: function deleteInventoryGroup(_ref13) {
+    var state = _ref13.state,
+        dispatch = _ref13.dispatch,
+        getters = _ref13.getters;
 
     return _DeleteRequest('inventory_group/' + getters.getCurrentInventoryGroupId, state.token).then(function () {
       alert('削除が完了しました');
