@@ -4,6 +4,7 @@ namespace Zaikok\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Zaikok\InventoryGroup;
 use Zaikok\User;
@@ -43,16 +44,31 @@ class HomeController extends Controller
      */
     protected function firstLogin(User $user): string
     {
-        $token       = $user->createToken('Token Name')->accessToken;
-        $bearerToken = $user->bearer_token = $token;
-        $user->save();
+        DB::beginTransaction();
 
-        $inventoryGroup = new InventoryGroup;
-        $inventoryGroup->inventory_group_id = 1;
-        $inventoryGroup->name = '日用品';
-        $inventoryGroup->user_id = $user->user_id;
-        $inventoryGroup->save();
+        try {
+            $token       = $user->createToken('Token Name')->accessToken;
+            $bearerToken = $user->bearer_token = $token;
+            $user->saveOrFail();
 
-        return $bearerToken;
+            $inventoryGroup                     = new InventoryGroup;
+            $inventoryGroup->inventory_group_id = 1;
+            $inventoryGroup->name               = '日用品';
+            $inventoryGroup->user_id            = $user->user_id;
+            $inventoryGroup->saveOrFail();
+
+            Log::info('HomeController@index 初回ログイン成功', [
+                'userId' => $user->user_id,
+            ]);
+
+            DB::commit();
+            return $bearerToken;
+        } catch (\Throwable $e) {
+            Log::error('HomeController@index 初回ログイン失敗', [
+                'userId' => $user->user_id,
+            ]);
+
+            DB::rollBack();
+        }
     }
 }
