@@ -3,7 +3,18 @@
     <v-layout row wrap>
       <v-flex xs12 text-xs-left>
         <h2>{{ this.userName }} さんの在庫管理</h2>
-        <h3>グループ: {{ inventoryGroupName }}</h3>
+        <h3 v-if="showGroupEditForm">
+          <v-form ref="form" v-model="editInventoryGroupValid" lazy-validation>
+            <v-text-field
+              v-model="editInventoryGroupName"
+              :rules="editInventoryGroupNameRules"
+              label="グループ名"
+              required
+              @change="changeInventoryGroupName"
+            ></v-text-field>
+          </v-form>
+        </h3>
+        <h3 v-else @click="showGroupEditForm=true">グループ: {{ inventoryGroupName }}</h3>
       </v-flex>
       <v-flex xs12 text-xs-center>
         <v-data-table
@@ -46,6 +57,10 @@ export default {
         { text: '更新日時', value: 'updated_at' },
         { text: '追加日', value: 'created_at' },
       ],
+      showGroupEditForm: false,
+      editInventoryGroupName: '',
+      editInventoryGroupNameRules: [],
+      editInventoryGroupValid: false,
     }
   },
   props: {
@@ -67,7 +82,13 @@ export default {
       userName: 'getUserName',
       inventoryGroupName: 'getCurrentInventoryGroupName',
       firstInventoryGroupId: 'getFirstInventoryGroupByGroupId',
+      currentGroupId: 'getCurrentInventoryGroupId',
     }),
+  },
+  watch: {
+    inventoryGroupName() {
+      this.editInventoryGroupName = this.inventoryGroupName
+    },
   },
   methods: {
     deleteGroup() {
@@ -75,6 +96,13 @@ export default {
         return
       }
       this.deleteInventoryGroup()
+    },
+    changeInventoryGroupName() {
+      this.showGroupEditForm = false
+      this.editInventoryGroup({
+        id: this.currentGroupId,
+        name: this.editInventoryGroupName,
+      })
     },
     ...mapActions([
       'editInventoryGroup',

@@ -93,8 +93,10 @@ export default {
     )
   },
 
-  editInventoryGroup: ({ state, dispatch }, id, data) => {
-    return _PutRequest(`inventory_group/${id}`, state.token, data).then(() => {
+  editInventoryGroup: ({ state, dispatch }, group) => {
+    return _PutRequest(`inventory_group/${group.id}`, state.token, {
+      name: group.name,
+    }).then(() => {
       return dispatch('setInventoryGroups')
     })
   },
