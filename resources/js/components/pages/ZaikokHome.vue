@@ -56,7 +56,7 @@
                   flat
                   @click.native="saveInventory"
                   :disabled="!addInventoryValid"
-                  :loading="addButtonLoading"
+                  :loading="buttonLoading"
                 >追加</v-btn>
               </v-card-actions>
             </v-card>
@@ -73,6 +73,34 @@
             <td>{{ props.item.name }}</td>
             <td class="text-xs-right">{{ props.item.count }}</td>
             <td class="text-xs-right">{{ props.item.updated_at }}</td>
+            <td>
+              <v-layout row wrap>
+                <v-flex xs6>
+                  <v-btn
+                    fab
+                    dark
+                    small
+                    color="success"
+                    @click="addCountInventory(props.item)"
+                    :loading="buttonLoading"
+                  >
+                    <v-icon dark>add</v-icon>
+                  </v-btn>
+                </v-flex>
+                <v-flex xs6>
+                  <v-btn
+                    fab
+                    dark
+                    small
+                    color="warning"
+                    @click="subCountInventory(props.item)"
+                    :loading="buttonLoading"
+                  >
+                    <v-icon dark>remove</v-icon>
+                  </v-btn>
+                </v-flex>
+              </v-layout>
+            </td>
             <td class="justify-center layout px-0">
               <v-btn
                 small
@@ -114,7 +142,8 @@ export default {
         { text: '品物', value: 'name', align: 'center' },
         { text: '個数', value: 'count', align: 'center' },
         { text: '更新日時', value: 'updated_at', align: 'center' },
-        { text: '削除', value: 'name', sortable: false },
+        { text: '増/減', value: 'name', sortable: false, align: 'center' },
+        { text: '削除', value: 'name', sortable: false, align: 'center' },
       ],
       showGroupEditForm: false,
       editInventoryGroupName: '',
@@ -130,7 +159,7 @@ export default {
       addInventoryDialog: false,
       addInventoryValid: false,
       addInventoryRules: [v => !!v || '名前の入力は必須です'],
-      addButtonLoading: false,
+      buttonLoading: false,
       deleteButtonLoading: false,
     }
   },
@@ -185,16 +214,37 @@ export default {
       })
     },
     saveInventory() {
-      this.addButtonLoading = true
+      this.buttonLoading = true
       this.newInventory.inventory_id = this.nextInventoryId
       this.addInventory(this.newInventory).then(() => {
-        this.addButtonLoading = false
+        this.buttonLoading = false
         this.addInventoryDialog = false
       })
     },
-    editIinventory(inventory) {
-      console.log('edit')
-      console.log(inventory)
+    addCountInventory(inventory) {
+      this.buttonLoading = true
+      inventory.count++
+      this.editInventory({
+        id: inventory.id,
+        count: inventory.count,
+      }).then(() => {
+        this.buttonLoading = false
+      })
+    },
+    subCountInventory(inventory) {
+      this.buttonLoading = true
+      if (0 > inventory.count - 1) {
+        this.buttonLoading = false
+        alert('既に在庫がないです。')
+        return
+      }
+      inventory.count--
+      this.editInventory({
+        id: inventory.id,
+        count: inventory.count,
+      }).then(() => {
+        this.buttonLoading = false
+      })
     },
     deleteInventory(id) {
       this.deleteButtonLoading = true
@@ -209,6 +259,7 @@ export default {
       'addInventory',
       'setInventory',
       'deleteInventory',
+      'editInventory',
     ]),
   },
 }

@@ -70865,13 +70865,41 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      headers: [{ text: 'ID', value: 'view_id', align: 'center' }, { text: '品物', value: 'name', align: 'center' }, { text: '個数', value: 'count', align: 'center' }, { text: '更新日時', value: 'updated_at', align: 'center' }, { text: '削除', value: 'name', sortable: false }],
+      headers: [{ text: 'ID', value: 'view_id', align: 'center' }, { text: '品物', value: 'name', align: 'center' }, { text: '個数', value: 'count', align: 'center' }, { text: '更新日時', value: 'updated_at', align: 'center' }, { text: '増/減', value: 'name', sortable: false, align: 'center' }, { text: '削除', value: 'name', sortable: false, align: 'center' }],
       showGroupEditForm: false,
       editInventoryGroupName: '',
       editInventoryGroupNameRules: [function (v) {
@@ -70890,7 +70918,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       addInventoryRules: [function (v) {
         return !!v || '名前の入力は必須です';
       }],
-      addButtonLoading: false,
+      buttonLoading: false,
       deleteButtonLoading: false
     };
   },
@@ -70946,26 +70974,51 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     saveInventory: function saveInventory() {
       var _this = this;
 
-      this.addButtonLoading = true;
+      this.buttonLoading = true;
       this.newInventory.inventory_id = this.nextInventoryId;
       this.addInventory(this.newInventory).then(function () {
-        _this.addButtonLoading = false;
+        _this.buttonLoading = false;
         _this.addInventoryDialog = false;
       });
     },
-    editIinventory: function editIinventory(inventory) {
-      console.log('edit');
-      console.log(inventory);
+    addCountInventory: function addCountInventory(inventory) {
+      var _this2 = this;
+
+      this.buttonLoading = true;
+      inventory.count++;
+      this.editInventory({
+        id: inventory.id,
+        count: inventory.count
+      }).then(function () {
+        _this2.buttonLoading = false;
+      });
+    },
+    subCountInventory: function subCountInventory(inventory) {
+      var _this3 = this;
+
+      this.buttonLoading = true;
+      if (0 > inventory.count - 1) {
+        this.buttonLoading = false;
+        alert('既に在庫がないです。');
+        return;
+      }
+      inventory.count--;
+      this.editInventory({
+        id: inventory.id,
+        count: inventory.count
+      }).then(function () {
+        _this3.buttonLoading = false;
+      });
     },
     deleteInventory: function deleteInventory(id) {
-      var _this2 = this;
+      var _this4 = this;
 
       this.deleteButtonLoading = true;
       this.deleteInventory(id).then(function () {
-        _this2.deleteButtonLoading = false;
+        _this4.deleteButtonLoading = false;
       });
     }
-  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['editInventoryGroup', 'deleteInventoryGroup', 'setInventoryGroups', 'addInventory', 'setInventory', 'deleteInventory']))
+  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['editInventoryGroup', 'deleteInventoryGroup', 'setInventoryGroups', 'addInventory', 'setInventory', 'deleteInventory', 'editInventory']))
 });
 
 /***/ }),
@@ -71169,7 +71222,7 @@ var render = function() {
                                     color: "blue darken-1",
                                     flat: "",
                                     disabled: !_vm.addInventoryValid,
-                                    loading: _vm.addButtonLoading
+                                    loading: _vm.buttonLoading
                                   },
                                   nativeOn: {
                                     click: function($event) {
@@ -71217,6 +71270,85 @@ var render = function() {
                           _c("td", { staticClass: "text-xs-right" }, [
                             _vm._v(_vm._s(props.item.updated_at))
                           ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c(
+                                "v-layout",
+                                { attrs: { row: "", wrap: "" } },
+                                [
+                                  _c(
+                                    "v-flex",
+                                    { attrs: { xs6: "" } },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            fab: "",
+                                            dark: "",
+                                            small: "",
+                                            color: "success",
+                                            loading: _vm.buttonLoading
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.addCountInventory(props.item)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            { attrs: { dark: "" } },
+                                            [_vm._v("add")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-flex",
+                                    { attrs: { xs6: "" } },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            fab: "",
+                                            dark: "",
+                                            small: "",
+                                            color: "warning",
+                                            loading: _vm.buttonLoading
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.subCountInventory(props.item)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            { attrs: { dark: "" } },
+                                            [_vm._v("remove")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
                           _vm._v(" "),
                           _c(
                             "td",
@@ -75495,9 +75627,18 @@ function _DeleteRequest(url, token) {
     });
   },
 
-  deleteInventory: function deleteInventory(_ref8, id) {
+  editInventory: function editInventory(_ref8, inventory) {
     var state = _ref8.state,
         dispatch = _ref8.dispatch;
+
+    return _PutRequest('inventory/' + inventory.id, state.token, inventory).then(function () {
+      return dispatch('setInventory');
+    });
+  },
+
+  deleteInventory: function deleteInventory(_ref9, id) {
+    var state = _ref9.state,
+        dispatch = _ref9.dispatch;
 
     if (!confirm('本当に削除してもよろしいですか？')) {
       return Promise.resolve();
@@ -75511,14 +75652,14 @@ function _DeleteRequest(url, token) {
   /**
    * Inventory Group
    */
-  setInventoryGroups: function setInventoryGroups(_ref9) {
-    var commit = _ref9.commit,
-        state = _ref9.state,
-        getters = _ref9.getters,
-        dispatch = _ref9.dispatch;
+  setInventoryGroups: function setInventoryGroups(_ref10) {
+    var commit = _ref10.commit,
+        state = _ref10.state,
+        getters = _ref10.getters,
+        dispatch = _ref10.dispatch;
 
-    return _GetRequest('inventory_group', state.token).then(function (_ref10) {
-      var data = _ref10.data;
+    return _GetRequest('inventory_group', state.token).then(function (_ref11) {
+      var data = _ref11.data;
 
       commit('SET_INVENTORY_GROUPS', data);
 
@@ -75529,10 +75670,10 @@ function _DeleteRequest(url, token) {
     });
   },
 
-  addInventoryGroup: function addInventoryGroup(_ref11, name) {
-    var state = _ref11.state,
-        getters = _ref11.getters,
-        dispatch = _ref11.dispatch;
+  addInventoryGroup: function addInventoryGroup(_ref12, name) {
+    var state = _ref12.state,
+        getters = _ref12.getters,
+        dispatch = _ref12.dispatch;
 
     var newInventoryGroup = {
       inventory_group_id: getters.nextInventoryGroupId,
@@ -75544,9 +75685,9 @@ function _DeleteRequest(url, token) {
     });
   },
 
-  editInventoryGroup: function editInventoryGroup(_ref12, group) {
-    var state = _ref12.state,
-        dispatch = _ref12.dispatch;
+  editInventoryGroup: function editInventoryGroup(_ref13, group) {
+    var state = _ref13.state,
+        dispatch = _ref13.dispatch;
 
     return _PutRequest('inventory_group/' + group.id, state.token, {
       name: group.name
@@ -75555,10 +75696,10 @@ function _DeleteRequest(url, token) {
     });
   },
 
-  deleteInventoryGroup: function deleteInventoryGroup(_ref13) {
-    var state = _ref13.state,
-        dispatch = _ref13.dispatch,
-        getters = _ref13.getters;
+  deleteInventoryGroup: function deleteInventoryGroup(_ref14) {
+    var state = _ref14.state,
+        dispatch = _ref14.dispatch,
+        getters = _ref14.getters;
 
     return _DeleteRequest('inventory_group/' + getters.getCurrentInventoryGroupId, state.token).then(function () {
       alert('削除が完了しました');

@@ -77,6 +77,16 @@ export default {
     })
   },
 
+  editInventory: ({ state, dispatch }, inventory) => {
+    return _PutRequest(
+      `inventory/${inventory.id}`,
+      state.token,
+      inventory,
+    ).then(() => {
+      return dispatch('setInventory')
+    })
+  },
+
   deleteInventory: ({ state, dispatch }, id) => {
     if (!confirm('本当に削除してもよろしいですか？')) {
       return Promise.resolve()
