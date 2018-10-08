@@ -18,7 +18,7 @@ class InventoryGroupController extends Controller
      */
     public function getList(Request $request): Collection
     {
-        return InventoryGroup::where('user_id', $request->user()->user_id)->get();
+        return InventoryGroup::where('user_id', $request->user()->user_id)->get()->keyBy('inventory_group_id');
     }
 
     /**

@@ -19,14 +19,18 @@ function _PostRequest(url, token, data) {
 
 function _PutRequest(url, token, data) {
   return axios.put(`/api/${url}`, data, {
-    Authorization: `Bearer ${token}`,
-    'Content-Type': 'application/json',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
   })
 }
 
 function _DeleteRequest(url, token) {
   return axios.delete(`/api/${url}`, {
-    Authorization: `Bearer ${token}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   })
 }
 
@@ -63,10 +67,17 @@ export default {
   /**
    * Inventory Group
    */
-  setInventoryGroups: ({ commit, state }) => {
-    return _GetRequest('inventory_group', state.token).then(({ data }) =>
-      commit('SET_INVENTORY_GROUPS', data),
-    )
+  setInventoryGroups: ({ commit, state, getters }) => {
+    return _GetRequest('inventory_group', state.token).then(({ data }) => {
+      commit('SET_INVENTORY_GROUPS', data)
+
+      if (undefined === getters.getCurrentInventoryGroup) {
+        commit(
+          'SET_CURRENT_INVENTORY_GROUP_ID',
+          getters.getFirstInventoryGroupByGroupId,
+        )
+      }
+    })
   },
 
   addInventoryGroup: ({ state, getters, dispatch }, name) => {
@@ -88,8 +99,12 @@ export default {
     })
   },
 
-  deleteInventoryGroup: ({ state, dispatch }, id) => {
-    return _DeleteRequest(`inventory_group/${id}`, state.token).then(() => {
+  deleteInventoryGroup: ({ state, dispatch, getters }) => {
+    return _DeleteRequest(
+      `inventory_group/${getters.getCurrentInventoryGroupId}`,
+      state.token,
+    ).then(() => {
+      alert('削除が完了しました')
       return dispatch('setInventoryGroups')
     })
   },

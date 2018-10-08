@@ -4,7 +4,7 @@ export default {
   },
 
   getUserId: state => {
-    return state.user.user_id || null
+    return null === state.user ? null : state.user.user_id
   },
 
   getUserName: state => {
@@ -12,10 +12,34 @@ export default {
   },
 
   nextInventoryGroupId: state => {
-    const length = state.inventoryGroups.length
-    if (0 < length) {
-      return state.inventoryGroups[length - 1].inventory_group_id + 1
-    }
-    return 1
+    const keys = Object.keys(state.inventoryGroups)
+    return 0 < keys.length ? keys[keys.length - 1] + 1 : 1
+  },
+
+  getCurrentInventoryGroup: state => {
+    return state.inventoryGroups[state.currentInventoryGroupId]
+  },
+
+  getCurrentInventoryGroupName: (state, getters) => {
+    return undefined === getters.getCurrentInventoryGroup
+      ? ''
+      : getters.getCurrentInventoryGroup.name
+  },
+
+  getCurrentInventoryGroupId: (state, getters) => {
+    return undefined === getters.getCurrentInventoryGroup
+      ? -1
+      : getters.getCurrentInventoryGroup.id
+  },
+
+  getFirstInventoryGroup: state => {
+    const keys = Object.keys(state.inventoryGroups)
+    return 0 < keys.length ? state.inventoryGroups[keys[0]] : null
+  },
+
+  getFirstInventoryGroupByGroupId: (state, getters) => {
+    return null === getters.getFirstInventoryGroup
+      ? -1
+      : getters.getFirstInventoryGroup.id
   },
 }

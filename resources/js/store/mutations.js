@@ -18,4 +18,8 @@ export default {
   SET_INVENTORY_GROUPS: (state, inventoryGroups) => {
     state.inventoryGroups = inventoryGroups
   },
+
+  SET_CURRENT_INVENTORY_GROUP_ID: (state, id) => {
+    state.currentInventoryGroupId = id
+  },
 }

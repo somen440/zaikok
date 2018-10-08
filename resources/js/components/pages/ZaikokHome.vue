@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex xs12 text-xs-left>
         <h2>{{ this.userName }} さんの在庫管理</h2>
-        <h3>グループ: 冷蔵庫</h3>
+        <h3>グループ: {{ inventoryGroupName }}</h3>
       </v-flex>
       <v-flex xs12 text-xs-center>
         <v-data-table
@@ -27,11 +27,14 @@
         </v-data-table>
       </v-flex>
     </v-layout>
+    <v-btn fab dark color="red darken-1" class="sticky-button">
+      <v-icon dark @click="deleteGroup">close</v-icon>
+    </v-btn>
   </v-container>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   data() {
@@ -55,14 +58,37 @@ export default {
     this.$store.commit('SET_TOKEN', this.token)
     this.$store.dispatch('login')
     this.$store.dispatch('setInventory')
-    this.$store.dispatch('setInventoryGroups')
+    this.setInventoryGroups()
   },
   computed: {
-    ...mapState(['user', 'inventories']),
+    ...mapState(['user', 'inventories', 'inventoryGroups']),
     ...mapGetters({
       userId: 'getUserId',
       userName: 'getUserName',
+      inventoryGroupName: 'getCurrentInventoryGroupName',
+      firstInventoryGroupId: 'getFirstInventoryGroupByGroupId',
     }),
+  },
+  methods: {
+    deleteGroup() {
+      if (!confirm('グループを削除します。よろしいですか？')) {
+        return
+      }
+      this.deleteInventoryGroup()
+    },
+    ...mapActions([
+      'editInventoryGroup',
+      'deleteInventoryGroup',
+      'setInventoryGroups',
+    ]),
   },
 }
 </script>
+
+<style scoped>
+.sticky-button {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+}
+</style>

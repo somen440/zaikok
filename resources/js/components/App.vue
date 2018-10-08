@@ -13,7 +13,7 @@
         <v-list-tile
           v-for="inventoryGroup in inventoryGroups"
           :key="inventoryGroup.name"
-          @click="changeGroup"
+          @click="changeGroup(inventoryGroup.inventory_group_id)"
         >
           <v-list-tile-action>
           </v-list-tile-action>
@@ -98,11 +98,11 @@ export default {
       addButtonLoading: false,
     }
   },
-  created() {},
   computed: {
     ...mapState(['isGuest', 'inventoryGroups']),
     ...mapGetters({
       csrf: 'getCsrf',
+      currentInventoryGroup: 'getCurrentInventoryGroup',
     }),
   },
   methods: {
@@ -116,9 +116,9 @@ export default {
         this.addInventoryGroupDialog = false
       })
     },
-    changeGroup() {
-      // todo
-      console.log('change')
+    changeGroup(id) {
+      this.$store.commit('SET_CURRENT_INVENTORY_GROUP_ID', id)
+      this.drawer = false
     },
     ...mapActions(['addInventoryGroup']),
   },
