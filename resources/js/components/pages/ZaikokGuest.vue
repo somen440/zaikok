@@ -32,10 +32,8 @@
       >
         <v-flex xs12 sm4 class="my-3">
           <div class="text-xs-center">
-            <h2 class="headline">在庫を管理する最善の方法</h2>
+            <h2 class="headline">在庫イッパイアルヨ オーイエス !!</h2>
             <span class="subheading">
-              パワフルな在庫管理が、あなたの手で加速します
-              とてもパワフルです
             </span>
           </div>
         </v-flex>
@@ -48,11 +46,9 @@
                     <v-icon x-large class="blue--text text--lighten-2">color_lens</v-icon>
                   </v-card-text>
                   <v-card-title primary-title class="layout justify-center">
-                    <div class="headline text-xs-center">スピーディな在庫管理</div>
+                    <div class="headline text-xs-center">スピーディだよ オーイエス !!</div>
                   </v-card-title>
                   <v-card-text>
-                    とってもスピーディでスピーディです
-                    最新の技術で色々ごちゃごちゃしてます
                   </v-card-text>
                 </v-card>
               </v-flex>
@@ -62,11 +58,9 @@
                     <v-icon x-large class="blue--text text--lighten-2">flash_on</v-icon>
                   </v-card-text>
                   <v-card-title primary-title class="layout justify-center">
-                    <div class="headline">リーズナブルな費用</div>
+                    <div class="headline">無料だよ オーイエス !!</div>
                   </v-card-title>
                   <v-card-text>
-                    サービス利用はフリーです
-                    全てフリー、責任もフリーです
                   </v-card-text>
                 </v-card>
               </v-flex>
@@ -76,10 +70,9 @@
                     <v-icon x-large class="blue--text text--lighten-2">build</v-icon>
                   </v-card-text>
                   <v-card-title primary-title class="layout justify-center">
-                    <div class="headline text-xs-center">オープンソースでいつでも要望、開発も</div>
+                    <div class="headline text-xs-center">オープンソースだよ オーイエス !!</div>
                   </v-card-title>
                   <v-card-text>
-                    全部公開まるはだかです
                   </v-card-text>
                 </v-card>
               </v-flex>
@@ -87,76 +80,6 @@
           </v-container>
         </v-flex>
       </v-layout>
-    </section>
-
-    <section>
-      <v-parallax src="images/section.jpg" height="380">
-        <v-layout column align-center justify-center>
-          <div class="headline white--text mb-3 text-xs-center">在庫管理ってこんな簡単だったんだ</div>
-          <em>今日からWebで在庫管理を始められます</em>
-          <v-btn
-            class="blue lighten-2 mt-5"
-            dark
-            large
-            href="/register"
-          >
-            はじめる
-          </v-btn>
-        </v-layout>
-      </v-parallax>
-    </section>
-
-    <section>
-      <v-container grid-list-xl>
-        <v-layout row wrap justify-center class="my-5">
-          <v-flex xs12 sm4>
-            <v-card class="elevation-0 transparent">
-              <v-card-title primary-title class="layout justify-center">
-                <div class="headline">作った人情報</div>
-              </v-card-title>
-              <v-card-text>
-                適当な日々をのんのんと生きてるプログラマーです。
-              </v-card-text>
-            </v-card>
-          </v-flex>
-          <v-flex xs12 sm4 offset-sm1>
-            <v-card class="elevation-0 transparent">
-              <v-card-title primary-title class="layout justify-center">
-                <div class="headline">コンタクトを取る</div>
-              </v-card-title>
-              <v-card-text>
-                もし興味を持ったなら続きは web で
-              </v-card-text>
-              <v-list class="transparent">
-                <v-list-tile>
-                  <v-list-tile-action>
-                    <v-icon class="blue--text text--lighten-2">phone</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-content>
-                    <v-list-tile-title>012-345-6789</v-list-tile-title>
-                 </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile>
-                  <v-list-tile-action>
-                    <v-icon class="blue--text text--lighten-2">place</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-content>
-                    <v-list-tile-title>Japan, JP</v-list-tile-title>
-                  </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile>
-                  <v-list-tile-action>
-                    <v-icon class="blue--text text--lighten-2">email</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-content>
-                    <v-list-tile-title>mentol310@gmail.com</v-list-tile-title>
-                  </v-list-tile-content>
-                </v-list-tile>
-              </v-list>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-container>
     </section>
   </div>
 </template>

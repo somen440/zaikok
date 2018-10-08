@@ -72237,83 +72237,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
@@ -72396,14 +72319,10 @@ var render = function() {
               [
                 _c("div", { staticClass: "text-xs-center" }, [
                   _c("h2", { staticClass: "headline" }, [
-                    _vm._v("在庫を管理する最善の方法")
+                    _vm._v("在庫イッパイアルヨ オーイエス !!")
                   ]),
                   _vm._v(" "),
-                  _c("span", { staticClass: "subheading" }, [
-                    _vm._v(
-                      "\n            パワフルな在庫管理が、あなたの手で加速します\n            とてもパワフルです\n          "
-                    )
-                  ])
+                  _c("span", { staticClass: "subheading" })
                 ])
               ]
             ),
@@ -72457,16 +72376,12 @@ var render = function() {
                                       {
                                         staticClass: "headline text-xs-center"
                                       },
-                                      [_vm._v("スピーディな在庫管理")]
+                                      [_vm._v("スピーディだよ オーイエス !!")]
                                     )
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _c("v-card-text", [
-                                  _vm._v(
-                                    "\n                  とってもスピーディでスピーディです\n                  最新の技術で色々ごちゃごちゃしてます\n                "
-                                  )
-                                ])
+                                _c("v-card-text")
                               ],
                               1
                             )
@@ -72507,16 +72422,12 @@ var render = function() {
                                   },
                                   [
                                     _c("div", { staticClass: "headline" }, [
-                                      _vm._v("リーズナブルな費用")
+                                      _vm._v("無料だよ オーイエス !!")
                                     ])
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _c("v-card-text", [
-                                  _vm._v(
-                                    "\n                  サービス利用はフリーです\n                  全てフリー、責任もフリーです\n                "
-                                  )
-                                ])
+                                _c("v-card-text")
                               ],
                               1
                             )
@@ -72563,246 +72474,14 @@ var render = function() {
                                       },
                                       [
                                         _vm._v(
-                                          "オープンソースでいつでも要望、開発も"
+                                          "オープンソースだよ オーイエス !!"
                                         )
                                       ]
                                     )
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _c("v-card-text", [
-                                  _vm._v(
-                                    "\n                  全部公開まるはだかです\n                "
-                                  )
-                                ])
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              ],
-              1
-            )
-          ],
-          1
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "section",
-      [
-        _c(
-          "v-parallax",
-          { attrs: { src: "images/section.jpg", height: "380" } },
-          [
-            _c(
-              "v-layout",
-              {
-                attrs: { column: "", "align-center": "", "justify-center": "" }
-              },
-              [
-                _c(
-                  "div",
-                  { staticClass: "headline white--text mb-3 text-xs-center" },
-                  [_vm._v("在庫管理ってこんな簡単だったんだ")]
-                ),
-                _vm._v(" "),
-                _c("em", [_vm._v("今日からWebで在庫管理を始められます")]),
-                _vm._v(" "),
-                _c(
-                  "v-btn",
-                  {
-                    staticClass: "blue lighten-2 mt-5",
-                    attrs: { dark: "", large: "", href: "/register" }
-                  },
-                  [_vm._v("\n          はじめる\n        ")]
-                )
-              ],
-              1
-            )
-          ],
-          1
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "section",
-      [
-        _c(
-          "v-container",
-          { attrs: { "grid-list-xl": "" } },
-          [
-            _c(
-              "v-layout",
-              {
-                staticClass: "my-5",
-                attrs: { row: "", wrap: "", "justify-center": "" }
-              },
-              [
-                _c(
-                  "v-flex",
-                  { attrs: { xs12: "", sm4: "" } },
-                  [
-                    _c(
-                      "v-card",
-                      { staticClass: "elevation-0 transparent" },
-                      [
-                        _c(
-                          "v-card-title",
-                          {
-                            staticClass: "layout justify-center",
-                            attrs: { "primary-title": "" }
-                          },
-                          [
-                            _c("div", { staticClass: "headline" }, [
-                              _vm._v("作った人情報")
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("v-card-text", [
-                          _vm._v(
-                            "\n              適当な日々をのんのんと生きてるプログラマーです。\n            "
-                          )
-                        ])
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-flex",
-                  { attrs: { xs12: "", sm4: "", "offset-sm1": "" } },
-                  [
-                    _c(
-                      "v-card",
-                      { staticClass: "elevation-0 transparent" },
-                      [
-                        _c(
-                          "v-card-title",
-                          {
-                            staticClass: "layout justify-center",
-                            attrs: { "primary-title": "" }
-                          },
-                          [
-                            _c("div", { staticClass: "headline" }, [
-                              _vm._v("コンタクトを取る")
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("v-card-text", [
-                          _vm._v(
-                            "\n              もし興味を持ったなら続きは web で\n            "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "v-list",
-                          { staticClass: "transparent" },
-                          [
-                            _c(
-                              "v-list-tile",
-                              [
-                                _c(
-                                  "v-list-tile-action",
-                                  [
-                                    _c(
-                                      "v-icon",
-                                      {
-                                        staticClass:
-                                          "blue--text text--lighten-2"
-                                      },
-                                      [_vm._v("phone")]
-                                    )
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-list-tile-content",
-                                  [
-                                    _c("v-list-tile-title", [
-                                      _vm._v("012-345-6789")
-                                    ])
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-list-tile",
-                              [
-                                _c(
-                                  "v-list-tile-action",
-                                  [
-                                    _c(
-                                      "v-icon",
-                                      {
-                                        staticClass:
-                                          "blue--text text--lighten-2"
-                                      },
-                                      [_vm._v("place")]
-                                    )
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-list-tile-content",
-                                  [
-                                    _c("v-list-tile-title", [
-                                      _vm._v("Japan, JP")
-                                    ])
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-list-tile",
-                              [
-                                _c(
-                                  "v-list-tile-action",
-                                  [
-                                    _c(
-                                      "v-icon",
-                                      {
-                                        staticClass:
-                                          "blue--text text--lighten-2"
-                                      },
-                                      [_vm._v("email")]
-                                    )
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-list-tile-content",
-                                  [
-                                    _c("v-list-tile-title", [
-                                      _vm._v("mentol310@gmail.com")
-                                    ])
-                                  ],
-                                  1
-                                )
+                                _c("v-card-text")
                               ],
                               1
                             )
