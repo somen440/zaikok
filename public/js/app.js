@@ -70101,10 +70101,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       });
     },
     changeGroup: function changeGroup(id) {
+      var _this2 = this;
+
       this.$store.commit('SET_CURRENT_INVENTORY_GROUP_ID', id);
-      this.drawer = false;
+      this.setInventory().then(function () {
+        _this2.drawer = false;
+      });
     }
-  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['addInventoryGroup']))
+  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['addInventoryGroup', 'setInventory']))
 });
 
 /***/ }),
@@ -70802,6 +70806,51 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -70811,8 +70860,23 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       headers: [{ text: 'ID', value: 'inventory_id' }, { text: '品物', value: 'name' }, { text: '個数', value: 'count' }, { text: '更新日時', value: 'updated_at' }, { text: '追加日', value: 'created_at' }],
       showGroupEditForm: false,
       editInventoryGroupName: '',
-      editInventoryGroupNameRules: [],
-      editInventoryGroupValid: false
+      editInventoryGroupNameRules: [function (v) {
+        return !!v || '名前の入力は必須です';
+      }],
+      editInventoryGroupValid: false,
+      newInventory: {
+        inventory_id: this.addInventoryId,
+        inventory_group_id: this.currentGroupId,
+        user_id: this.userId,
+        name: '',
+        count: 0
+      },
+      addInventoryDialog: false,
+      addInventoryValid: false,
+      addInventoryRules: [function (v) {
+        return !!v || '名前の入力は必須です';
+      }],
+      addButtonLoading: false
     };
   },
 
@@ -70825,7 +70889,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
   created: function created() {
     this.$store.commit('SET_TOKEN', this.token);
     this.$store.dispatch('login');
-    this.$store.dispatch('setInventory');
     this.setInventoryGroups();
   },
 
@@ -70834,11 +70897,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     userName: 'getUserName',
     inventoryGroupName: 'getCurrentInventoryGroupName',
     firstInventoryGroupId: 'getFirstInventoryGroupByGroupId',
-    currentGroupId: 'getCurrentInventoryGroupId'
+    currentGroupId: 'getCurrentInventoryGroupId',
+    nextInventoryId: 'nextInventoryId'
   })),
   watch: {
     inventoryGroupName: function inventoryGroupName() {
       this.editInventoryGroupName = this.inventoryGroupName;
+    },
+    currentGroupId: function currentGroupId() {
+      this.newInventory.inventory_group_id = this.currentGroupId;
+    },
+    userId: function userId() {
+      this.newInventory.user_id = this.userId;
     }
   },
   methods: _extends({
@@ -70849,13 +70919,26 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       this.deleteInventoryGroup();
     },
     changeInventoryGroupName: function changeInventoryGroupName() {
+      if (!this.editInventoryGroupValid) {
+        return;
+      }
       this.showGroupEditForm = false;
       this.editInventoryGroup({
         id: this.currentGroupId,
         name: this.editInventoryGroupName
       });
+    },
+    saveInventory: function saveInventory() {
+      var _this = this;
+
+      this.addButtonLoading = true;
+      this.newInventory.inventory_id = this.nextInventoryId;
+      this.addInventory(this.newInventory).then(function () {
+        _this.addButtonLoading = false;
+        _this.addInventoryDialog = false;
+      });
     }
-  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['editInventoryGroup', 'deleteInventoryGroup', 'setInventoryGroups']))
+  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['editInventoryGroup', 'deleteInventoryGroup', 'setInventoryGroups', 'addInventory', 'setInventory']))
 });
 
 /***/ }),
@@ -70875,64 +70958,213 @@ var render = function() {
         { attrs: { row: "", wrap: "" } },
         [
           _c("v-flex", { attrs: { xs12: "", "text-xs-left": "" } }, [
-            _c("h2", [_vm._v(_vm._s(this.userName) + " さんの在庫管理")]),
-            _vm._v(" "),
-            _vm.showGroupEditForm
-              ? _c(
-                  "h3",
-                  [
-                    _c(
-                      "v-form",
-                      {
-                        ref: "form",
-                        attrs: { "lazy-validation": "" },
-                        model: {
-                          value: _vm.editInventoryGroupValid,
-                          callback: function($$v) {
-                            _vm.editInventoryGroupValid = $$v
-                          },
-                          expression: "editInventoryGroupValid"
-                        }
-                      },
-                      [
-                        _c("v-text-field", {
-                          attrs: {
-                            rules: _vm.editInventoryGroupNameRules,
-                            label: "グループ名",
-                            required: ""
-                          },
-                          on: { change: _vm.changeInventoryGroupName },
-                          model: {
-                            value: _vm.editInventoryGroupName,
-                            callback: function($$v) {
-                              _vm.editInventoryGroupName = $$v
-                            },
-                            expression: "editInventoryGroupName"
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              : _c(
-                  "h3",
-                  {
-                    on: {
-                      click: function($event) {
-                        _vm.showGroupEditForm = true
-                      }
-                    }
-                  },
-                  [_vm._v("グループ: " + _vm._s(_vm.inventoryGroupName))]
-                )
+            _c("h2", [_vm._v(_vm._s(this.userName) + " さんの在庫管理")])
           ]),
           _vm._v(" "),
           _c(
             "v-flex",
             { attrs: { xs12: "", "text-xs-center": "" } },
             [
+              _c(
+                "v-toolbar",
+                { attrs: { flat: "", color: "white" } },
+                [
+                  _c("v-toolbar-title", [
+                    _vm.showGroupEditForm
+                      ? _c(
+                          "h3",
+                          [
+                            _c(
+                              "v-form",
+                              {
+                                attrs: { "lazy-validation": "" },
+                                model: {
+                                  value: _vm.editInventoryGroupValid,
+                                  callback: function($$v) {
+                                    _vm.editInventoryGroupValid = $$v
+                                  },
+                                  expression: "editInventoryGroupValid"
+                                }
+                              },
+                              [
+                                _c("v-text-field", {
+                                  attrs: {
+                                    rules: _vm.editInventoryGroupNameRules,
+                                    label: "グループ名",
+                                    required: ""
+                                  },
+                                  on: { change: _vm.changeInventoryGroupName },
+                                  model: {
+                                    value: _vm.editInventoryGroupName,
+                                    callback: function($$v) {
+                                      _vm.editInventoryGroupName = $$v
+                                    },
+                                    expression: "editInventoryGroupName"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      : _c(
+                          "h3",
+                          {
+                            on: {
+                              click: function($event) {
+                                _vm.showGroupEditForm = true
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "グループ: " + _vm._s(_vm.inventoryGroupName)
+                            )
+                          ]
+                        )
+                  ]),
+                  _vm._v(" "),
+                  _c("v-divider", {
+                    staticClass: "mx-2",
+                    attrs: { inset: "", vertical: "" }
+                  }),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-dialog",
+                    {
+                      attrs: { "max-width": "500px" },
+                      model: {
+                        value: _vm.addInventoryDialog,
+                        callback: function($$v) {
+                          _vm.addInventoryDialog = $$v
+                        },
+                        expression: "addInventoryDialog"
+                      }
+                    },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          staticClass: "mb-2",
+                          attrs: {
+                            slot: "activator",
+                            color: "primary",
+                            dark: ""
+                          },
+                          slot: "activator"
+                        },
+                        [_vm._v("新しい品物を追加")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card",
+                        [
+                          _c("v-card-title", [
+                            _c("span", { staticClass: "headline" }, [
+                              _vm._v("新しい品物の情報")
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-text",
+                            [
+                              _c(
+                                "v-container",
+                                { attrs: { "grid-list-md": "" } },
+                                [
+                                  _c(
+                                    "v-layout",
+                                    { attrs: { wrap: "" } },
+                                    [
+                                      _c(
+                                        "v-flex",
+                                        { attrs: { xs12: "" } },
+                                        [
+                                          _c(
+                                            "v-form",
+                                            {
+                                              attrs: { "lazy-validation": "" },
+                                              model: {
+                                                value: _vm.addInventoryValid,
+                                                callback: function($$v) {
+                                                  _vm.addInventoryValid = $$v
+                                                },
+                                                expression: "addInventoryValid"
+                                              }
+                                            },
+                                            [
+                                              _c("v-text-field", {
+                                                attrs: {
+                                                  label: "品物名",
+                                                  rules: _vm.addInventoryRules
+                                                },
+                                                model: {
+                                                  value: _vm.newInventory.name,
+                                                  callback: function($$v) {
+                                                    _vm.$set(
+                                                      _vm.newInventory,
+                                                      "name",
+                                                      $$v
+                                                    )
+                                                  },
+                                                  expression:
+                                                    "newInventory.name"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-actions",
+                            [
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    color: "blue darken-1",
+                                    flat: "",
+                                    disabled: !_vm.addInventoryValid,
+                                    loading: _vm.addButtonLoading
+                                  },
+                                  nativeOn: {
+                                    click: function($event) {
+                                      return _vm.saveInventory($event)
+                                    }
+                                  }
+                                },
+                                [_vm._v("追加")]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
               _c(
                 "v-data-table",
                 {
@@ -75181,38 +75413,53 @@ function _DeleteRequest(url, token) {
    */
   setInventory: function setInventory(_ref5) {
     var commit = _ref5.commit,
-        state = _ref5.state;
+        state = _ref5.state,
+        getters = _ref5.getters;
 
-    // todo: specified group
-    _GetRequest('inventory/1', state.token).then(function (_ref6) {
+    var groupId = getters.getCurrentInventoryGroupId;
+    if (-1 === groupId) {
+      return Promise.resolve();
+    }
+    return _GetRequest('inventory/' + groupId, state.token).then(function (_ref6) {
       var data = _ref6.data;
       return commit('SET_INVENTORIES', data);
+    });
+  },
+
+  addInventory: function addInventory(_ref7, inventory) {
+    var state = _ref7.state,
+        dispatch = _ref7.dispatch;
+
+    return _PostRequest('inventory', state.token, inventory).then(function () {
+      return dispatch('setInventory');
     });
   },
 
   /**
    * Inventory Group
    */
-  setInventoryGroups: function setInventoryGroups(_ref7) {
-    var commit = _ref7.commit,
-        state = _ref7.state,
-        getters = _ref7.getters;
+  setInventoryGroups: function setInventoryGroups(_ref8) {
+    var commit = _ref8.commit,
+        state = _ref8.state,
+        getters = _ref8.getters,
+        dispatch = _ref8.dispatch;
 
-    return _GetRequest('inventory_group', state.token).then(function (_ref8) {
-      var data = _ref8.data;
+    return _GetRequest('inventory_group', state.token).then(function (_ref9) {
+      var data = _ref9.data;
 
       commit('SET_INVENTORY_GROUPS', data);
 
       if (undefined === getters.getCurrentInventoryGroup) {
         commit('SET_CURRENT_INVENTORY_GROUP_ID', getters.getFirstInventoryGroupByGroupId);
+        return dispatch('setInventory');
       }
     });
   },
 
-  addInventoryGroup: function addInventoryGroup(_ref9, name) {
-    var state = _ref9.state,
-        getters = _ref9.getters,
-        dispatch = _ref9.dispatch;
+  addInventoryGroup: function addInventoryGroup(_ref10, name) {
+    var state = _ref10.state,
+        getters = _ref10.getters,
+        dispatch = _ref10.dispatch;
 
     var newInventoryGroup = {
       inventory_group_id: getters.nextInventoryGroupId,
@@ -75224,9 +75471,9 @@ function _DeleteRequest(url, token) {
     });
   },
 
-  editInventoryGroup: function editInventoryGroup(_ref10, group) {
-    var state = _ref10.state,
-        dispatch = _ref10.dispatch;
+  editInventoryGroup: function editInventoryGroup(_ref11, group) {
+    var state = _ref11.state,
+        dispatch = _ref11.dispatch;
 
     return _PutRequest('inventory_group/' + group.id, state.token, {
       name: group.name
@@ -75235,10 +75482,10 @@ function _DeleteRequest(url, token) {
     });
   },
 
-  deleteInventoryGroup: function deleteInventoryGroup(_ref11) {
-    var state = _ref11.state,
-        dispatch = _ref11.dispatch,
-        getters = _ref11.getters;
+  deleteInventoryGroup: function deleteInventoryGroup(_ref12) {
+    var state = _ref12.state,
+        dispatch = _ref12.dispatch,
+        getters = _ref12.getters;
 
     return _DeleteRequest('inventory_group/' + getters.getCurrentInventoryGroupId, state.token).then(function () {
       alert('削除が完了しました');
@@ -75306,36 +75553,44 @@ function registerUser(param) {
     return document.head.querySelector('meta[name="csrf-token"]').content;
   },
 
+  /**
+   * User
+   */
   getUserId: function getUserId(state) {
     return null === state.user ? null : state.user.user_id;
   },
-
   getUserName: function getUserName(state) {
     return null === state.user ? '' : state.user.name;
   },
 
-  nextInventoryGroupId: function nextInventoryGroupId(state) {
-    var keys = Object.keys(state.inventoryGroups);
-    return 0 < keys.length ? keys[keys.length - 1] + 1 : 1;
+  /**
+   * Inventory
+   */
+  nextInventoryId: function nextInventoryId(state) {
+    var length = state.inventories.length;
+    return 0 < length ? parseInt(state.inventories[length - 1].inventory_id) + 1 : 1;
   },
 
+  /**
+   * Inventory Group
+   */
+  nextInventoryGroupId: function nextInventoryGroupId(state) {
+    var keys = Object.keys(state.inventoryGroups);
+    return 0 < keys.length ? parseInt(keys[keys.length - 1]) + 1 : 1;
+  },
   getCurrentInventoryGroup: function getCurrentInventoryGroup(state) {
     return state.inventoryGroups[state.currentInventoryGroupId];
   },
-
   getCurrentInventoryGroupName: function getCurrentInventoryGroupName(state, getters) {
     return undefined === getters.getCurrentInventoryGroup ? '' : getters.getCurrentInventoryGroup.name;
   },
-
   getCurrentInventoryGroupId: function getCurrentInventoryGroupId(state, getters) {
     return undefined === getters.getCurrentInventoryGroup ? -1 : getters.getCurrentInventoryGroup.id;
   },
-
   getFirstInventoryGroup: function getFirstInventoryGroup(state) {
     var keys = Object.keys(state.inventoryGroups);
     return 0 < keys.length ? state.inventoryGroups[keys[0]] : null;
   },
-
   getFirstInventoryGroupByGroupId: function getFirstInventoryGroupByGroupId(state, getters) {
     return null === getters.getFirstInventoryGroup ? -1 : getters.getFirstInventoryGroup.id;
   }

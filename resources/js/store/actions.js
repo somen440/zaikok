@@ -57,17 +57,26 @@ export default {
   /**
    * Inventory
    */
-  setInventory: ({ commit, state }) => {
-    // todo: specified group
-    _GetRequest('inventory/1', state.token).then(({ data }) =>
+  setInventory: ({ commit, state, getters }) => {
+    const groupId = getters.getCurrentInventoryGroupId
+    if (-1 === groupId) {
+      return Promise.resolve()
+    }
+    return _GetRequest(`inventory/${groupId}`, state.token).then(({ data }) =>
       commit('SET_INVENTORIES', data),
     )
+  },
+
+  addInventory: ({ state, dispatch }, inventory) => {
+    return _PostRequest('inventory', state.token, inventory).then(() => {
+      return dispatch('setInventory')
+    })
   },
 
   /**
    * Inventory Group
    */
-  setInventoryGroups: ({ commit, state, getters }) => {
+  setInventoryGroups: ({ commit, state, getters, dispatch }) => {
     return _GetRequest('inventory_group', state.token).then(({ data }) => {
       commit('SET_INVENTORY_GROUPS', data)
 
@@ -76,6 +85,7 @@ export default {
           'SET_CURRENT_INVENTORY_GROUP_ID',
           getters.getFirstInventoryGroupByGroupId,
         )
+        return dispatch('setInventory')
       }
     })
   },

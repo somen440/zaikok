@@ -118,9 +118,11 @@ export default {
     },
     changeGroup(id) {
       this.$store.commit('SET_CURRENT_INVENTORY_GROUP_ID', id)
-      this.drawer = false
+      this.setInventory().then(() => {
+        this.drawer = false
+      })
     },
-    ...mapActions(['addInventoryGroup']),
+    ...mapActions(['addInventoryGroup', 'setInventory']),
   },
 }
 </script>
