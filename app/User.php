@@ -25,4 +25,11 @@ class User extends Authenticatable
      * @var string
      */
     protected $primaryKey = 'user_id';
+
+    /**
+     * @var array
+     */
+    protected $guarded = [
+        'bearer_token',
+    ];
 }
