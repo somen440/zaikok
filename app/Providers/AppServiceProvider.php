@@ -2,6 +2,7 @@
 
 namespace Zaikok\Providers;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
         // 本番環境(Heroku)でhttpsを強制する
         if (\App::environment('production')) {
             \URL::forceScheme('https');
+            Schema::defaultStringLength(191);
         }
     }
 
