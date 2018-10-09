@@ -40,9 +40,9 @@ class HomeController extends Controller
 
     /**
      * @param User $user
-     * @return string
+     * @return string|null
      */
-    protected function firstLogin(User $user): string
+    protected function firstLogin(User $user): ?string
     {
         DB::beginTransaction();
 
@@ -69,6 +69,7 @@ class HomeController extends Controller
             ]);
 
             DB::rollBack();
+            throw $e;
         }
     }
 }
