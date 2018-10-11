@@ -37,3 +37,4 @@ Route::middleware(['auth:api'])->group(function () {
         Route::delete('/{id}', 'InventoryGroupController@delete');
     });
 });
+Route::post('/callback', 'CallbackController@index');

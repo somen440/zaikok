@@ -40,12 +40,12 @@ class HomeController extends Controller
 
     /**
      * @param User $user
-     * @return string|null
+     * @return null|string
+     * @throws \Throwable
      */
     protected function firstLogin(User $user): ?string
     {
         DB::beginTransaction();
-
         try {
             $token       = $user->createToken('Token Name')->accessToken;
             $bearerToken = $user->bearer_token = $token;
