@@ -56,7 +56,19 @@ class CallbackController extends Controller
                             '詳細',
                             'https://wired.jp/wp-content/uploads/2018/01/GettyImages-522585140.jpg',
                             [$plusPost, $minusPost]
-                        )
+                        ),
+                        new CarouselColumnTemplateBuilder(
+                            'タイトル',
+                            '詳細',
+                            'https://wired.jp/wp-content/uploads/2018/01/GettyImages-522585140.jpg',
+                            [$plusPost, $minusPost]
+                        ),
+                        new CarouselColumnTemplateBuilder(
+                            'タイトル',
+                            '詳細',
+                            'https://wired.jp/wp-content/uploads/2018/01/GettyImages-522585140.jpg',
+                            [$plusPost, $minusPost]
+                        ),
                     ]);
                     $messages[] = new TemplateMessageBuilder('タイトル', $carousel);
                     break;
