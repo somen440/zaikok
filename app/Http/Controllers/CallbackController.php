@@ -40,10 +40,10 @@ class CallbackController extends Controller
             $token = $event->getReplyToken();
             $bot->replyText($token, "userId {$event->getUserId()}");
 
-            $yes_post        = new PostbackTemplateActionBuilder("はい", "page={$page}");
-            $no_post         = new PostbackTemplateActionBuilder("いいえ", "page=-1");
-            $confirm         = new ConfirmTemplateBuilder("メッセージ", [$yes_post, $no_post]);
-            $confirm_message = new TemplateMessageBuilder("メッセージのタイトル", $confirm);
+            $yes_post        = new PostbackTemplateActionBuilder('はい', 'yes');
+            $no_post         = new PostbackTemplateActionBuilder('いいえ', 'no');
+            $confirm         = new ConfirmTemplateBuilder('メッセージ', [$yes_post, $no_post]);
+            $confirm_message = new TemplateMessageBuilder('メッセージのタイトル', $confirm);
             $bot->replyMessage($token, $confirm_message);
 
         }
