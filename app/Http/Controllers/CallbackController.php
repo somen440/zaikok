@@ -48,33 +48,23 @@ class CallbackController extends Controller
 
             switch (true) {
                 case $event instanceof MessageEvent:
-                    $plusPost   = new PostbackTemplateActionBuilder('＋', 'plus');
-                    $minusPost  = new PostbackTemplateActionBuilder('ー', 'minus');
-                    $carousel   = new CarouselTemplateBuilder([
-                        new CarouselColumnTemplateBuilder(
-                            'タイトル',
-                            '詳細',
-                            'https://wired.jp/wp-content/uploads/2018/01/GettyImages-522585140.jpg',
-                            [$plusPost, $minusPost]
-                        ),
-                        new CarouselColumnTemplateBuilder(
-                            'タイトル',
-                            '詳細',
-                            'https://wired.jp/wp-content/uploads/2018/01/GettyImages-522585140.jpg',
-                            [$plusPost, $minusPost]
-                        ),
-                        new CarouselColumnTemplateBuilder(
-                            'タイトル',
-                            '詳細',
-                            'https://wired.jp/wp-content/uploads/2018/01/GettyImages-522585140.jpg',
-                            [$plusPost, $minusPost]
-                        ),
-                    ]);
-                    $messages[] = new TemplateMessageBuilder('タイトル', $carousel);
+                    foreach (range(1, 5) as $id) {
+                        $plusPost   = new PostbackTemplateActionBuilder('＋', "plus?$id");
+                        $minusPost  = new PostbackTemplateActionBuilder('ー', "minus?$id");
+                        $carousel   = new CarouselTemplateBuilder([
+                            new CarouselColumnTemplateBuilder(
+                                "ゴリラの $id くん",
+                                '詳細',
+                                'https://wired.jp/wp-content/uploads/2018/01/GettyImages-522585140.jpg',
+                                [$plusPost, $minusPost]
+                            ),
+                        ]);
+                        $messages[] = new TemplateMessageBuilder("ゴリラーズ", $carousel);
+                    }
                     break;
 
                 case $event instanceof PostbackEvent:
-                    $messages[] = new TextMessageBuilder('ポストがきたよ');
+                    $messages[] = new TextMessageBuilder($event->getPostbackData());
                     break;
 
                 default:
