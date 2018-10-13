@@ -30,6 +30,14 @@ use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
 
 class CallbackController extends Controller
 {
+    private const PLUS = 1;
+    private const MINUS = 2;
+
+    private const TYPE_STRING_MAP = [
+        self::PLUS => '加算',
+        self::MINUS => '減算',
+    ];
+
     /**
      * @param Request $request
      * @param Logger $logger
@@ -48,23 +56,28 @@ class CallbackController extends Controller
 
             switch (true) {
                 case $event instanceof MessageEvent:
+                    $columns = [];
                     foreach (range(1, 5) as $id) {
-                        $plusPost   = new PostbackTemplateActionBuilder('＋', "plus?$id");
-                        $minusPost  = new PostbackTemplateActionBuilder('ー', "minus?$id");
-                        $carousel   = new CarouselTemplateBuilder([
-                            new CarouselColumnTemplateBuilder(
-                                "ゴリラの $id くん",
-                                '詳細',
-                                'https://wired.jp/wp-content/uploads/2018/01/GettyImages-522585140.jpg',
-                                [$plusPost, $minusPost]
-                            ),
-                        ]);
-                        $messages[] = new TemplateMessageBuilder("ゴリラーズ", $carousel);
+                        $plusPost   = new PostbackTemplateActionBuilder('＋', self::PLUS . '?' . $id);
+                        $minusPost  = new PostbackTemplateActionBuilder('ー', self::MINUS . '?' . $id);
+                        $columns[] = new CarouselColumnTemplateBuilder(
+                            "ゴリラの $id くん",
+                            '詳細',
+                            'https://wired.jp/wp-content/uploads/2018/01/GettyImages-522585140.jpg',
+                            [$plusPost, $minusPost]
+                        ),
                     }
+                    $carousel   = new CarouselTemplateBuilder($columns);
+                    $messages[] = new TemplateMessageBuilder("ゴリラーズ", $carousel);
                     break;
 
                 case $event instanceof PostbackEvent:
-                    $messages[] = new TextMessageBuilder($event->getPostbackData());
+                    [$type, $id] = explode('?', $event->getPostbackData());
+                    $messages[] = new TextMessageBuilder(sprintf(
+                        'ゴリラの %s くんを %s （気持ち）したよ。',
+                        $id,
+                        self::TYPE_STRING_MAP[$type]
+                    ));
                     break;
 
                 default:
