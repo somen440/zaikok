@@ -14,6 +14,11 @@ use LINE\LINEBot\KitchenSink\EventHandler\MessageHandler;
 use LINE\LINEBot\Event\MessageEvent;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
 use LINE\LINEBot\KitchenSink\EventHandler\MessageHandler\TextMessageHandler;
+use LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder;
+use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
+use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
+use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder;
+use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
 
 class CallbackController extends Controller
 {
@@ -30,13 +35,22 @@ class CallbackController extends Controller
         $events    = $bot->parseEventRequest($request->getContent(), $signature);
 
         foreach ($events as $event) {
-            if ($event instanceof MessageEvent) {
-                if ($event instanceof TextMessage) {
-                    $handler = new TextMessageHandler($bot, $logger, $request, $event);
-                }
-            }
-        }
+            $token = $event->getReplyToken();
+            $bot->replyText($token, "userId {$event->getUserId()}");
 
-        $handler->handle();
+            $buttonTemplateBuilder = new ButtonTemplateBuilder(
+                'My button sample',
+                'Hello my button',
+                '',
+                [
+                    new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
+                    new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
+                    new PostbackTemplateActionBuilder('Add to cart', 'action=add&itemid=123'),
+                    new MessageTemplateActionBuilder('Say message', 'hello hello'),
+                ]
+            );
+            $templateMessage = new TemplateMessageBuilder('Button alt text', $buttonTemplateBuilder);
+            $bot->replyMessage($token, $templateMessage);
+        }
     }
 }
