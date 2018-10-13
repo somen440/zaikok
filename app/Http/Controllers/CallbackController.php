@@ -19,6 +19,8 @@ use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
+use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
+use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 
 class CallbackController extends Controller
 {
@@ -38,19 +40,12 @@ class CallbackController extends Controller
             $token = $event->getReplyToken();
             $bot->replyText($token, "userId {$event->getUserId()}");
 
-            $buttonTemplateBuilder = new ButtonTemplateBuilder(
-                'My button sample',
-                'Hello my button',
-                '',
-                [
-                    new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
-                    new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
-                    new PostbackTemplateActionBuilder('Add to cart', 'action=add&itemid=123'),
-                    new MessageTemplateActionBuilder('Say message', 'hello hello'),
-                ]
-            );
-            $templateMessage = new TemplateMessageBuilder('Button alt text', $buttonTemplateBuilder);
-            $bot->replyMessage($token, $templateMessage);
+            $yes_post        = new PostbackTemplateActionBuilder("はい", "page={$page}");
+            $no_post         = new PostbackTemplateActionBuilder("いいえ", "page=-1");
+            $confirm         = new ConfirmTemplateBuilder("メッセージ", [$yes_post, $no_post]);
+            $confirm_message = new TemplateMessageBuilder("メッセージのタイトル", $confirm);
+            $bot->replyMessage($token, $confirm_message);
+
         }
     }
 }
