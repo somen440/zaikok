@@ -37,8 +37,8 @@ class CallbackController extends Controller
         $events    = $bot->parseEventRequest($request->getContent(), $signature);
 
         foreach ($events as $event) {
-            $token = $event->getReplyToken();
-            $bot->replyText($token, "userId {$event->getUserId()}");
+//            $token = $event->getReplyToken();
+//            $bot->replyText($token, "userId {$event->getUserId()}");
 
             $yes_post        = new PostbackTemplateActionBuilder('はい', 'yes');
             $no_post         = new PostbackTemplateActionBuilder('いいえ', 'no');
