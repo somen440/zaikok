@@ -39,10 +39,6 @@ class CallbackController extends Controller
         $events    = $bot->parseEventRequest($request->getContent(), $signature);
 
         foreach ($events as $event) {
-            if (!($event instanceof MessageEvent) and !($event instanceof PostbackEvent)) {
-                continue;
-            }
-
             $messages = [];
             $token    = $event->getReplyToken();
 
@@ -58,6 +54,9 @@ class CallbackController extends Controller
                 case $event instanceof PostbackEvent:
                     $messages[] = new TextMessageBuilder('ポストがきたよ');
                     break;
+
+                default:
+                    continue;
             }
 
             $multiMessage = new MultiMessageBuilder;
