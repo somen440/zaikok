@@ -23,6 +23,8 @@ use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
 use LINE\LINEBot\Event\PostbackEvent;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
+use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
+use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
 
 class CallbackController extends Controller
 {
@@ -44,11 +46,13 @@ class CallbackController extends Controller
 
             switch (true) {
                 case $event instanceof MessageEvent:
-//            $bot->replyText($token, "userId {$event->getUserId()}");
-                    $yesPost    = new PostbackTemplateActionBuilder('はい', 'yes');
-                    $noPost     = new PostbackTemplateActionBuilder('いいえ', 'no');
-                    $confirm    = new ConfirmTemplateBuilder('メッセージ', [$yesPost, $noPost]);
-                    $messages[] = new TemplateMessageBuilder('メッセージのタイトル', $confirm);
+                    $plusPost   = new PostbackTemplateActionBuilder('＋', 'plus');
+                    $minusPost  = new PostbackTemplateActionBuilder('ー', 'minus');
+                    $messages[] = new CarouselTemplateBuilder([
+                        new CarouselColumnTemplateBuilder('ティッシュペーパー', '', '', [$plusPost, $minusPost]),
+                        new CarouselColumnTemplateBuilder('セロハンテープ', '', '', [$plusPost, $minusPost]),
+                        new CarouselColumnTemplateBuilder('ほげ', '', '', [$plusPost, $minusPost]),
+                    ]);
                     break;
 
                 case $event instanceof PostbackEvent:
