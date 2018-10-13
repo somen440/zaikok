@@ -25,6 +25,8 @@ use LINE\LINEBot\Event\PostbackEvent;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ContainerBuilder\BubbleContainerBuilder;
+use LINE\LINEBot\MessageBuilder\Flex\ComponentBuilder\BoxComponentBuilder;
 
 class CallbackController extends Controller
 {
@@ -49,9 +51,7 @@ class CallbackController extends Controller
                     $plusPost   = new PostbackTemplateActionBuilder('＋', 'plus');
                     $minusPost  = new PostbackTemplateActionBuilder('ー', 'minus');
                     $carousel   = new CarouselTemplateBuilder([
-                        new CarouselColumnTemplateBuilder('ティッシュペーパー', '', '', [$plusPost, $minusPost]),
-                        new CarouselColumnTemplateBuilder('セロハンテープ', '', '', [$plusPost, $minusPost]),
-                        new CarouselColumnTemplateBuilder('ほげ', '', '', [$plusPost, $minusPost]),
+                        self::createItemBubble(),
                     ]);
                     $messages[] = new TemplateMessageBuilder('タイトル', $carousel);
                     break;
@@ -71,5 +71,15 @@ class CallbackController extends Controller
 
             $bot->replyMessage($token, $multiMessage);
         }
+    }
+
+    private static function createItemBubble()
+    {
+        return BubbleContainerBuilder::builder()
+            ->setHero(null)
+            ->setBody(null)
+            ->setFooter(
+                BoxComponentBuilder::builder()
+            );
     }
 }
