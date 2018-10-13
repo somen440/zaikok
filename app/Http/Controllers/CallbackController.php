@@ -21,6 +21,8 @@ use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
 use LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder;
+use LINE\LINEBot\Event\PostbackEvent;
+use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 
 class CallbackController extends Controller
 {
@@ -37,15 +39,33 @@ class CallbackController extends Controller
         $events    = $bot->parseEventRequest($request->getContent(), $signature);
 
         foreach ($events as $event) {
-            $token = $event->getReplyToken();
+            if (!($event instanceof MessageEvent) and !($event instanceof PostbackEvent)) {
+                continue;
+            }
+
+            $messages = [];
+            $token    = $event->getReplyToken();
+
+            switch (true) {
+                case $event instanceof MessageEvent:
 //            $bot->replyText($token, "userId {$event->getUserId()}");
+                    $yesPost    = new PostbackTemplateActionBuilder('はい', 'yes');
+                    $noPost     = new PostbackTemplateActionBuilder('いいえ', 'no');
+                    $confirm    = new ConfirmTemplateBuilder('メッセージ', [$yesPost, $noPost]);
+                    $messages[] = new TemplateMessageBuilder('メッセージのタイトル', $confirm);
+                    break;
 
-            $yes_post        = new PostbackTemplateActionBuilder('はい', 'yes');
-            $no_post         = new PostbackTemplateActionBuilder('いいえ', 'no');
-            $confirm         = new ConfirmTemplateBuilder('メッセージ', [$yes_post, $no_post]);
-            $confirm_message = new TemplateMessageBuilder('メッセージのタイトル', $confirm);
-            $bot->replyMessage($token, $confirm_message);
+                case $event instanceof PostbackEvent:
+                    $messages[] = new TextMessageBuilder('ポストがきたよ');
+                    break;
+            }
 
+            $multiMessage = new MultiMessageBuilder;
+            foreach ($messages as $message) {
+                $multiMessage->add($message);
+            }
+
+            $bot->replyMessage($token, $multiMessage);
         }
     }
 }
