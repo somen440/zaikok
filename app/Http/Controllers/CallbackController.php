@@ -48,11 +48,12 @@ class CallbackController extends Controller
                 case $event instanceof MessageEvent:
                     $plusPost   = new PostbackTemplateActionBuilder('＋', 'plus');
                     $minusPost  = new PostbackTemplateActionBuilder('ー', 'minus');
-                    $messages[] = new CarouselTemplateBuilder([
+                    $carousel   = new CarouselTemplateBuilder([
                         new CarouselColumnTemplateBuilder('ティッシュペーパー', '', '', [$plusPost, $minusPost]),
                         new CarouselColumnTemplateBuilder('セロハンテープ', '', '', [$plusPost, $minusPost]),
                         new CarouselColumnTemplateBuilder('ほげ', '', '', [$plusPost, $minusPost]),
                     ]);
+                    $messages[] = new TemplateMessageBuilder('タイトル', $carousel);
                     break;
 
                 case $event instanceof PostbackEvent:
