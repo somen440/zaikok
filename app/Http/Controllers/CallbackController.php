@@ -51,7 +51,12 @@ class CallbackController extends Controller
                     $plusPost   = new PostbackTemplateActionBuilder('＋', 'plus');
                     $minusPost  = new PostbackTemplateActionBuilder('ー', 'minus');
                     $carousel   = new CarouselTemplateBuilder([
-                        self::createItemBubble(),
+                        new CarouselColumnTemplateBuilder(
+                            'タイトル',
+                            '詳細',
+                            'https://wired.jp/wp-content/uploads/2018/01/GettyImages-522585140.jpg',
+                            [$plusPost, $minusPost]
+                        )
                     ]);
                     $messages[] = new TemplateMessageBuilder('タイトル', $carousel);
                     break;
@@ -71,15 +76,5 @@ class CallbackController extends Controller
 
             $bot->replyMessage($token, $multiMessage);
         }
-    }
-
-    private static function createItemBubble()
-    {
-        return BubbleContainerBuilder::builder()
-            ->setHero(null)
-            ->setBody(null)
-            ->setFooter(
-                BoxComponentBuilder::builder()
-            );
     }
 }
