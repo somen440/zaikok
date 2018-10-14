@@ -2,6 +2,8 @@
 
 namespace Zaikok\Handler;
 
+use Faker\Provider\ar_JO\Text;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use LINE\LINEBot;
@@ -26,6 +28,7 @@ class TextMessageHandler extends AbstractHandler
                 break;
 
             case '在庫リスト':
+                $messages[] = self::inventoriesList($textMessage);
                 break;
 
             case 'ゴリラ' === $text:
@@ -66,6 +69,32 @@ class TextMessageHandler extends AbstractHandler
             default:
                 return new TextMessageBuilder("{$command} は知らないんです。ごめんね。");
         }
+    }
+
+    private static function inventoriesList(TextMessage $textMessage)
+    {
+        /** @var Collection $inventories */
+        // todo: グループ固定は後で直す
+        $inventories = Inventory::where('inventory_group', 3)->where('line_id', $textMessage->getUserId())->get();
+        if (0 === $inventories->count()) {
+            return new TextMessageBuilder('ログインしてないユーザーみたいだよ。');
+        }
+
+        $columns = [];
+
+        /** @var Inventory $inventory */
+        foreach ($inventories as $inventory) {
+            $plusPost   = new PostbackTemplateActionBuilder('＋', Inventory::PLUS . '?' . $inventory->id);
+            $minusPost  = new PostbackTemplateActionBuilder('ー', Inventory::MINUS . '?' . $inventory->id);
+            $columns[] = new CarouselColumnTemplateBuilder(
+                $inventory->name,
+                "個数: $inventory->count",
+                'https://wired.jp/wp-content/uploads/2018/01/GettyImages-522585140.jpg',
+                [$plusPost, $minusPost]
+            );
+        }
+        $carousel   = new CarouselTemplateBuilder($columns);
+        return new TemplateMessageBuilder("ゴリラーズ", $carousel);
     }
 
     private static function gorilla(): TemplateMessageBuilder
