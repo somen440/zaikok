@@ -3,6 +3,7 @@
 namespace Zaikok\Handler;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use LINE\LINEBot;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
@@ -25,7 +26,18 @@ class TextMessageHandler extends AbstractHandler
                 switch ($command) {
                     case 'login':
                         $user = DB::table('users')->where('line_verify_token', intval($identifier))->first();
-                        if (isset($user)) {
+                        if ($user instanceof User) {
+                            DB::beginTransaction();
+                            try {
+                                $user->line_verify_token = null;
+                                $user->line_id = $textMessage->getUserId();
+                                $user->saveOrFail();
+                                DB::commit();
+                            } catch (\Throwable $e) {
+                                DB::rollBack();
+                                Log::error($e->getMessage());
+                                throw $e;
+                            }
                             $messages[] = new TextMessageBuilder("ようこそ {$user->name} さん !!");
                         } else {
                             $messages[] = new TextMessageBuilder("{$identifier} のユーザー見つからん。。。もう一回やって？");
