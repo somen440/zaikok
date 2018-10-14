@@ -22,31 +22,10 @@ class TextMessageHandler extends AbstractHandler
         $messages = [];
         switch (true) {
             case preg_match('/^[a-z]+:[0-9]+$/', $text):
-                [$command, $identifier] = explode(':', $text);
-                switch ($command) {
-                    case 'login':
-                        $user = User::where('line_verify_token', intval($identifier))->first();
-                        if ($user instanceof User) {
-                            DB::beginTransaction();
-                            try {
-                                $user->line_verify_token = null;
-                                $user->line_id = $textMessage->getUserId();
-                                $user->saveOrFail();
-                                DB::commit();
-                            } catch (\Throwable $e) {
-                                DB::rollBack();
-                                Log::error($e->getMessage());
-                                throw $e;
-                            }
-                            $messages[] = new TextMessageBuilder("ようこそ {$user->name} さん !!");
-                        } else {
-                            $messages[] = new TextMessageBuilder("{$identifier} のユーザー見つからん。。。もう一回やって？");
-                        }
-                        break;
+                $messages[] = self::commands($textMessage);
+                break;
 
-                    default:
-                        $messages[] = new TextMessageBuilder("{$command} は知らないんです。ごめんね。");
-                }
+            case '在庫リスト':
                 break;
 
             case 'ゴリラ' === $text:
@@ -57,6 +36,36 @@ class TextMessageHandler extends AbstractHandler
                 $messages[] = new TextMessageBuilder("$text は知らないことばゴリ");
         };
         return new self($bot, $textMessage->getReplyToken(), $messages);
+    }
+
+    private static function commands(TextMessage $textMessage): TextMessageBuilder
+    {
+        $text = $textMessage->getText();
+        [$command, $identifier] = explode(':', $text);
+        switch ($command) {
+            case 'login':
+                $user = User::where('line_verify_token', intval($identifier))->first();
+                if ($user instanceof User) {
+                    DB::beginTransaction();
+                    try {
+                        $user->line_verify_token = null;
+                        $user->line_id = $textMessage->getUserId();
+                        $user->saveOrFail();
+                        DB::commit();
+                    } catch (\Throwable $e) {
+                        DB::rollBack();
+                        Log::error($e->getMessage());
+                        throw $e;
+                    }
+                    return new TextMessageBuilder("ようこそ {$user->name} さん !!");
+                } else {
+                    return new TextMessageBuilder("{$identifier} のユーザー見つからん。。。もう一回やって？");
+                }
+                break;
+
+            default:
+                return new TextMessageBuilder("{$command} は知らないんです。ごめんね。");
+        }
     }
 
     private static function gorilla(): TemplateMessageBuilder
