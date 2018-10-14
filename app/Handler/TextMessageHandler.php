@@ -75,7 +75,7 @@ class TextMessageHandler extends AbstractHandler
     {
         /** @var Collection $inventories */
         // todo: グループ固定は後で直す
-        $inventories = Inventory::where('inventory_group', 3)->where('line_id', $textMessage->getUserId())->get();
+        $inventories = Inventory::where('inventory_group_id', 3)->where('line_id', $textMessage->getUserId())->get();
         if (0 === $inventories->count()) {
             return new TextMessageBuilder('ログインしてないユーザーみたいだよ。');
         }
