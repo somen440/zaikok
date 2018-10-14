@@ -25,11 +25,6 @@ SQL;
      */
     public function down()
     {
-        $sql = <<<SQL
-ALTER TABLE `users`
-  CHANGE `bearer_token` `bearer_token` text NOT NULL COMMENT '';
-SQL;
-        DB::statement($sql);
     }
 }
 
