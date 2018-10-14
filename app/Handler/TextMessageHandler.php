@@ -25,8 +25,8 @@ class TextMessageHandler extends AbstractHandler
                 [$command, $identifier] = explode(':', $text);
                 switch ($command) {
                     case 'login':
-                        $user = DB::table('users')->where('line_verify_token', intval($identifier))->first();
-                        if (isset($user)) {
+                        $user = User::where('line_verify_token', intval($identifier))->first();
+                        if ($user instanceof User) {
                             DB::beginTransaction();
                             try {
                                 $user->line_verify_token = null;
