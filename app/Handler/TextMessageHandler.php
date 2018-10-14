@@ -73,11 +73,16 @@ class TextMessageHandler extends AbstractHandler
 
     private static function inventoriesList(TextMessage $textMessage)
     {
+        $user = User::where('line_id', $textMessage->getUserId())->first();
+        if (is_null($user)) {
+            return new TextMessageBuilder('ログインしてないユーザーみたいだよ。');
+        }
+
         /** @var Collection $inventories */
         // todo: グループ固定は後で直す
-        $inventories = Inventory::where('inventory_group_id', 3)->where('line_id', $textMessage->getUserId())->get();
+        $inventories = Inventory::where('inventory_group_id', 3)->where('user_id', $user->user_id)->get();
         if (0 === $inventories->count()) {
-            return new TextMessageBuilder('ログインしてないユーザーみたいだよ。');
+            return new TextMessageBuilder('在庫のないグループみたいだよ。');
         }
 
         $columns = [];
