@@ -3,6 +3,7 @@
 namespace Zaikok\Handler;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use LINE\LINEBot;
 use LINE\LINEBot\Event\MessageEvent\ImageMessage;
@@ -18,7 +19,7 @@ class ImageMessageHandler extends AbstractHandler
         $image = $bot->getMessageContent($contentId)->getRawBody();
 
         Storage::put('public/file.jpg', $image);
-        $url = Storage::url('public/file.jpg');
+        $url = base_path() . Storage::url('public/file.jpg');
         $messages[] = new TextMessageBuilder($url);
         $messages[] = new ImageMessageBuilder($url, $url);
 
