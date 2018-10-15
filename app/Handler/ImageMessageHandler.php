@@ -2,6 +2,7 @@
 
 namespace Zaikok\Handler;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use LINE\LINEBot;
@@ -17,8 +18,9 @@ class ImageMessageHandler extends AbstractHandler
         $contentId = $imageMessage->getMessageId();
         $image = $bot->getMessageContent($contentId)->getRawBody();
 
-        Storage::put('public/file.jpg', $image);
-        $url = asset(Storage::url('public/file.jpg'));
+        $filePath = sprintF('public/%s.jpg', Carbon::now()->getTimestamp());
+        Storage::put($filePath, $image);
+        $url = asset(Storage::url($filePath));
         $messages[] = new TextMessageBuilder($url);
         $messages[] = new ImageMessageBuilder($url, $url);
 
