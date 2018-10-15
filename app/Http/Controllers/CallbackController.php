@@ -5,6 +5,7 @@ namespace Zaikok\Http\Controllers;
 use Illuminate\Http\Request;
 use LINE\LINEBot;
 use LINE\LINEBot\Constant\HTTPHeader;
+use LINE\LINEBot\Event\MessageEvent\ImageMessage;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
 use LINE\LINEBot\Event\PostbackEvent;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
@@ -25,6 +26,9 @@ class CallbackController extends Controller
             switch (true) {
                 case $event instanceof TextMessage:
                     TextMessageHandler::create($bot, $event)->handle();
+                    break;
+
+                case $event instanceof ImageMessage:
                     break;
 
                 case $event instanceof PostbackEvent:
