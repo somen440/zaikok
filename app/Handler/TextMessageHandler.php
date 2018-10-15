@@ -89,8 +89,8 @@ class TextMessageHandler extends AbstractHandler
 
         /** @var Inventory $inventory */
         foreach ($inventories as $inventory) {
-            $plusPost   = new PostbackTemplateActionBuilder('＋', Inventory::PLUS . '?' . $inventory->id);
-            $minusPost  = new PostbackTemplateActionBuilder('ー', Inventory::MINUS . '?' . $inventory->id);
+            $plusPost   = new PostbackTemplateActionBuilder('＋', 'increment' . '?' . $inventory->id);
+            $minusPost  = new PostbackTemplateActionBuilder('ー', 'decrement' . '?' . $inventory->id);
             $columns[] = new CarouselColumnTemplateBuilder(
                 $inventory->name,
                 "個数: $inventory->count",
