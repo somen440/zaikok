@@ -91,11 +91,12 @@ class TextMessageHandler extends AbstractHandler
         foreach ($inventories as $inventory) {
             $plusPost   = new PostbackTemplateActionBuilder('＋', 'increment' . '?' . $inventory->id);
             $minusPost  = new PostbackTemplateActionBuilder('ー', 'decrement' . '?' . $inventory->id);
-            $columns[] = new CarouselColumnTemplateBuilder(
+            $deletePost = new PostbackTemplateActionBuilder('削除', 'delete' . '?' . $inventory->id);
+            $columns[]  = new CarouselColumnTemplateBuilder(
                 $inventory->name,
                 "個数: $inventory->count",
                 'https://wired.jp/wp-content/uploads/2018/01/GettyImages-522585140.jpg',
-                [$plusPost, $minusPost]
+                [$plusPost, $minusPost, $deletePost]
             );
         }
         $carousel   = new CarouselTemplateBuilder($columns);

@@ -29,6 +29,10 @@ class PostbackEventHandler extends AbstractHandler
                 $messages[] = new TextMessageBuilder('減らしたよ');
                 break;
 
+            case 'delete':
+                Inventory::find($id)->deleted();
+                break;
+
             default:
                 throw new \Exception('未定義のコマンド');
         }
