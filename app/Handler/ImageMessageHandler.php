@@ -17,8 +17,8 @@ class ImageMessageHandler extends AbstractHandler
         $contentId = $imageMessage->getMessageId();
         $image = $bot->getMessageContent($contentId)->getRawBody();
 
-        Storage::put('file.jpg', $image);
-        $url = Storage::url('file.jpg');
+        Storage::put('public/file.jpg', $image);
+        $url = Storage::url('public/file.jpg');
         $messages[] = new TextMessageBuilder($url);
         $messages[] = new ImageMessageBuilder($url, $url);
 
