@@ -90,7 +90,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      drawer: null,
+      drawer: false,
       addInventoryGroupDialog: false,
       name: '',
       nameRules: [v => !!v || 'グループ名入力は必須です。'],
