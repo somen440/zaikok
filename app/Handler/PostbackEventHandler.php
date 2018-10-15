@@ -30,7 +30,8 @@ class PostbackEventHandler extends AbstractHandler
                 break;
 
             case 'delete':
-                Inventory::find($id)->deleted();
+                Inventory::find($id)->delete();
+                $messages[] = new TextMessageBuilder('削除したよ');
                 break;
 
             default:
