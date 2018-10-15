@@ -10,11 +10,11 @@ class ImegeMessageHandler extends AbstractHandler
 {
     public static function create(LINEBot $bot, ImageMessage $imageMessage): self
     {
+        $messages = [];
         $contentId = $imageMessage->getMessageId();
 //        $image = $bot->getMessageContent($contentId)->getRawBody();
         $messages[] = new TextMessageBuilder($contentId . ' が来たよ');
 
-        $messages = [];
         return new self($bot, $imageMessage->getReplyToken(), $messages);
     }
 }
