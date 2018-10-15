@@ -9,7 +9,7 @@ use LINE\LINEBot\Event\MessageEvent\ImageMessage;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
 use LINE\LINEBot\Event\PostbackEvent;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
-use Zaikok\Handler\ImegeMessageHandler;
+use Zaikok\Handler\ImageMessageHandler;
 use Zaikok\Handler\PostbackEventHandler;
 use Zaikok\Handler\TextMessageHandler;
 
@@ -30,7 +30,7 @@ class CallbackController extends Controller
                     break;
 
                 case $event instanceof ImageMessage:
-                    ImegeMessageHandler::create($bot, $event)->handle();
+                    ImageMessageHandler::create($bot, $event)->handle();
                     break;
 
                 case $event instanceof PostbackEvent:
