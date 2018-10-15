@@ -32,6 +32,8 @@ class HomeController extends Controller
         $bearerToken = $user->bearer_token;
         if (is_null($bearerToken)) {
             $bearerToken = $this->firstLogin($user);
+        } else {
+            $bearerToken = $this->updateToken($user);
         }
         return view('home')->with([
             'token' => $bearerToken,
@@ -43,7 +45,7 @@ class HomeController extends Controller
      * @return null|string
      * @throws \Throwable
      */
-    protected function firstLogin(User $user): ?string
+    protected function firstLogin(User $user): string
     {
         DB::beginTransaction();
         try {
@@ -65,6 +67,29 @@ class HomeController extends Controller
             return $bearerToken;
         } catch (\Throwable $e) {
             Log::error('HomeController@index 初回ログイン失敗', [
+                'userId' => $user->user_id,
+            ]);
+
+            DB::rollBack();
+            throw $e;
+        }
+    }
+
+    protected function updateToken(User $user): string
+    {
+        DB::beginTransaction();
+        try {
+            $token       = $user->createToken('Token Name')->accessToken;
+            $bearerToken = $user->bearer_token = $token;
+            $user->saveOrFail();
+
+            Log::info('HomeController@index トークン更新成功', [
+                'userId' => $user->user_id,
+            ]);
+            DB::commit();
+            return $bearerToken;
+        } catch (\Throwable $e) {
+            Log::error('HomeController@index トークン更新失敗', [
                 'userId' => $user->user_id,
             ]);
 
