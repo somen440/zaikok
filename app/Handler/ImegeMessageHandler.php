@@ -12,8 +12,8 @@ class ImegeMessageHandler extends AbstractHandler
     {
         $messages = [];
         $contentId = $imageMessage->getMessageId();
-//        $image = $bot->getMessageContent($contentId)->getRawBody();
-        $messages[] = new TextMessageBuilder($contentId . ' が来たよ');
+        $image = $bot->getMessageContent($contentId)->getRawBody();
+        $messages[] = new TextMessageBuilder($image);
 
         return new self($bot, $imageMessage->getReplyToken(), $messages);
     }
