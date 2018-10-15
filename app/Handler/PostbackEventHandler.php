@@ -2,6 +2,7 @@
 
 namespace Zaikok\Handler;
 
+use LINE\LINEBot;
 use LINE\LINEBot\Event\PostbackEvent;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use Zaikok\Inventory;
