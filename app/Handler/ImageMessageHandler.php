@@ -16,7 +16,7 @@ class ImageMessageHandler extends AbstractHandler
     public static function create(LINEBot $bot, ImageMessage $imageMessage): self
     {
         $messages = [];
-        $user     = User::where('line_verify_token', $imageMessage->getUserId())->first();
+        $user     = User::where('line_user_id', $imageMessage->getUserId())->first();
         if ($user instanceof User) {
             $contentId = $imageMessage->getMessageId();
             $image     = $bot->getMessageContent($contentId)->getRawBody();

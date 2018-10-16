@@ -67,7 +67,7 @@ class TextMessageHandler extends AbstractHandler
                 break;
 
             case 'add':
-                $user = User::where('line_verify_token', intval($identifier))->first();
+                $user = User::where('line_user_id', intval($identifier))->first();
                 if ($user instanceof User) {
                     $nextInventoryId = Inventory::where('user_id', $user->user_id)->lastInventoryId(3)->first()->inventory_id + 1;
                     Inventory::create([
