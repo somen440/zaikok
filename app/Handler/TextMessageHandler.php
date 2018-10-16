@@ -23,11 +23,11 @@ class TextMessageHandler extends AbstractHandler
         $text = $textMessage->getText();
         $messages = [];
         switch (true) {
-            case preg_match('/^[a-z]+:[0-9]+$/', $text):
+            case preg_match('/^[a-z]+:.+$/', $text):
                 $messages[] = self::commands($textMessage);
                 break;
 
-            case '在庫リスト':
+            case '在庫リスト' === $text:
                 $messages[] = self::inventoriesList($textMessage);
                 break;
 
