@@ -6,6 +6,7 @@ use Faker\Provider\ar_JO\Text;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use LINE\LINEBot;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
@@ -119,7 +120,7 @@ class TextMessageHandler extends AbstractHandler
                 "個数: $inventory->count",
                 is_null($inventory->image_path)
                     ? 'https://wired.jp/wp-content/uploads/2018/01/GettyImages-522585140.jpg'
-                    : asset($inventory->image_path)
+                    : asset(Storage::url($inventory->image_path))
                 ,
                 [$plusPost, $minusPost, $deletePost]
             );
