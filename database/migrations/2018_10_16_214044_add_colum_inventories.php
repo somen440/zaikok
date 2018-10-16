@@ -14,7 +14,7 @@ class AddColumInventories extends Migration
     public function up()
     {
         Schema::table('inventories', function (Blueprint $table) {
-            $table->unsignedSmallInteger('image_path')->after('count')->nullable();
+            $table->text('image_path')->after('count')->nullable();
         });
     }
 

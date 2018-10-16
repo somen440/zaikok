@@ -14,7 +14,7 @@ class AddColumUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedSmallInteger('temp_image_path')->after('line_verify_token')->nullable();
+            $table->text('temp_image_path')->after('line_verify_token')->nullable();
         });
     }
 

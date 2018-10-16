@@ -29,7 +29,6 @@ class ImageMessageHandler extends AbstractHandler
 
             $url        = asset(Storage::url($filePath));
             $messages[] = new TextMessageBuilder($url);
-            $messages[] = new ImageMessageBuilder($url, $url);
 
             Log::info('ImageMessageHandler@create', [
                 'url' => $url,
@@ -37,7 +36,6 @@ class ImageMessageHandler extends AbstractHandler
         } else {
             $messages[] = new TextMessageBuilder('認証してそ');
         }
-
         return new self($bot, $imageMessage->getReplyToken(), $messages);
     }
 }
