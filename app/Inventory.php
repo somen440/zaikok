@@ -2,6 +2,7 @@
 
 namespace Zaikok;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Inventory extends Model
@@ -16,4 +17,9 @@ class Inventory extends Model
 
     /** @var array  */
     protected $guarded = [];
+
+    public function scopeLastInventoryId(Builder $query, int $group): Builder
+    {
+        return $query->where('inventory_group_id', $group)->orderBy('inventory_id', 'asc')->limit(1);
+    }
 }

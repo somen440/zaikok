@@ -66,6 +66,22 @@ class TextMessageHandler extends AbstractHandler
                 }
                 break;
 
+            case 'add':
+                $user = User::where('line_verify_token', intval($identifier))->first();
+                if ($user instanceof User) {
+                    $nextInventoryId = Inventory::where('user_id', $user->user_id)->lastInventoryId(3)->first()->inventory_id + 1;
+                    Inventory::create([
+                        'inventory_id'       => $nextInventoryId,
+                        'inventory_group_id' => 3,
+                        'user_id'            => $user->user_id,
+                        'name'               => $identifier,
+                        'count'              => 0,
+                    ]);
+                } else {
+                    return new TextMessageBuilder('認証しようず');
+                }
+                break;
+
             default:
                 return new TextMessageBuilder("{$command} は知らないんです。ごめんね。");
         }
