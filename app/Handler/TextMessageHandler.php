@@ -69,7 +69,11 @@ class TextMessageHandler extends AbstractHandler
             case 'add':
                 $user = User::where('line_id', intval($identifier))->first();
                 if ($user instanceof User) {
-                    $nextInventoryId = Inventory::where('user_id', $user->user_id)->lastInventoryId(3)->first()->inventory_id + 1;
+                    $nextInventoryId = Inventory::where('user_id', $user->user_id)
+                            ->where('inventory_group_id', 3)
+                            ->orderBy('inventory_id', 'desc')
+                            ->first()
+                            ->inventory_id + 1;
                     Inventory::create([
                         'inventory_id'       => $nextInventoryId,
                         'inventory_group_id' => 3,
