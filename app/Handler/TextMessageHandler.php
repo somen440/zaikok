@@ -82,6 +82,7 @@ class TextMessageHandler extends AbstractHandler
                         'count'              => 0,
                         'image_path'         => $user->temp_image_path,
                     ]);
+                    return new TextMessageBuilder('追加でけたで');
                 } else {
                     return new TextMessageBuilder('認証しようず');
                 }
@@ -116,7 +117,10 @@ class TextMessageHandler extends AbstractHandler
             $columns[]  = new CarouselColumnTemplateBuilder(
                 $inventory->name,
                 "個数: $inventory->count",
-                'https://wired.jp/wp-content/uploads/2018/01/GettyImages-522585140.jpg',
+                is_null($inventory->image_path)
+                    ? 'https://wired.jp/wp-content/uploads/2018/01/GettyImages-522585140.jpg'
+                    : asset($inventory->image_path)
+                ,
                 [$plusPost, $minusPost, $deletePost]
             );
         }
