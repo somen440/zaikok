@@ -76,6 +76,7 @@ class TextMessageHandler extends AbstractHandler
                         'user_id'            => $user->user_id,
                         'name'               => $identifier,
                         'count'              => 0,
+                        'image_path'         => $user->temp_image_path,
                     ]);
                 } else {
                     return new TextMessageBuilder('認証しようず');
