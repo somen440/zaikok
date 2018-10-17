@@ -105,7 +105,7 @@ class TextMessageHandler extends AbstractHandler
                 }
                 break;
 
-            case 'add-group':
+            case 'addg':
                 $user = User::where('line_id', intval($identifier))->first();
                 if ($user instanceof User) {
                     $nextInventoryGroupId = InventoryGroup::where('user_id', $user->user_id)
