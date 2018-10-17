@@ -6,6 +6,7 @@ use LINE\LINEBot;
 use LINE\LINEBot\Event\PostbackEvent;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use Zaikok\Inventory;
+use Zaikok\InventoryGroup;
 use Zaikok\User;
 
 class PostbackEventHandler extends AbstractHandler
@@ -40,6 +41,10 @@ class PostbackEventHandler extends AbstractHandler
                 $user->current_inventory_group_id = $id;
                 $user->saveOrFail();
                 $messages[] = new TextMessageBuilder('切り替えたよ');
+                break;
+
+            case 'delete-group':
+                InventoryGroup::find($id)->delete();
                 break;
 
             default:

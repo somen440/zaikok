@@ -44,6 +44,10 @@ class TextMessageHandler extends AbstractHandler
                 $messages[] = new TextMessageBuilder('ヘルプだよ');
                 break;
 
+            case 'delete' === $text:
+                $messages[] = self::groupsList($textMessage, true);
+                break;
+
             case 'ゴリラ' === $text:
                 $messages[] = self::gorilla();
                 break;
@@ -83,17 +87,35 @@ class TextMessageHandler extends AbstractHandler
                 $user = User::where('line_id', intval($identifier))->first();
                 if ($user instanceof User) {
                     $nextInventoryId = Inventory::where('user_id', $user->user_id)
-                            ->where('inventory_group_id', 3)
+                            ->where('inventory_group_id', $user->current_inventory_group_id)
                             ->orderBy('inventory_id', 'desc')
                             ->first()
                             ->inventory_id + 1;
                     Inventory::create([
                         'inventory_id'       => $nextInventoryId,
-                        'inventory_group_id' => 3,
+                        'inventory_group_id' => $user->current_inventory_group_id,
                         'user_id'            => $user->user_id,
                         'name'               => $identifier,
                         'count'              => 0,
                         'image_path'         => $user->temp_image_path,
+                    ]);
+                    return new TextMessageBuilder('追加でけたで');
+                } else {
+                    return new TextMessageBuilder('認証しようず');
+                }
+                break;
+
+            case 'add-group':
+                $user = User::where('line_id', intval($identifier))->first();
+                if ($user instanceof User) {
+                    $nextInventoryGroupId = InventoryGroup::where('user_id', $user->user_id)
+                            ->orderBy('inventory_group_id', 'desc')
+                            ->first()
+                            ->inventory_group_id + 1;
+                    InventoryGroup::create([
+                        'inventory_group_id' => $nextInventoryGroupId,
+                        'user_id'            => $user->user_id,
+                        'name'               => $identifier,
                     ]);
                     return new TextMessageBuilder('追加でけたで');
                 } else {
@@ -114,7 +136,6 @@ class TextMessageHandler extends AbstractHandler
         }
 
         /** @var Collection $inventories */
-        // todo: グループ固定は後で直す
         $inventories = Inventory::where('inventory_group_id', $user->current_inventory_group_id)->where('user_id', $user->user_id)->get();
         if (0 === $inventories->count()) {
             return new TextMessageBuilder('在庫のないグループみたいだよ。');
@@ -141,7 +162,7 @@ class TextMessageHandler extends AbstractHandler
         return new TemplateMessageBuilder("ゴリラーズ", $carousel);
     }
 
-    private static function groupsList(TextMessage $textMessage)
+    private static function groupsList(TextMessage $textMessage, bool $isDelete = false)
     {
         $user = User::where('line_id', $textMessage->getUserId())->first();
         if (is_null($user)) {
@@ -151,13 +172,18 @@ class TextMessageHandler extends AbstractHandler
         $groupButtons = [];
         $inventoryGroups = InventoryGroup::where('user_id', $user->user_id)->get();
         foreach ($inventoryGroups as $inventoryGroup) {
-            $groupButtons[] = new PostbackTemplateActionBuilder($inventoryGroup->name, 'group?' . $inventoryGroup->inventory_group_id);
+            $groupButtons[] = new PostbackTemplateActionBuilder(
+                $inventoryGroup->name,
+                $isDelete
+                    ? 'delete-group?' . $inventoryGroup->id
+                    : 'group?' . $inventoryGroup->inventory_group_id
+            );
         }
 
         $buttonTemplateBuilder = new ButtonTemplateBuilder(
             'グループ一覧',
-            'グループをタップで切り替えられるよ',
-            asset('images/menu.jpg'),
+            $isDelete ? 'タップしたグループを削除できるよ' : 'グループをタップで切り替えられるよ',
+            $isDelete ? asset('images/trash.jpg') ? asset('images/menu.jpg'),
             $groupButtons
         );
         return new TemplateMessageBuilder('Button alt text', $buttonTemplateBuilder);
