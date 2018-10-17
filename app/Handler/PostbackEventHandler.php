@@ -45,6 +45,7 @@ class PostbackEventHandler extends AbstractHandler
 
             case 'delete-group':
                 InventoryGroup::find($id)->delete();
+                $messages[] = new TextMessageBuilder('削除したよ');
                 break;
 
             default:
