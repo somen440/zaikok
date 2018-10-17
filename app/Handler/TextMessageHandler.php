@@ -7,13 +7,15 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use LINE\LINEBot;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
+use LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
+use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder;
 use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
+use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use Zaikok\Inventory;
 use Zaikok\User;
 
@@ -28,8 +30,16 @@ class TextMessageHandler extends AbstractHandler
                 $messages[] = self::commands($textMessage);
                 break;
 
-            case '在庫リスト' === $text:
+            case 'inventory' === $text:
                 $messages[] = self::inventoriesList($textMessage);
+                break;
+
+            case 'group' === $text:
+                $messages[] = self::groupsList($textMessage);
+                break;
+
+            case 'help' === $text:
+                $messages[] = new TextMessageBuilder('ヘルプだよ');
                 break;
 
             case 'ゴリラ' === $text:
@@ -103,7 +113,7 @@ class TextMessageHandler extends AbstractHandler
 
         /** @var Collection $inventories */
         // todo: グループ固定は後で直す
-        $inventories = Inventory::where('inventory_group_id', 3)->where('user_id', $user->user_id)->get();
+        $inventories = Inventory::where('inventory_group_id', $user->current_inventory_group_id)->where('user_id', $user->user_id)->get();
         if (0 === $inventories->count()) {
             return new TextMessageBuilder('在庫のないグループみたいだよ。');
         }
@@ -127,6 +137,22 @@ class TextMessageHandler extends AbstractHandler
         }
         $carousel   = new CarouselTemplateBuilder($columns);
         return new TemplateMessageBuilder("ゴリラーズ", $carousel);
+    }
+
+    private static function groupsList()
+    {
+        $buttonTemplateBuilder = new ButtonTemplateBuilder(
+            'My button sample',
+            'Hello my button',
+            asset('menu.jpg'),
+            [
+                new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
+                new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
+                new PostbackTemplateActionBuilder('Add to cart', 'action=add&itemid=123'),
+                new MessageTemplateActionBuilder('Say message', 'hello hello'),
+            ]
+        );
+        return new TemplateMessageBuilder('Button alt text', $buttonTemplateBuilder);
     }
 
     private static function gorilla(): TemplateMessageBuilder
