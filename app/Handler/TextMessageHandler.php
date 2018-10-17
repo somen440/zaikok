@@ -18,6 +18,7 @@ use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder;
 use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
 use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use Zaikok\Inventory;
+use Zaikok\InventoryGroup;
 use Zaikok\User;
 
 class TextMessageHandler extends AbstractHandler
@@ -140,18 +141,24 @@ class TextMessageHandler extends AbstractHandler
         return new TemplateMessageBuilder("ゴリラーズ", $carousel);
     }
 
-    private static function groupsList()
+    private static function groupsList(TextMessage $textMessage)
     {
+        $user = User::where('line_id', $textMessage->getUserId())->first();
+        if (is_null($user)) {
+            return new TextMessageBuilder('ログインしてないユーザーみたいだよ。');
+        }
+
+        $groupButtons = [];
+        $inventoryGroups = InventoryGroup::where('user_id', $user->user_id)->get();
+        foreach ($inventoryGroups as $inventoryGroup) {
+            $groupButtons[] = new PostbackTemplateActionBuilder($inventoryGroup->name, 'group?' . $inventoryGroup->inventory_group_id);
+        }
+
         $buttonTemplateBuilder = new ButtonTemplateBuilder(
-            'My button sample',
-            'Hello my button',
-            asset('menu.jpg'),
-            [
-                new UriTemplateActionBuilder('Go to line.me', 'https://line.me'),
-                new PostbackTemplateActionBuilder('Buy', 'action=buy&itemid=123'),
-                new PostbackTemplateActionBuilder('Add to cart', 'action=add&itemid=123'),
-                new MessageTemplateActionBuilder('Say message', 'hello hello'),
-            ]
+            'グループ一覧',
+            'グループをタップで切り替えられるよ',
+            asset('images/menu.jpg'),
+            $groupButtons,
         );
         return new TemplateMessageBuilder('Button alt text', $buttonTemplateBuilder);
     }
