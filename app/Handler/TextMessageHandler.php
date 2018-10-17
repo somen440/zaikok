@@ -158,7 +158,7 @@ class TextMessageHandler extends AbstractHandler
             'グループ一覧',
             'グループをタップで切り替えられるよ',
             asset('images/menu.jpg'),
-            $groupButtons,
+            $groupButtons
         );
         return new TemplateMessageBuilder('Button alt text', $buttonTemplateBuilder);
     }
