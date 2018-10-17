@@ -183,7 +183,7 @@ class TextMessageHandler extends AbstractHandler
         $buttonTemplateBuilder = new ButtonTemplateBuilder(
             'グループ一覧',
             $isDelete ? 'タップしたグループを削除できるよ' : 'グループをタップで切り替えられるよ',
-            $isDelete ? asset('images/trash.jpg') ? asset('images/menu.jpg'),
+            $isDelete ? asset('images/trash.jpg') : asset('images/menu.jpg'),
             $groupButtons
         );
         return new TemplateMessageBuilder('Button alt text', $buttonTemplateBuilder);
