@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumInventories extends Migration
+class AddColumnUsersLineVerifyToken extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddColumInventories extends Migration
      */
     public function up()
     {
-        Schema::table('inventories', function (Blueprint $table) {
-            $table->text('image_path')->after('count')->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->unsignedSmallInteger('line_verify_token')->after('line_id')->nullable();
+            $table->index('line_verify_token');
         });
     }
 
@@ -25,8 +26,8 @@ class AddColumInventories extends Migration
      */
     public function down()
     {
-        Schema::table('inventories', function (Blueprint $table) {
-            $table->dropColumn('image_path');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('line_verify_token');
         });
     }
 }
