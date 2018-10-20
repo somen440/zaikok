@@ -11,6 +11,8 @@ use Zaikok\User;
 
 class PostbackEventHandler extends AbstractHandler
 {
+    use LineHandlerTrait;
+
     public static function create(LINEBot $bot, PostbackEvent $postbackEvent): self
     {
         [$command, $id] = explode('?', $postbackEvent->getPostbackData());
@@ -37,7 +39,7 @@ class PostbackEventHandler extends AbstractHandler
                 break;
 
             case 'group':
-                $user = User::where('line_id', $postbackEvent->getUserId())->first();
+                $user = self::getUser($postbackEvent->getUserId());
                 $user->current_inventory_group_id = $id;
                 $user->saveOrFail();
                 $messages[] = new TextMessageBuilder('切り替えたよ');
