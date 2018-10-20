@@ -8,7 +8,6 @@
           justify-center
           class="white--text"
         >
-          <img src="images/vuetify.png" alt="Vuetify.js" height="200">
           <h1 class="white--text mb-2 display-1 text-xs-center">在庫管理 -zaikok-</h1>
           <div class="subheading mb-3 text-xs-center">Powered by ya-sato@mentol</div>
           <v-btn
@@ -32,7 +31,7 @@
       >
         <v-flex xs12 sm4 class="my-3">
           <div class="text-xs-center">
-            <h2 class="headline">在庫イッパイアルヨ オーイエス !!</h2>
+            <h2 class="headline">Detail</h2>
             <span class="subheading">
             </span>
           </div>
@@ -46,9 +45,11 @@
                     <v-icon x-large class="blue--text text--lighten-2">color_lens</v-icon>
                   </v-card-text>
                   <v-card-title primary-title class="layout justify-center">
-                    <div class="headline text-xs-center">スピーディだよ オーイエス !!</div>
+                    <div class="headline text-xs-center">Simple & SHARE</div>
                   </v-card-title>
                   <v-card-text>
+                    シンプルで直感的な操作感
+                    在庫の共有も簡単です
                   </v-card-text>
                 </v-card>
               </v-flex>
@@ -58,9 +59,10 @@
                     <v-icon x-large class="blue--text text--lighten-2">flash_on</v-icon>
                   </v-card-text>
                   <v-card-title primary-title class="layout justify-center">
-                    <div class="headline">無料だよ オーイエス !!</div>
+                    <div class="headline">WEB & LINE</div>
                   </v-card-title>
                   <v-card-text>
+                    WEB からの利用だけでなく LINE BOT からも利用できます
                   </v-card-text>
                 </v-card>
               </v-flex>
@@ -70,9 +72,11 @@
                     <v-icon x-large class="blue--text text--lighten-2">build</v-icon>
                   </v-card-text>
                   <v-card-title primary-title class="layout justify-center">
-                    <div class="headline text-xs-center">オープンソースだよ オーイエス !!</div>
+                    <div class="headline text-xs-center">Free & OSS</div>
                   </v-card-title>
                   <v-card-text>
+                    利用料は無料です
+                    オープンソースです
                   </v-card-text>
                 </v-card>
               </v-flex>

@@ -70072,7 +70072,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      drawer: null,
+      drawer: false,
       addInventoryGroupDialog: false,
       name: '',
       nameRules: [function (v) {
@@ -72237,6 +72237,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
@@ -72267,14 +72271,6 @@ var render = function() {
                 attrs: { column: "", "align-center": "", "justify-center": "" }
               },
               [
-                _c("img", {
-                  attrs: {
-                    src: "images/vuetify.png",
-                    alt: "Vuetify.js",
-                    height: "200"
-                  }
-                }),
-                _vm._v(" "),
                 _c(
                   "h1",
                   { staticClass: "white--text mb-2 display-1 text-xs-center" },
@@ -72318,9 +72314,7 @@ var render = function() {
               { staticClass: "my-3", attrs: { xs12: "", sm4: "" } },
               [
                 _c("div", { staticClass: "text-xs-center" }, [
-                  _c("h2", { staticClass: "headline" }, [
-                    _vm._v("在庫イッパイアルヨ オーイエス !!")
-                  ]),
+                  _c("h2", { staticClass: "headline" }, [_vm._v("Detail")]),
                   _vm._v(" "),
                   _c("span", { staticClass: "subheading" })
                 ])
@@ -72376,12 +72370,16 @@ var render = function() {
                                       {
                                         staticClass: "headline text-xs-center"
                                       },
-                                      [_vm._v("スピーディだよ オーイエス !!")]
+                                      [_vm._v("Simple & SHARE")]
                                     )
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _c("v-card-text")
+                                _c("v-card-text", [
+                                  _vm._v(
+                                    "\n                  シンプルで直感的な操作感\n                  在庫の共有も簡単です\n                "
+                                  )
+                                ])
                               ],
                               1
                             )
@@ -72422,12 +72420,16 @@ var render = function() {
                                   },
                                   [
                                     _c("div", { staticClass: "headline" }, [
-                                      _vm._v("無料だよ オーイエス !!")
+                                      _vm._v("WEB & LINE")
                                     ])
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _c("v-card-text")
+                                _c("v-card-text", [
+                                  _vm._v(
+                                    "\n                  WEB からの利用だけでなく LINE BOT からも利用できます\n                "
+                                  )
+                                ])
                               ],
                               1
                             )
@@ -72472,16 +72474,16 @@ var render = function() {
                                       {
                                         staticClass: "headline text-xs-center"
                                       },
-                                      [
-                                        _vm._v(
-                                          "オープンソースだよ オーイエス !!"
-                                        )
-                                      ]
+                                      [_vm._v("Free & OSS")]
                                     )
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _c("v-card-text")
+                                _c("v-card-text", [
+                                  _vm._v(
+                                    "\n                  利用料は無料です\n                  オープンソースです\n                "
+                                  )
+                                ])
                               ],
                               1
                             )
