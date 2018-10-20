@@ -9,7 +9,7 @@
 
 namespace Zaikok\Handler;
 
-use PhpParser\Node\Scalar\MagicConst\Line;
+use Zaikok\LineVerify;
 use Zaikok\User;
 
 trait LineHandlerTrait
@@ -20,7 +20,7 @@ trait LineHandlerTrait
      */
     private static function getUser(string $lineId): ?User
     {
-        $lineVerify = Line::findByLineId($lineId)->first();
+        $lineVerify = LineVerify::findByLineId($lineId)->first();
         if (is_null($lineVerify)) {
             return null;
         }
