@@ -31,8 +31,8 @@ class AddInventoryAction
                 ->first();
 
         if (isset($user->temp_image_path)) {
-            $imagePath = sprintf('public/%s_%s.jpg', $user->user_id, Carbon::now()->getTimestamp());
-            Storage::move($user->temp_image_path, $imagePath);
+            $imagePath = sprintf('%s_%s.jpg', $user->user_id, Carbon::now()->getTimestamp());
+            Storage::move($user->temp_image_path, Storage::url($imagePath));
             $user->temp_image_path = null;
             $user->saveOrFail();
         } else {
