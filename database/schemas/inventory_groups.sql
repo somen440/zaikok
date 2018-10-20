@@ -6,5 +6,5 @@ CREATE TABLE `inventory_groups` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `inventory_group_id_user_id` (`inventory_group_id`,`user_id`)
+  UNIQUE KEY `inventory_groups_user_id_inventory_group_id_unique` (`user_id`,`inventory_group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
