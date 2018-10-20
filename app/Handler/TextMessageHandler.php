@@ -18,10 +18,11 @@ use Zaikok\Action\Line\AddInventoryGroupAction;
 use Zaikok\Action\Line\LoginAction;
 use Zaikok\Inventory;
 use Zaikok\InventoryGroup;
-use Zaikok\User;
 
 class TextMessageHandler extends AbstractHandler
 {
+    use LineHandlerTrait;
+
     public static function create(LINEBot $bot, TextMessage $textMessage): self
     {
         $text = $textMessage->getText();
@@ -71,14 +72,14 @@ class TextMessageHandler extends AbstractHandler
 
                 case 'add':
                     $message = AddInventoryAction::execute(
-                        User::findByLineId($textMessage->getUserId())->first(),
+                        self::getUser($textMessage->getUserId()),
                         $identifier
                     );
                     break;
 
                 case 'addg':
                     $message = AddInventoryGroupAction::execute(
-                        User::findByLineId($textMessage->getUserId())->first(),
+                        self::getUser($textMessage->getUserId()),
                         $identifier
                     );
                     break;
@@ -98,7 +99,7 @@ class TextMessageHandler extends AbstractHandler
 
     private static function inventoriesList(TextMessage $textMessage)
     {
-        $user = User::where('line_id', $textMessage->getUserId())->first();
+        $user = self::getUser($textMessage->getUserId());
         if (is_null($user)) {
             return new TextMessageBuilder('ログインしてないユーザーみたいだよ。');
         }
@@ -132,7 +133,7 @@ class TextMessageHandler extends AbstractHandler
 
     private static function groupsList(TextMessage $textMessage, bool $isDelete = false)
     {
-        $user = User::where('line_id', $textMessage->getUserId())->first();
+        $user = self::getUser($textMessage->getUserId());
         if (is_null($user)) {
             return new TextMessageBuilder('ログインしてないユーザーみたいだよ。');
         }

@@ -6,7 +6,6 @@ CREATE TABLE `users` (
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bearer_token` text COLLATE utf8mb4_unicode_ci,
-  `line_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `line_verify_token` smallint(5) unsigned DEFAULT NULL,
   `temp_image_path` text COLLATE utf8mb4_unicode_ci,
   `current_inventory_group_id` int(10) unsigned NOT NULL DEFAULT '1',

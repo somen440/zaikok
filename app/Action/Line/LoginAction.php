@@ -9,6 +9,8 @@
 namespace Zaikok\Action\Line;
 
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
+use PhpParser\Node\Scalar\MagicConst\Line;
+use Zaikok\LineVerify;
 use Zaikok\User;
 
 class LoginAction
@@ -21,8 +23,12 @@ class LoginAction
         }
 
         $user->line_verify_token = null;
-        $user->line_id = $lineId;
         $user->saveOrFail();
+
+        LineVerify::create([
+            'line_id' => $lineId,
+            'user_id' => $user->user_id,
+        ]);
 
         return new TextMessageBuilder("ようこそ!! {$user->name} さん");
     }
