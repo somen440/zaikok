@@ -24,12 +24,11 @@ class AddInventoryAction
             return new TextMessageBuilder('認証できてへんで');
         }
 
-        $nextInventoryId = Inventory::findLastByUserIdAndInventoryGroupId(
+        $lastInventory = Inventory::findLastByUserIdAndInventoryGroupId(
             $user->user_id,
             $user->current_inventory_group_id
         )
-                ->first()
-                ->inventory_id + 1;
+                ->first();
 
         if (isset($user->temp_image_path)) {
             $imagePath = sprintf('public/%s_%s.jpg', $user->user_id, Carbon::now()->getTimestamp());
@@ -41,7 +40,7 @@ class AddInventoryAction
         }
 
         Inventory::create([
-            'inventory_id'       => $nextInventoryId,
+            'inventory_id'       => $nextInventoryId = (is_null($lastInventory) ? 1 : $lastInventory + 1),
             'inventory_group_id' => $user->current_inventory_group_id,
             'user_id'            => $user->user_id,
             'name'               => $name,
