@@ -12,10 +12,12 @@ use Zaikok\User;
 
 class ImageMessageHandler extends AbstractHandler
 {
+    use LineHandlerTrait;
+
     public static function create(LINEBot $bot, ImageMessage $imageMessage): self
     {
         $messages = [];
-        $user     = User::where('line_id', $imageMessage->getUserId())->first();
+        $user     = self::getUser($imageMessage->getUserId());
         if ($user instanceof User) {
             $contentId = $imageMessage->getMessageId();
             $image     = $bot->getMessageContent($contentId)->getRawBody();
