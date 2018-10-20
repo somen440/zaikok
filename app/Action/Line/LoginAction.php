@@ -13,7 +13,7 @@ use Zaikok\User;
 
 class LoginAction
 {
-    public static function execute(int $lineVerifyToken): TextMessageBuilder
+    public static function execute(int $lineVerifyToken, string $lineId): TextMessageBuilder
     {
         $user = User::findByLineVerifyToken($lineVerifyToken)->first();
         if (is_null($user)) {
@@ -21,7 +21,7 @@ class LoginAction
         }
 
         $user->line_verify_token = null;
-        $user->line_id = $lineVerifyToken;
+        $user->line_id = $lineId;
         $user->saveOrFail();
 
         return new TextMessageBuilder("ようこそ!! {$user->name} さん");

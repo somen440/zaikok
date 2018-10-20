@@ -66,7 +66,7 @@ class TextMessageHandler extends AbstractHandler
         try {
             switch ($command) {
                 case 'login':
-                    $message = LoginAction::execute($identifier);
+                    $message = LoginAction::execute($identifier, $textMessage->getUserId());
                     break;
 
                 case 'add':
