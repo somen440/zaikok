@@ -2,10 +2,8 @@
 
 namespace Zaikok\Handler;
 
-use Faker\Provider\ar_JO\Text;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use LINE\LINEBot;
 use LINE\LINEBot\Event\MessageEvent\TextMessage;
@@ -14,9 +12,10 @@ use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder;
 use LINE\LINEBot\MessageBuilder\TemplateMessageBuilder;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
-use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder;
 use LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder;
-use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
+use Zaikok\Action\Line\AddInventoryAction;
+use Zaikok\Action\Line\AddInventoryGroupAction;
+use Zaikok\Action\Line\LoginAction;
 use Zaikok\Inventory;
 use Zaikok\InventoryGroup;
 use Zaikok\User;
@@ -62,70 +61,39 @@ class TextMessageHandler extends AbstractHandler
     {
         $text = $textMessage->getText();
         [$command, $identifier] = explode(':', $text);
-        switch ($command) {
-            case 'login':
-                $user = User::where('line_verify_token', intval($identifier))->first();
-                if ($user instanceof User) {
-                    DB::beginTransaction();
-                    try {
-                        $user->line_verify_token = null;
-                        $user->line_id = $textMessage->getUserId();
-                        $user->saveOrFail();
-                        DB::commit();
-                    } catch (\Throwable $e) {
-                        DB::rollBack();
-                        Log::error($e->getMessage());
-                        throw $e;
-                    }
-                    return new TextMessageBuilder("ようこそ {$user->name} さん !!");
-                } else {
-                    return new TextMessageBuilder("{$identifier} のユーザー見つからん。。。もう一回やって？");
-                }
-                break;
 
-            case 'add':
-                $user = User::where('line_id', intval($identifier))->first();
-                if ($user instanceof User) {
-                    $nextInventoryId = Inventory::where('user_id', $user->user_id)
-                            ->where('inventory_group_id', $user->current_inventory_group_id)
-                            ->orderBy('inventory_id', 'desc')
-                            ->first()
-                            ->inventory_id + 1;
-                    Inventory::create([
-                        'inventory_id'       => $nextInventoryId,
-                        'inventory_group_id' => $user->current_inventory_group_id,
-                        'user_id'            => $user->user_id,
-                        'name'               => $identifier,
-                        'count'              => 0,
-                        'image_path'         => $user->temp_image_path,
-                    ]);
-                    return new TextMessageBuilder('追加でけたで');
-                } else {
-                    return new TextMessageBuilder('認証しようず');
-                }
-                break;
+        DB::beginTransaction();
+        try {
+            switch ($command) {
+                case 'login':
+                    $message = LoginAction::execute($identifier);
+                    break;
 
-            case 'addg':
-                $user = User::where('line_id', intval($identifier))->first();
-                if ($user instanceof User) {
-                    $nextInventoryGroupId = InventoryGroup::where('user_id', $user->user_id)
-                            ->orderBy('inventory_group_id', 'desc')
-                            ->first()
-                            ->inventory_group_id + 1;
-                    InventoryGroup::create([
-                        'inventory_group_id' => $nextInventoryGroupId,
-                        'user_id'            => $user->user_id,
-                        'name'               => $identifier,
-                    ]);
-                    return new TextMessageBuilder('追加でけたで');
-                } else {
-                    return new TextMessageBuilder('認証しようず');
-                }
-                break;
+                case 'add':
+                    $message = AddInventoryAction::execute(
+                        User::findByLineId($textMessage->getUserId())->first(),
+                        $identifier
+                    );
+                    break;
 
-            default:
-                return new TextMessageBuilder("{$command} は知らないんです。ごめんね。");
+                case 'addg':
+                    $message = AddInventoryGroupAction::execute(
+                        User::findByLineId($textMessage->getUserId())->first(),
+                        $identifier
+                    );
+                    break;
+
+                default:
+                    $message = new TextMessageBuilder("{$command} は知らないんです。ごめんね。");
+            }
+
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw $e;
         }
+
+        return $message;
     }
 
     private static function inventoriesList(TextMessage $textMessage)

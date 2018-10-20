@@ -4,6 +4,8 @@ namespace Zaikok\Providers;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Zaikok\Inventory;
+use Zaikok\Observers\InventoryObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
             \URL::forceScheme('https');
             Schema::defaultStringLength(191);
         }
+        Inventory::observe(InventoryObserver::class);
     }
 
     /**

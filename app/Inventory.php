@@ -18,8 +18,21 @@ class Inventory extends Model
     /** @var array  */
     protected $guarded = [];
 
-    public function scopeLastInventoryId(Builder $query, int $group): Builder
-    {
-        return $query->where('inventory_group_id', $group)->orderBy('inventory_id', 'asc')->limit(1);
+    /**
+     * @param Builder $query
+     * @param int     $userId
+     * @param int     $group
+     * @return Builder
+     */
+    public function scopeFindLastByUserIdAndInventoryGroupId(
+        Builder $query,
+        int $userId,
+        int $group
+    ): Builder {
+        return $query
+            ->where('user_id', $userId)
+            ->where('inventory_group_id', $group)
+            ->orderBy('inventory_id', 'desc')
+            ->limit(1);
     }
 }
