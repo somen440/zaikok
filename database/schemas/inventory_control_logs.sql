@@ -1,9 +1,7 @@
 CREATE TABLE `inventory_control_logs` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) unsigned NOT NULL,
-  `inventory_group_id` int(10) unsigned NOT NULL,
-  `inventory_id` int(10) unsigned NOT NULL,
-  `count` tinyint(3) unsigned NOT NULL,
+  `log_type` int(10) unsigned NOT NULL,
+  `detail` json NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
