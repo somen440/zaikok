@@ -14,11 +14,12 @@ use \Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    if (Auth::guest()) {
-        return view('guest');
-    } else {
-        return redirect('home');
-    }
+//    if (Auth::guest()) {
+//        return view('guest');
+//    } else {
+//        return redirect('home');
+//    }
+    var_dump(\Illuminate\Support\Facades\Storage::url('hoge'));
 })->name('root');
 
 Auth::routes();
