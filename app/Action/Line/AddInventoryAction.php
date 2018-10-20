@@ -40,7 +40,7 @@ class AddInventoryAction
         }
 
         Inventory::create([
-            'inventory_id'       => $nextInventoryId = (is_null($lastInventory) ? 1 : $lastInventory + 1),
+            'inventory_id'       => $nextInventoryId = (is_null($lastInventory) ? 1 : $lastInventory->inventory_id + 1),
             'inventory_group_id' => $user->current_inventory_group_id,
             'user_id'            => $user->user_id,
             'name'               => $name,
