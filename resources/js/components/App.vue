@@ -16,6 +16,7 @@
           @click="changeGroup(inventoryGroup.inventory_group_id)"
         >
           <v-list-tile-action>
+            <v-icon>folder</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>{{ inventoryGroup.name }}</v-list-tile-title>
@@ -30,6 +31,17 @@
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>グループを追加</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
+        <v-list-tile
+          @click="redirectLineVerify"
+        >
+          <v-list-tile-action>
+            <v-icon>compare_arrows</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>LINE認証</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -117,12 +129,16 @@ export default {
       })
     },
     changeGroup(id) {
+      this.$router.push(`/home/${id}`)
       this.$store.commit('SET_CURRENT_INVENTORY_GROUP_ID', id)
       this.setInventory().then(() => {
         this.drawer = false
       })
     },
     ...mapActions(['addInventoryGroup', 'setInventory']),
+    redirectLineVerify() {
+      this.$router.push('/line_verify')
+    },
   },
 }
 </script>

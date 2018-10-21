@@ -25996,9 +25996,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_1__organisms__) if(["ZaikokApp","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_1__organisms__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages__ = __webpack_require__(49);
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "ZaikokHome", function() { return __WEBPACK_IMPORTED_MODULE_2__pages__["b"]; });
-/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "ZaikokLogin", function() { return __WEBPACK_IMPORTED_MODULE_2__pages__["c"]; });
-/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "ZaikokRegister", function() { return __WEBPACK_IMPORTED_MODULE_2__pages__["d"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "ZaikokLogin", function() { return __WEBPACK_IMPORTED_MODULE_2__pages__["e"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "ZaikokRegister", function() { return __WEBPACK_IMPORTED_MODULE_2__pages__["f"]; });
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "ZaikokGuest", function() { return __WEBPACK_IMPORTED_MODULE_2__pages__["a"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "ZaikokLineVerify", function() { return __WEBPACK_IMPORTED_MODULE_2__pages__["d"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "ZaikokInventory", function() { return __WEBPACK_IMPORTED_MODULE_2__pages__["c"]; });
 
 
 
@@ -70065,6 +70067,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -70103,12 +70117,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     changeGroup: function changeGroup(id) {
       var _this2 = this;
 
+      this.$router.push('/home/' + id);
       this.$store.commit('SET_CURRENT_INVENTORY_GROUP_ID', id);
       this.setInventory().then(function () {
         _this2.drawer = false;
       });
     }
-  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['addInventoryGroup', 'setInventory']))
+  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['addInventoryGroup', 'setInventory']), {
+    redirectLineVerify: function redirectLineVerify() {
+      this.$router.push('/line_verify');
+    }
+  })
 });
 
 /***/ }),
@@ -70159,7 +70178,11 @@ var render = function() {
                     }
                   },
                   [
-                    _c("v-list-tile-action"),
+                    _c(
+                      "v-list-tile-action",
+                      [_c("v-icon", [_vm._v("folder")])],
+                      1
+                    ),
                     _vm._v(" "),
                     _c(
                       "v-list-tile-content",
@@ -70194,6 +70217,25 @@ var render = function() {
                   _c(
                     "v-list-tile-content",
                     [_c("v-list-tile-title", [_vm._v("グループを追加")])],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-tile",
+                { on: { click: _vm.redirectLineVerify } },
+                [
+                  _c(
+                    "v-list-tile-action",
+                    [_c("v-icon", [_vm._v("compare_arrows")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile-content",
+                    [_c("v-list-tile-title", [_vm._v("LINE認証")])],
                     1
                   )
                 ],
@@ -70387,13 +70429,21 @@ if (false) {
 /* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__ZaikokHome_vue___default.a; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ZaikokLogin_vue__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ZaikokLogin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ZaikokLogin_vue__);
-/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_1__ZaikokLogin_vue___default.a; });
+/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_1__ZaikokLogin_vue___default.a; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ZaikokRegister_vue__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ZaikokRegister_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__ZaikokRegister_vue__);
-/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_2__ZaikokRegister_vue___default.a; });
+/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_2__ZaikokRegister_vue___default.a; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ZaikokGuest_vue__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ZaikokGuest_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__ZaikokGuest_vue__);
 /* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_3__ZaikokGuest_vue___default.a; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ZaikokLineVerify_vue__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ZaikokLineVerify_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__ZaikokLineVerify_vue__);
+/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_4__ZaikokLineVerify_vue___default.a; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ZaikokInventory_vue__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ZaikokInventory_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__ZaikokInventory_vue__);
+/* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_5__ZaikokInventory_vue___default.a; });
+
+
 
 
 
@@ -70404,21 +70454,17 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(51)
-}
 var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = __webpack_require__(55)
 /* template */
-var __vue_template__ = __webpack_require__(56)
+var __vue_template__ = __webpack_require__(94)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
-var __vue_scopeId__ = "data-v-2d9616ba"
+var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -70451,46 +70497,8 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(52);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(53)("2347ba58", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2d9616ba\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ZaikokHome.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2d9616ba\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ZaikokHome.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(7)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.sticky-button[data-v-2d9616ba] {\n  position: fixed;\n  top: 80px;\n  right: 20px;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 51 */,
+/* 52 */,
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -70764,165 +70772,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      headers: [{ text: 'ID', value: 'view_id', align: 'center' }, { text: '品物', value: 'name', align: 'center' }, { text: '個数', value: 'count', align: 'center' }, { text: '更新日時', value: 'updated_at', align: 'center' }, { text: '増/減', value: 'name', sortable: false, align: 'center' }, { text: '削除', value: 'name', sortable: false, align: 'center' }],
-      showGroupEditForm: false,
-      editInventoryGroupName: '',
-      editInventoryGroupNameRules: [function (v) {
-        return !!v || '名前の入力は必須です';
-      }],
-      editInventoryGroupValid: false,
-      newInventory: {
-        inventory_id: this.addInventoryId,
-        inventory_group_id: this.currentGroupId,
-        user_id: this.userId,
-        name: '',
-        count: 0
-      },
-      addInventoryDialog: false,
-      addInventoryValid: false,
-      addInventoryRules: [function (v) {
-        return !!v || '名前の入力は必須です';
-      }],
-      buttonLoading: false,
-      deleteButtonLoading: false
-    };
-  },
-
   props: {
     token: {
       type: String,
@@ -70933,522 +70786,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     this.$store.commit('SET_TOKEN', this.token);
     this.$store.dispatch('login');
     this.setInventoryGroups();
+    this.$router.push('/home/1');
   },
 
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])(['user', 'inventories', 'inventoryGroups']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])({
-    userId: 'getUserId',
-    userName: 'getUserName',
-    inventoryGroupName: 'getCurrentInventoryGroupName',
-    firstInventoryGroupId: 'getFirstInventoryGroupByGroupId',
-    currentGroupId: 'getCurrentInventoryGroupId',
-    nextInventoryId: 'nextInventoryId'
-  })),
-  watch: {
-    inventoryGroupName: function inventoryGroupName() {
-      this.editInventoryGroupName = this.inventoryGroupName;
-    },
-    currentGroupId: function currentGroupId() {
-      this.newInventory.inventory_group_id = this.currentGroupId;
-    },
-    userId: function userId() {
-      this.newInventory.user_id = this.userId;
-    }
-  },
-  methods: _extends({
-    deleteGroup: function deleteGroup() {
-      if (!confirm('グループを削除します。よろしいですか？')) {
-        return;
-      }
-      this.deleteInventoryGroup();
-    },
-    changeInventoryGroupName: function changeInventoryGroupName() {
-      if (!this.editInventoryGroupValid) {
-        return;
-      }
-      this.showGroupEditForm = false;
-      this.editInventoryGroup({
-        id: this.currentGroupId,
-        name: this.editInventoryGroupName
-      });
-    },
-    saveInventory: function saveInventory() {
-      var _this = this;
-
-      this.buttonLoading = true;
-      this.newInventory.inventory_id = this.nextInventoryId;
-      this.addInventory(this.newInventory).then(function () {
-        _this.buttonLoading = false;
-        _this.addInventoryDialog = false;
-      });
-    },
-    addCountInventory: function addCountInventory(inventory) {
-      var _this2 = this;
-
-      this.buttonLoading = true;
-      inventory.count++;
-      this.editInventory({
-        id: inventory.id,
-        count: inventory.count
-      }).then(function () {
-        _this2.buttonLoading = false;
-      });
-    },
-    subCountInventory: function subCountInventory(inventory) {
-      var _this3 = this;
-
-      this.buttonLoading = true;
-      if (0 > inventory.count - 1) {
-        this.buttonLoading = false;
-        alert('既に在庫がないです。');
-        return;
-      }
-      inventory.count--;
-      this.editInventory({
-        id: inventory.id,
-        count: inventory.count
-      }).then(function () {
-        _this3.buttonLoading = false;
-      });
-    },
-    deleteInventory: function deleteInventory(id) {
-      var _this4 = this;
-
-      this.deleteButtonLoading = true;
-      this.deleteInventory(id).then(function () {
-        _this4.deleteButtonLoading = false;
-      });
-    }
-  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['editInventoryGroup', 'deleteInventoryGroup', 'setInventoryGroups', 'addInventory', 'setInventory', 'deleteInventory', 'editInventory']))
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['setInventoryGroups']))
 });
 
 /***/ }),
-/* 56 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-container",
-    { attrs: { "grid-list-md": "" } },
-    [
-      _c(
-        "v-layout",
-        { attrs: { row: "", wrap: "" } },
-        [
-          _c("v-flex", { attrs: { xs12: "", "text-xs-left": "" } }, [
-            _c("h2", [_vm._v(_vm._s(this.userName) + " さんの在庫管理")])
-          ]),
-          _vm._v(" "),
-          _c(
-            "v-flex",
-            { attrs: { xs12: "", "text-xs-center": "" } },
-            [
-              _c(
-                "v-toolbar",
-                { attrs: { flat: "", color: "white" } },
-                [
-                  _c("v-toolbar-title", [
-                    _vm.showGroupEditForm
-                      ? _c(
-                          "h3",
-                          [
-                            _c(
-                              "v-form",
-                              {
-                                attrs: { "lazy-validation": "" },
-                                model: {
-                                  value: _vm.editInventoryGroupValid,
-                                  callback: function($$v) {
-                                    _vm.editInventoryGroupValid = $$v
-                                  },
-                                  expression: "editInventoryGroupValid"
-                                }
-                              },
-                              [
-                                _c("v-text-field", {
-                                  attrs: {
-                                    rules: _vm.editInventoryGroupNameRules,
-                                    label: "グループ名",
-                                    required: ""
-                                  },
-                                  on: { change: _vm.changeInventoryGroupName },
-                                  model: {
-                                    value: _vm.editInventoryGroupName,
-                                    callback: function($$v) {
-                                      _vm.editInventoryGroupName = $$v
-                                    },
-                                    expression: "editInventoryGroupName"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      : _c(
-                          "h3",
-                          {
-                            on: {
-                              click: function($event) {
-                                _vm.showGroupEditForm = true
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "グループ: " + _vm._s(_vm.inventoryGroupName)
-                            )
-                          ]
-                        )
-                  ]),
-                  _vm._v(" "),
-                  _c("v-divider", {
-                    staticClass: "mx-2",
-                    attrs: { inset: "", vertical: "" }
-                  }),
-                  _vm._v(" "),
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-dialog",
-                    {
-                      attrs: { "max-width": "500px" },
-                      model: {
-                        value: _vm.addInventoryDialog,
-                        callback: function($$v) {
-                          _vm.addInventoryDialog = $$v
-                        },
-                        expression: "addInventoryDialog"
-                      }
-                    },
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          staticClass: "mb-2",
-                          attrs: {
-                            slot: "activator",
-                            color: "primary",
-                            dark: ""
-                          },
-                          slot: "activator"
-                        },
-                        [_vm._v("新しい品物を追加")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-card",
-                        [
-                          _c("v-card-title", [
-                            _c("span", { staticClass: "headline" }, [
-                              _vm._v("新しい品物の情報")
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "v-card-text",
-                            [
-                              _c(
-                                "v-container",
-                                { attrs: { "grid-list-md": "" } },
-                                [
-                                  _c(
-                                    "v-layout",
-                                    { attrs: { wrap: "" } },
-                                    [
-                                      _c(
-                                        "v-flex",
-                                        { attrs: { xs12: "" } },
-                                        [
-                                          _c(
-                                            "v-form",
-                                            {
-                                              attrs: { "lazy-validation": "" },
-                                              model: {
-                                                value: _vm.addInventoryValid,
-                                                callback: function($$v) {
-                                                  _vm.addInventoryValid = $$v
-                                                },
-                                                expression: "addInventoryValid"
-                                              }
-                                            },
-                                            [
-                                              _c("v-text-field", {
-                                                attrs: {
-                                                  label: "品物名",
-                                                  rules: _vm.addInventoryRules
-                                                },
-                                                model: {
-                                                  value: _vm.newInventory.name,
-                                                  callback: function($$v) {
-                                                    _vm.$set(
-                                                      _vm.newInventory,
-                                                      "name",
-                                                      $$v
-                                                    )
-                                                  },
-                                                  expression:
-                                                    "newInventory.name"
-                                                }
-                                              })
-                                            ],
-                                            1
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-card-actions",
-                            [
-                              _c("v-spacer"),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: {
-                                    color: "blue darken-1",
-                                    flat: "",
-                                    disabled: !_vm.addInventoryValid,
-                                    loading: _vm.buttonLoading
-                                  },
-                                  nativeOn: {
-                                    click: function($event) {
-                                      return _vm.saveInventory($event)
-                                    }
-                                  }
-                                },
-                                [_vm._v("追加")]
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-data-table",
-                {
-                  staticClass: "elevation-1",
-                  attrs: {
-                    headers: _vm.headers,
-                    items: _vm.inventories,
-                    "hide-actions": ""
-                  },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "items",
-                      fn: function(props) {
-                        return [
-                          _c("td", [_vm._v(_vm._s(props.item.view_id))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(props.item.name))]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "text-xs-right" }, [
-                            _vm._v(_vm._s(props.item.count))
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "text-xs-right" }, [
-                            _vm._v(_vm._s(props.item.updated_at))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "td",
-                            [
-                              _c(
-                                "v-layout",
-                                { attrs: { row: "", wrap: "" } },
-                                [
-                                  _c(
-                                    "v-flex",
-                                    { attrs: { xs6: "" } },
-                                    [
-                                      _c(
-                                        "v-btn",
-                                        {
-                                          attrs: {
-                                            fab: "",
-                                            dark: "",
-                                            small: "",
-                                            color: "success",
-                                            loading: _vm.buttonLoading
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              _vm.addCountInventory(props.item)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-icon",
-                                            { attrs: { dark: "" } },
-                                            [_vm._v("add")]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-flex",
-                                    { attrs: { xs6: "" } },
-                                    [
-                                      _c(
-                                        "v-btn",
-                                        {
-                                          attrs: {
-                                            fab: "",
-                                            dark: "",
-                                            small: "",
-                                            color: "warning",
-                                            loading: _vm.buttonLoading
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              _vm.subCountInventory(props.item)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-icon",
-                                            { attrs: { dark: "" } },
-                                            [_vm._v("remove")]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "td",
-                            { staticClass: "justify-center layout px-0" },
-                            [
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: {
-                                    small: "",
-                                    color: "error",
-                                    loading: _vm.deleteButtonLoading
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.deleteInventory(props.item.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("v-icon", { attrs: { small: "" } }, [
-                                    _vm._v(
-                                      "\n                delete\n              "
-                                    )
-                                  ]),
-                                  _vm._v("\n              削除\n            ")
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ]
-                      }
-                    }
-                  ])
-                },
-                [
-                  _c(
-                    "template",
-                    { slot: "no-data" },
-                    [
-                      _c(
-                        "v-alert",
-                        {
-                          attrs: {
-                            value: true,
-                            color: "error",
-                            icon: "warning"
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n            Sorry, nothing to display here :(\n          "
-                          )
-                        ]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                2
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-btn",
-        {
-          staticClass: "sticky-button",
-          attrs: { fab: "", dark: "", color: "red darken-1" }
-        },
-        [
-          _c(
-            "v-icon",
-            { attrs: { dark: "" }, on: { click: _vm.deleteGroup } },
-            [_vm._v("close")]
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-2d9616ba", module.exports)
-  }
-}
-
-/***/ }),
+/* 56 */,
 /* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -72525,9 +71870,7 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components__ = __webpack_require__(16);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components__ = __webpack_require__(16);
 
 
 
@@ -72536,9 +71879,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
   mode: 'history',
-  routes: [
-    // { path: '/home', component: Components.ZaikokHome },
-  ]
+  routes: [{ path: '/home/:id', component: __WEBPACK_IMPORTED_MODULE_2__components__["ZaikokInventory"] }, { path: '/line_verify', component: __WEBPACK_IMPORTED_MODULE_2__components__["ZaikokLineVerify"] }]
 }));
 
 /***/ }),
@@ -75728,6 +75069,883 @@ module.exports = "/fonts/vendor/material-design-icons-icondist/MaterialIcons-Reg
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 85 */,
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(87)
+/* template */
+var __vue_template__ = __webpack_require__(88)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/pages/ZaikokLineVerify.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0d85cbb0", Component.options)
+  } else {
+    hotAPI.reload("data-v-0d85cbb0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 87 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_vm._v("らいん認証のペーじ")])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0d85cbb0", module.exports)
+  }
+}
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(90)
+}
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(92)
+/* template */
+var __vue_template__ = __webpack_require__(93)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-2828edde"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/pages/ZaikokInventory.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2828edde", Component.options)
+  } else {
+    hotAPI.reload("data-v-2828edde", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(91);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(53)("fe7ae2d2", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2828edde\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ZaikokInventory.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2828edde\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ZaikokInventory.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(7)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.sticky-button[data-v-2828edde] {\n  position: fixed;\n  top: 80px;\n  right: 20px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 92 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(1);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      headers: [{ text: 'ID', value: 'view_id', align: 'center' }, { text: '品物', value: 'name', align: 'center' }, { text: '個数', value: 'count', align: 'center' }, { text: '更新日時', value: 'updated_at', align: 'center' }, { text: '増/減', value: 'name', sortable: false, align: 'center' }, { text: '削除', value: 'name', sortable: false, align: 'center' }],
+      showGroupEditForm: false,
+      editInventoryGroupName: '',
+      editInventoryGroupNameRules: [function (v) {
+        return !!v || '名前の入力は必須です';
+      }],
+      editInventoryGroupValid: false,
+      newInventory: {
+        inventory_id: this.addInventoryId,
+        inventory_group_id: this.currentGroupId,
+        user_id: this.userId,
+        name: '',
+        count: 0
+      },
+      addInventoryDialog: false,
+      addInventoryValid: false,
+      addInventoryRules: [function (v) {
+        return !!v || '名前の入力は必須です';
+      }],
+      buttonLoading: false,
+      deleteButtonLoading: false
+    };
+  },
+
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])(['user', 'inventories', 'inventoryGroups']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])({
+    userId: 'getUserId',
+    userName: 'getUserName',
+    inventoryGroupName: 'getCurrentInventoryGroupName',
+    firstInventoryGroupId: 'getFirstInventoryGroupByGroupId',
+    currentGroupId: 'getCurrentInventoryGroupId',
+    nextInventoryId: 'nextInventoryId'
+  })),
+  watch: {
+    inventoryGroupName: function inventoryGroupName() {
+      this.editInventoryGroupName = this.inventoryGroupName;
+    },
+    currentGroupId: function currentGroupId() {
+      this.newInventory.inventory_group_id = this.currentGroupId;
+    },
+    userId: function userId() {
+      this.newInventory.user_id = this.userId;
+    }
+  },
+  methods: _extends({
+    deleteGroup: function deleteGroup() {
+      if (!confirm('グループを削除します。よろしいですか？')) {
+        return;
+      }
+      this.deleteInventoryGroup();
+    },
+    changeInventoryGroupName: function changeInventoryGroupName() {
+      if (!this.editInventoryGroupValid) {
+        return;
+      }
+      this.showGroupEditForm = false;
+      this.editInventoryGroup({
+        id: this.currentGroupId,
+        name: this.editInventoryGroupName
+      });
+    },
+    saveInventory: function saveInventory() {
+      var _this = this;
+
+      this.buttonLoading = true;
+      this.newInventory.inventory_id = this.nextInventoryId;
+      this.addInventory(this.newInventory).then(function () {
+        _this.buttonLoading = false;
+        _this.addInventoryDialog = false;
+      });
+    },
+    addCountInventory: function addCountInventory(inventory) {
+      var _this2 = this;
+
+      this.buttonLoading = true;
+      inventory.count++;
+      this.editInventory({
+        id: inventory.id,
+        count: inventory.count
+      }).then(function () {
+        _this2.buttonLoading = false;
+      });
+    },
+    subCountInventory: function subCountInventory(inventory) {
+      var _this3 = this;
+
+      this.buttonLoading = true;
+      if (0 > inventory.count - 1) {
+        this.buttonLoading = false;
+        alert('既に在庫がないです。');
+        return;
+      }
+      inventory.count--;
+      this.editInventory({
+        id: inventory.id,
+        count: inventory.count
+      }).then(function () {
+        _this3.buttonLoading = false;
+      });
+    },
+    deleteInventory: function deleteInventory(id) {
+      var _this4 = this;
+
+      this.deleteButtonLoading = true;
+      this.deleteInventory(id).then(function () {
+        _this4.deleteButtonLoading = false;
+      });
+    }
+  }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['editInventoryGroup', 'deleteInventoryGroup', 'setInventoryGroups', 'addInventory', 'setInventory', 'deleteInventory', 'editInventory']))
+});
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-container",
+    { attrs: { "grid-list-md": "" } },
+    [
+      _c(
+        "v-layout",
+        { attrs: { row: "", wrap: "" } },
+        [
+          _c("v-flex", { attrs: { xs12: "", "text-xs-left": "" } }, [
+            _c("h2", [_vm._v(_vm._s(this.userName) + " さんの在庫管理")])
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-flex",
+            { attrs: { xs12: "", "text-xs-center": "" } },
+            [
+              _c(
+                "v-toolbar",
+                { attrs: { flat: "", color: "white" } },
+                [
+                  _c("v-toolbar-title", [
+                    _vm.showGroupEditForm
+                      ? _c(
+                          "h3",
+                          [
+                            _c(
+                              "v-form",
+                              {
+                                attrs: { "lazy-validation": "" },
+                                model: {
+                                  value: _vm.editInventoryGroupValid,
+                                  callback: function($$v) {
+                                    _vm.editInventoryGroupValid = $$v
+                                  },
+                                  expression: "editInventoryGroupValid"
+                                }
+                              },
+                              [
+                                _c("v-text-field", {
+                                  attrs: {
+                                    rules: _vm.editInventoryGroupNameRules,
+                                    label: "グループ名",
+                                    required: ""
+                                  },
+                                  on: { change: _vm.changeInventoryGroupName },
+                                  model: {
+                                    value: _vm.editInventoryGroupName,
+                                    callback: function($$v) {
+                                      _vm.editInventoryGroupName = $$v
+                                    },
+                                    expression: "editInventoryGroupName"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      : _c(
+                          "h3",
+                          {
+                            on: {
+                              click: function($event) {
+                                _vm.showGroupEditForm = true
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "グループ: " + _vm._s(_vm.inventoryGroupName)
+                            )
+                          ]
+                        )
+                  ]),
+                  _vm._v(" "),
+                  _c("v-divider", {
+                    staticClass: "mx-2",
+                    attrs: { inset: "", vertical: "" }
+                  }),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-dialog",
+                    {
+                      attrs: { "max-width": "500px" },
+                      model: {
+                        value: _vm.addInventoryDialog,
+                        callback: function($$v) {
+                          _vm.addInventoryDialog = $$v
+                        },
+                        expression: "addInventoryDialog"
+                      }
+                    },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          staticClass: "mb-2",
+                          attrs: {
+                            slot: "activator",
+                            color: "primary",
+                            dark: ""
+                          },
+                          slot: "activator"
+                        },
+                        [_vm._v("新しい品物を追加")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card",
+                        [
+                          _c("v-card-title", [
+                            _c("span", { staticClass: "headline" }, [
+                              _vm._v("新しい品物の情報")
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-text",
+                            [
+                              _c(
+                                "v-container",
+                                { attrs: { "grid-list-md": "" } },
+                                [
+                                  _c(
+                                    "v-layout",
+                                    { attrs: { wrap: "" } },
+                                    [
+                                      _c(
+                                        "v-flex",
+                                        { attrs: { xs12: "" } },
+                                        [
+                                          _c(
+                                            "v-form",
+                                            {
+                                              attrs: { "lazy-validation": "" },
+                                              model: {
+                                                value: _vm.addInventoryValid,
+                                                callback: function($$v) {
+                                                  _vm.addInventoryValid = $$v
+                                                },
+                                                expression: "addInventoryValid"
+                                              }
+                                            },
+                                            [
+                                              _c("v-text-field", {
+                                                attrs: {
+                                                  label: "品物名",
+                                                  rules: _vm.addInventoryRules
+                                                },
+                                                model: {
+                                                  value: _vm.newInventory.name,
+                                                  callback: function($$v) {
+                                                    _vm.$set(
+                                                      _vm.newInventory,
+                                                      "name",
+                                                      $$v
+                                                    )
+                                                  },
+                                                  expression:
+                                                    "newInventory.name"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-actions",
+                            [
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    color: "blue darken-1",
+                                    flat: "",
+                                    disabled: !_vm.addInventoryValid,
+                                    loading: _vm.buttonLoading
+                                  },
+                                  nativeOn: {
+                                    click: function($event) {
+                                      return _vm.saveInventory($event)
+                                    }
+                                  }
+                                },
+                                [_vm._v("追加")]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-data-table",
+                {
+                  staticClass: "elevation-1",
+                  attrs: {
+                    headers: _vm.headers,
+                    items: _vm.inventories,
+                    "hide-actions": ""
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "items",
+                      fn: function(props) {
+                        return [
+                          _c("td", [_vm._v(_vm._s(props.item.view_id))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(props.item.name))]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-xs-right" }, [
+                            _vm._v(_vm._s(props.item.count))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-xs-right" }, [
+                            _vm._v(_vm._s(props.item.updated_at))
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c(
+                                "v-layout",
+                                { attrs: { row: "", wrap: "" } },
+                                [
+                                  _c(
+                                    "v-flex",
+                                    { attrs: { xs6: "" } },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            fab: "",
+                                            dark: "",
+                                            small: "",
+                                            color: "success",
+                                            loading: _vm.buttonLoading
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.addCountInventory(props.item)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            { attrs: { dark: "" } },
+                                            [_vm._v("add")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-flex",
+                                    { attrs: { xs6: "" } },
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: {
+                                            fab: "",
+                                            dark: "",
+                                            small: "",
+                                            color: "warning",
+                                            loading: _vm.buttonLoading
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.subCountInventory(props.item)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            { attrs: { dark: "" } },
+                                            [_vm._v("remove")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "justify-center layout px-0" },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    small: "",
+                                    color: "error",
+                                    loading: _vm.deleteButtonLoading
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.deleteInventory(props.item.id)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("v-icon", { attrs: { small: "" } }, [
+                                    _vm._v(
+                                      "\n                delete\n              "
+                                    )
+                                  ]),
+                                  _vm._v("\n              削除\n            ")
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ]
+                      }
+                    }
+                  ])
+                },
+                [
+                  _c(
+                    "template",
+                    { slot: "no-data" },
+                    [
+                      _c(
+                        "v-alert",
+                        {
+                          attrs: {
+                            value: true,
+                            color: "error",
+                            icon: "warning"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n            Sorry, nothing to display here :(\n          "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                2
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-btn",
+        {
+          staticClass: "sticky-button",
+          attrs: { fab: "", dark: "", color: "red darken-1" }
+        },
+        [
+          _c(
+            "v-icon",
+            { attrs: { dark: "" }, on: { click: _vm.deleteGroup } },
+            [_vm._v("close")]
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2828edde", module.exports)
+  }
+}
+
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("router-view")
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2d9616ba", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
