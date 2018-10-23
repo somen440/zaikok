@@ -7,6 +7,10 @@ export default {
     state.token = token
   },
 
+  SET_LINE_VERIFY: (state, lineVerify) => {
+    state.lineVerify = lineVerify
+  },
+
   SET_USER: (state, user) => {
     state.user = user
   },

@@ -15,6 +15,7 @@ export default new Vuex.Store({
     inventories: [],
     inventoryGroups: [],
     currentInventoryGroupId: 1,
+    lineVerify: [],
   },
   actions,
   mutations,

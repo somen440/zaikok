@@ -19,4 +19,12 @@ class UserController extends Controller
     {
         return $request->user();
     }
+
+    /**
+     * @return int[]
+     */
+    public function createLineVerify(): array
+    {
+        return [1, 2, 3, 4];
+    }
 }

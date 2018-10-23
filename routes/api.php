@@ -20,6 +20,7 @@ use Zaikok\Inventory;
 Route::middleware(['auth:api'])->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('', 'UserController@get');
+        Route::post('/line_verify', 'UserController@createLineVerify');
     });
 
     Route::prefix('inventory')->group(function () {
