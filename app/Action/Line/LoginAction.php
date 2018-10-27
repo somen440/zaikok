@@ -26,7 +26,7 @@ class LoginAction
         $user->saveOrFail();
 
         LineVerify::create([
-            'line_id' => $lineId,
+            'line_id' => Hash::make($lineId),
             'user_id' => $user->user_id,
         ]);
 
