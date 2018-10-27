@@ -9,6 +9,7 @@
 namespace Zaikok\Action\Line;
 
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use Zaikok\LineVerify;
 use Zaikok\User;
@@ -19,6 +20,9 @@ class LoginAction
     {
         $user = User::findByLineVerifyToken(Hash::make($lineVerifyToken))->first();
         if (is_null($user)) {
+            Log::warning('LoginAction@execute', [
+                'lineVerifyToken' => Hash::make($lineVerifyToken),
+            ]);
             return new TextMessageBuilder('見つからんからもっかいやって。。。');
         }
 
