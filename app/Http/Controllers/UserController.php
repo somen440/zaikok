@@ -36,11 +36,11 @@ class UserController extends Controller
             $user  = User::where('user_id', Auth::user()->user_id)->first();
             while (true) {
                 $token = mt_rand(1111, 9999);
-                if (is_null(User::where('line_verify_token', Hash::make($token))->first())) {
+                if (is_null(User::where('line_verify_token', password_hash($token, PASSWORD_DEFAULT))->first())) {
                     break;
                 }
             }
-            $user->line_verify_token = Hash::make($token);
+            $user->line_verify_token = password_hash($token, PASSWORD_DEFAULT);
             $user->saveOrFail();
             DB::commit();
         } catch (\Throwable $e) {

@@ -9,7 +9,6 @@
 
 namespace Zaikok\Handler;
 
-use Illuminate\Support\Facades\Hash;
 use Zaikok\LineVerify;
 
 trait LineHandlerTrait
@@ -20,6 +19,6 @@ trait LineHandlerTrait
      */
     private static function getLineVerify(string $lineId): ?LineVerify
     {
-        return LineVerify::findByLineId(Hash::make($lineId))->first();
+        return LineVerify::findByLineId(password_hash($lineId, PASSWORD_DEFAULT))->first();
     }
 }
