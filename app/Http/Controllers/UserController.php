@@ -2,8 +2,9 @@
 
 namespace Zaikok\Http\Controllers;
 
-use Faker\Generator as Faker;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Zaikok\User;
 
 /**
@@ -22,14 +23,28 @@ class UserController extends Controller
     }
 
     /**
-     * @param Faker $faker
-     * @return int[]
+     * @return int
+     * @throws \Throwable
      */
-    public function createLineVerify(Faker $faker): array
+    public function createLineVerify(): int
     {
-        foreach (range(1, 1000) as $index) {
-            $faker->numberBetween(1000, 9999);
+        DB::beginTransaction();
+        try {
+            $token = null;
+            $user  = User::find(Auth::user()->user_id)->first();
+            while (true) {
+                $token = mt_rand(1111, 9999);
+                if (is_null(User::where('line_verify_token', $token)->first())) {
+                    break;
+                }
+            }
+            $user->line_verify_token = $token;
+            $user->saveOrFail();
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw $e;
         }
-        return [1, 2, 3, 4];
+        return $token;
     }
 }

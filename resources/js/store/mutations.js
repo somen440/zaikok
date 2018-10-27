@@ -7,8 +7,8 @@ export default {
     state.token = token
   },
 
-  SET_LINE_VERIFY: (state, lineVerify) => {
-    state.lineVerify = lineVerify
+  SET_VERIFY_TOKEN: (state, verifyToken) => {
+    state.verifyToken = verifyToken
   },
 
   SET_USER: (state, user) => {

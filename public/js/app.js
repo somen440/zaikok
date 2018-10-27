@@ -71765,35 +71765,30 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      one: '',
-      two: '',
-      three: '',
-      four: '',
-      e1: 0
+      e1: 0,
+      loading: false
     };
   },
 
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])(['lineVerify'])),
+  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])(['verifyToken'])),
   methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['createLineVerify']), {
     createAndNext: function createAndNext() {
-      this.e1++;
-      this.createLineVerify();
+      var _this = this;
+
+      this.loading = true;
+      this.createLineVerify().then(function () {
+        _this.e1++;
+        _this.loading = false;
+      });
     }
-  }),
-  watch: {
-    lineVerify: function lineVerify() {
-      this.one = this.lineVerify[0];
-      this.two = this.lineVerify[1];
-      this.three = this.lineVerify[2];
-      this.four = this.lineVerify[3];
-    }
-  }
+  })
 });
 
 /***/ }),
@@ -71930,7 +71925,11 @@ var render = function() {
                   _c(
                     "v-btn",
                     {
-                      attrs: { color: "primary", dark: "" },
+                      attrs: {
+                        color: "primary",
+                        dark: "",
+                        loading: _vm.loading
+                      },
                       on: { click: _vm.createAndNext }
                     },
                     [_vm._v("認証用コード発行")]
@@ -75775,7 +75774,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
     inventories: [],
     inventoryGroups: [],
     currentInventoryGroupId: 1,
-    lineVerify: []
+    verifyToken: 1111
   },
   actions: __WEBPACK_IMPORTED_MODULE_2__actions__["a" /* default */],
   mutations: __WEBPACK_IMPORTED_MODULE_3__mutations__["a" /* default */],
@@ -75860,7 +75859,7 @@ function _DeleteRequest(url, token) {
     return _PostRequest('user/line_verify', state.token).then(function (_ref6) {
       var data = _ref6.data;
 
-      commit('SET_LINE_VERIFY', data);
+      commit('SET_VERIFY_TOKEN', data);
     });
   },
 
@@ -76009,8 +76008,8 @@ function registerUser(param) {
     state.token = token;
   },
 
-  SET_LINE_VERIFY: function SET_LINE_VERIFY(state, lineVerify) {
-    state.lineVerify = lineVerify;
+  SET_VERIFY_TOKEN: function SET_VERIFY_TOKEN(state, verifyToken) {
+    state.verifyToken = verifyToken;
   },
 
   SET_USER: function SET_USER(state, user) {

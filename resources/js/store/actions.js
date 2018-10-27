@@ -56,7 +56,7 @@ export default {
 
   createLineVerify: ({ commit, state }) => {
     return _PostRequest('user/line_verify', state.token).then(({ data }) => {
-      commit('SET_LINE_VERIFY', data)
+      commit('SET_VERIFY_TOKEN', data)
     })
   },
 

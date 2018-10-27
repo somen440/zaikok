@@ -42,6 +42,7 @@
           <v-btn
             color="primary"
             dark
+            :loading="loading"
             @click="createAndNext"
           >認証用コード発行</v-btn>
           <v-btn
@@ -95,29 +96,21 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      one: '',
-      two: '',
-      three: '',
-      four: '',
       e1: 0,
+      loading: false,
     }
   },
   computed: {
-    ...mapState(['lineVerify']),
+    ...mapState(['verifyToken']),
   },
   methods: {
     ...mapActions(['createLineVerify']),
     createAndNext() {
-      this.e1++
-      this.createLineVerify()
-    },
-  },
-  watch: {
-    lineVerify() {
-      this.one = this.lineVerify[0]
-      this.two = this.lineVerify[1]
-      this.three = this.lineVerify[2]
-      this.four = this.lineVerify[3]
+      this.loading = true
+      this.createLineVerify().then(() => {
+        this.e1++
+        this.loading = false
+      })
     },
   },
 }
