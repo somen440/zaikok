@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Zaikok\User;
 
 /**
@@ -32,7 +33,7 @@ class UserController extends Controller
         DB::beginTransaction();
         try {
             $token = null;
-            $user  = User::find(Auth::user()->user_id)->first();
+            $user  = User::where('user_id', Auth::user()->user_id)->first();
             while (true) {
                 $token = mt_rand(1111, 9999);
                 if (is_null(User::where('line_verify_token', $token)->first())) {
@@ -46,6 +47,9 @@ class UserController extends Controller
             DB::rollBack();
             throw $e;
         }
+        Log::info('UserController@createLineVerify', [
+           'userId' => $user->user_id,
+        ]);
         return $token;
     }
 }
