@@ -71729,6 +71729,42 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -71738,12 +71774,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       one: '',
       two: '',
       three: '',
-      four: ''
+      four: '',
+      e1: 0
     };
   },
 
   computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])(['lineVerify'])),
-  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['createLineVerify'])),
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['createLineVerify']), {
+    createAndNext: function createAndNext() {
+      this.e1++;
+      this.createLineVerify();
+    }
+  }),
   watch: {
     lineVerify: function lineVerify() {
       this.one = this.lineVerify[0];
@@ -71766,104 +71808,237 @@ var render = function() {
     "v-container",
     { attrs: { "grid-list-md": "" } },
     [
+      _c("h2", [_vm._v("Line からも在庫管理 !!")]),
+      _vm._v(" "),
       _c(
-        "v-layout",
-        { attrs: { row: "", wrap: "" } },
+        "v-stepper",
+        {
+          model: {
+            value: _vm.e1,
+            callback: function($$v) {
+              _vm.e1 = $$v
+            },
+            expression: "e1"
+          }
+        },
         [
           _c(
-            "v-flex",
-            { attrs: { xs12: "" } },
+            "v-stepper-header",
             [
-              _c("h3", { staticClass: "headline mb-0" }, [
-                _vm._v("LINEアプリへのQRコード")
-              ]),
+              _c(
+                "v-stepper-step",
+                { attrs: { complete: _vm.e1 > 1, step: "1" } },
+                [_vm._v("Name of step 1")]
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
               _vm._v(" "),
               _c(
-                "v-layout",
-                { attrs: { column: "" } },
-                [
-                  _c("div", { staticClass: "subheading" }, [
-                    _vm._v("QRコード読み込みでLINEに追加できます")
-                  ]),
-                  _vm._v(" "),
-                  _c("v-img", {
-                    attrs: {
-                      src: "images/zaikok_qr.png",
-                      height: "125px",
-                      contain: ""
-                    }
-                  })
-                ],
-                1
+                "v-stepper-step",
+                { attrs: { complete: _vm.e1 > 2, step: "2" } },
+                [_vm._v("Name of step 2")]
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-stepper-step",
+                { attrs: { complete: _vm.e1 > 3, step: "3" } },
+                [_vm._v("Name of step 3")]
+              ),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _c(
+                "v-stepper-step",
+                { attrs: { complete: _vm.e1 > 4, step: "4" } },
+                [_vm._v("Name of step 4")]
               )
             ],
             1
           ),
           _vm._v(" "),
-          _c("v-flex", { attrs: { xs12: "" } }, [
-            _c("h3", { staticClass: "headline mb-0" }, [_vm._v("認証コード")])
-          ]),
-          _vm._v(" "),
           _c(
-            "v-flex",
-            { attrs: { xs3: "" } },
-            [
-              _c("v-text-field", {
-                attrs: {
-                  value: _vm.one,
-                  outline: "",
-                  readonly: "",
-                  "text-center": ""
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-flex",
-            { attrs: { xs3: "" } },
-            [
-              _c("v-text-field", {
-                attrs: { value: _vm.two, outline: "", readonly: "" }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-flex",
-            { attrs: { xs3: "" } },
-            [
-              _c("v-text-field", {
-                attrs: { value: _vm.three, outline: "", readonly: "" }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-flex",
-            { attrs: { xs3: "" } },
-            [
-              _c("v-text-field", {
-                attrs: { value: _vm.four, outline: "", readonly: "" }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-flex",
-            { attrs: { "offset-xs9": "", xs3: "" } },
+            "v-stepper-items",
             [
               _c(
-                "v-btn",
-                {
-                  attrs: { color: "primary", dark: "" },
-                  on: { click: _vm.createLineVerify }
-                },
-                [_vm._v("認証用コード発行")]
+                "v-stepper-content",
+                { attrs: { step: "1" } },
+                [
+                  _c(
+                    "v-card",
+                    [
+                      _c("v-card-title", [
+                        _c("h3", { staticClass: "headline mb-0" }, [
+                          _vm._v("1. Zaikok Bot を友達追加")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-text",
+                        [
+                          _c("div", { staticClass: "subheading" }, [
+                            _vm._v("QRコードを読み込もう !!")
+                          ]),
+                          _vm._v(" "),
+                          _c("v-img", {
+                            attrs: {
+                              src: "images/zaikok_qr.png",
+                              height: "125px",
+                              contain: ""
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary" },
+                      on: {
+                        click: function($event) {
+                          _vm.e1 = 2
+                        }
+                      }
+                    },
+                    [_vm._v("\n          次へ\n        ")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-stepper-content",
+                { attrs: { step: "2" } },
+                [
+                  _c(
+                    "v-card",
+                    [
+                      _c("v-card-title", [
+                        _c("h3", { staticClass: "headline mb-0" }, [
+                          _vm._v("2. 認証コードを発行")
+                        ])
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary", dark: "" },
+                      on: { click: _vm.createAndNext }
+                    },
+                    [_vm._v("認証用コード発行")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { flat: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.e1 = 1
+                        }
+                      }
+                    },
+                    [_vm._v("戻る")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-stepper-content",
+                { attrs: { step: "3" } },
+                [
+                  _c(
+                    "v-card",
+                    [
+                      _c("v-card-title", [
+                        _c("h3", { staticClass: "headline mb-0" }, [
+                          _vm._v("3. LINE とアカウントの紐付け")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("v-card-text", [
+                        _c("div", { staticClass: "subheading" }, [
+                          _vm._v(
+                            "Zaikok Line Bot に 「 login:" +
+                              _vm._s(_vm.verifyToken) +
+                              " 」を呟こう"
+                          )
+                        ])
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary", dark: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.e1++
+                        }
+                      }
+                    },
+                    [_vm._v("完了")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { flat: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.e1--
+                        }
+                      }
+                    },
+                    [_vm._v("戻る")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-stepper-content",
+                { attrs: { step: "4" } },
+                [
+                  _c(
+                    "v-card",
+                    [
+                      _c(
+                        "v-img",
+                        [
+                          _c("v-img", {
+                            attrs: {
+                              src: "images/zaiko_sabaku.png",
+                              "aspect-ratio": "2.75"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-card-text", [
+                        _c("h3", { staticClass: "text-xs-center" }, [
+                          _vm._v(
+                            "ありがとう !! 完了です。 ゆっくり在庫さばいていってね !!"
+                          )
+                        ])
+                      ])
+                    ],
+                    1
+                  )
+                ],
+                1
               )
             ],
             1
