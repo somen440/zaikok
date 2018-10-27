@@ -11,25 +11,26 @@ namespace Zaikok\Action\Line;
 
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use Zaikok\InventoryGroup;
+use Zaikok\LineVerify;
 use Zaikok\User;
 
 class AddInventoryGroupAction
 {
-    public static function execute(?User $user, string $name): TextMessageBuilder
+    public static function execute(?LineVerify $lineVerify, string $name): TextMessageBuilder
     {
-        if (is_null($user)) {
+        if (is_null($lineVerify)) {
             return new TextMessageBuilder('認証しようず');
         }
 
         $nextInventoryGroupId = InventoryGroup::findLastByUserId(
-            $user->user_id
+            $lineVerify->user_id
         )
             ->first()
             ->inventory_group_id + 1;
 
         InventoryGroup::create([
             'inventory_group_id' => $nextInventoryGroupId,
-            'user_id'            => $user->user_id,
+            'user_id'            => $lineVerify->user_id,
             'name'               => $name,
         ]);
         return new TextMessageBuilder('追加でけたで');

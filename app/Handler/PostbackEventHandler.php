@@ -39,9 +39,9 @@ class PostbackEventHandler extends AbstractHandler
                 break;
 
             case 'group':
-                $user = self::getUser($postbackEvent->getUserId());
-                $user->current_inventory_group_id = $id;
-                $user->saveOrFail();
+                $lineVerify = self::getLineVerify($postbackEvent->getUserId());
+                $lineVerify->current_inventory_group_id = $id;
+                $lineVerify->saveOrFail();
                 $messages[] = new TextMessageBuilder('切り替えたよ');
                 break;
 

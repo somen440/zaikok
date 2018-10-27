@@ -11,20 +11,15 @@ namespace Zaikok\Handler;
 
 use Illuminate\Support\Facades\Hash;
 use Zaikok\LineVerify;
-use Zaikok\User;
 
 trait LineHandlerTrait
 {
     /**
      * @param string $lineId
-     * @return null|User
+     * @return null|LineVerify
      */
-    private static function getUser(string $lineId): ?User
+    private static function getLineVerify(string $lineId): ?LineVerify
     {
-        $lineVerify = LineVerify::findByLineId(Hash::make($lineId))->first();
-        if (is_null($lineVerify)) {
-            return null;
-        }
-        return User::find($lineVerify->user_id);
+        return LineVerify::findByLineId(Hash::make($lineId))->first();
     }
 }

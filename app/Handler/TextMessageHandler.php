@@ -72,14 +72,14 @@ class TextMessageHandler extends AbstractHandler
 
                 case 'add':
                     $message = AddInventoryAction::execute(
-                        self::getUser($textMessage->getUserId()),
+                        self::getLineVerify($textMessage->getUserId()),
                         $identifier
                     );
                     break;
 
                 case 'addg':
                     $message = AddInventoryGroupAction::execute(
-                        self::getUser($textMessage->getUserId()),
+                        self::getLineVerify($textMessage->getUserId()),
                         $identifier
                     );
                     break;
@@ -99,13 +99,15 @@ class TextMessageHandler extends AbstractHandler
 
     private static function inventoriesList(TextMessage $textMessage)
     {
-        $user = self::getUser($textMessage->getUserId());
-        if (is_null($user)) {
+        $lineVerify = self::getLineVerify($textMessage->getUserId());
+        if (is_null($lineVerify)) {
             return new TextMessageBuilder('ログインしてないユーザーみたいだよ。');
         }
 
         /** @var Collection $inventories */
-        $inventories = Inventory::where('inventory_group_id', $user->current_inventory_group_id)->where('user_id', $user->user_id)->get();
+        $inventories = Inventory::where('inventory_group_id', $lineVerify->current_inventory_group_id)
+            ->where('user_id', $lineVerify->user_id)
+            ->get();
         if (0 === $inventories->count()) {
             return new TextMessageBuilder('在庫のないグループみたいだよ。');
         }
@@ -133,13 +135,13 @@ class TextMessageHandler extends AbstractHandler
 
     private static function groupsList(TextMessage $textMessage, bool $isDelete = false)
     {
-        $user = self::getUser($textMessage->getUserId());
-        if (is_null($user)) {
+        $lineVerify = self::getLineVerify($textMessage->getUserId());
+        if (is_null($lineVerify)) {
             return new TextMessageBuilder('ログインしてないユーザーみたいだよ。');
         }
 
         $groupButtons = [];
-        $inventoryGroups = InventoryGroup::where('user_id', $user->user_id)->get();
+        $inventoryGroups = InventoryGroup::where('user_id', $lineVerify->user_id)->get();
         foreach ($inventoryGroups as $inventoryGroup) {
             $groupButtons[] = new PostbackTemplateActionBuilder(
                 $inventoryGroup->name,

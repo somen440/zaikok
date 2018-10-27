@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use LINE\LINEBot;
 use LINE\LINEBot\Event\MessageEvent\ImageMessage;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
+use Zaikok\LineVerify;
 use Zaikok\User;
 
 class ImageMessageHandler extends AbstractHandler
@@ -16,17 +17,17 @@ class ImageMessageHandler extends AbstractHandler
 
     public static function create(LINEBot $bot, ImageMessage $imageMessage): self
     {
-        $messages = [];
-        $user     = self::getUser($imageMessage->getUserId());
-        if ($user instanceof User) {
+        $messages   = [];
+        $lineVerify = self::getLineVerify($imageMessage->getUserId());
+        if ($lineVerify instanceof LineVerify) {
             $contentId = $imageMessage->getMessageId();
             $image     = $bot->getMessageContent($contentId)->getRawBody();
 
             $filePath = sprintf('public/%s.jpg', $imageMessage->getUserId() . Carbon::now()->getTimestamp());
             Storage::put($filePath, $image);
 
-            $user->temp_image_path = $filePath;
-            $user->saveOrFail();
+            $lineVerify->temp_image_path = $filePath;
+            $lineVerify->saveOrFail();
 
             $url        = asset(Storage::url($filePath));
             $messages[] = new TextMessageBuilder($url);
