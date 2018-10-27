@@ -5,6 +5,7 @@ namespace Zaikok\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Zaikok\User;
 
 /**
@@ -38,7 +39,7 @@ class UserController extends Controller
                     break;
                 }
             }
-            $user->line_verify_token = $token;
+            $user->line_verify_token = Hash::make($token);
             $user->saveOrFail();
             DB::commit();
         } catch (\Throwable $e) {

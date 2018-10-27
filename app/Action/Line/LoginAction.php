@@ -8,8 +8,8 @@
 
 namespace Zaikok\Action\Line;
 
+use Illuminate\Support\Facades\Hash;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
-use PhpParser\Node\Scalar\MagicConst\Line;
 use Zaikok\LineVerify;
 use Zaikok\User;
 
@@ -17,7 +17,7 @@ class LoginAction
 {
     public static function execute(int $lineVerifyToken, string $lineId): TextMessageBuilder
     {
-        $user = User::findByLineVerifyToken($lineVerifyToken)->first();
+        $user = User::findByLineVerifyToken(Hash::make($lineVerifyToken))->first();
         if (is_null($user)) {
             return new TextMessageBuilder('見つからんからもっかいやって。。。');
         }
