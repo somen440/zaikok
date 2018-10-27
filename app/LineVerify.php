@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class LineVerify extends Model
 {
+    /** @var string  */
+    protected $primaryKey = 'line_verify_id';
+
     /** @var array  */
     protected $fillable = ['line_id', 'user_id'];
 
