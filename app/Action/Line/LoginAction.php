@@ -18,11 +18,8 @@ class LoginAction
 {
     public static function execute(int $lineVerifyToken, string $lineId): TextMessageBuilder
     {
-        $user = User::findByLineVerifyToken(Hash::make($lineVerifyToken))->first();
+        $user = User::findByLineVerifyToken($lineVerifyToken)->first();
         if (is_null($user)) {
-            Log::warning('LoginAction@execute', [
-                'lineVerifyToken' => Hash::make($lineVerifyToken),
-            ]);
             return new TextMessageBuilder('見つからんからもっかいやって。。。');
         }
 
@@ -30,7 +27,7 @@ class LoginAction
         $user->saveOrFail();
 
         LineVerify::create([
-            'line_id' => Hash::make($lineId),
+            'line_id' => $lineId,
             'user_id' => $user->user_id,
         ]);
 

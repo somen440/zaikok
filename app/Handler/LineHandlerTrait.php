@@ -20,6 +20,6 @@ trait LineHandlerTrait
      */
     private static function getLineVerify(string $lineId): ?LineVerify
     {
-        return LineVerify::findByLineId(Hash::make($lineId))->first();
+        return LineVerify::findByLineId($lineId)->first();
     }
 }
