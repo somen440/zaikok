@@ -24,13 +24,13 @@ class ImageMessageHandler extends AbstractHandler
             $image     = $bot->getMessageContent($contentId)->getRawBody();
 
             $filePath = sprintf('public/%s.jpg', $imageMessage->getUserId() . Carbon::now()->getTimestamp());
-            Storage::put($filePath, $image);
+            Storage::disk('s3')->put($filePath, $image);
 
             $lineVerify->temp_image_path = $filePath;
             $lineVerify->saveOrFail();
 
-            $url        = asset(Storage::url($filePath));
-            $messages[] = new TextMessageBuilder($url);
+            $url        = Storage::disk('s3')->url($filePath);
+            $messages[] = new TextMessageBuilder('成功したやで');
 
             Log::info('ImageMessageHandler@create', [
                 'url' => $url,

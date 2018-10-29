@@ -124,7 +124,7 @@ class TextMessageHandler extends AbstractHandler
                 "個数: $inventory->count",
                 is_null($inventory->image_path)
                     ? 'https://wired.jp/wp-content/uploads/2018/01/GettyImages-522585140.jpg'
-                    : asset(Storage::url($inventory->image_path))
+                    : Storage::disk('s3')->url($inventory->image_path)
                 ,
                 [$plusPost, $minusPost, $deletePost]
             );

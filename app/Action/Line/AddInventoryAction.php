@@ -33,7 +33,7 @@ class AddInventoryAction
 
         if (isset($lineVerify->temp_image_path)) {
             $imagePath = sprintf('%s_%s.jpg', $lineVerify->user_id, Carbon::now()->getTimestamp());
-            Storage::move($lineVerify->temp_image_path, sprintf('public/%s', $imagePath));
+            Storage::disk('s3')->move($lineVerify->temp_image_path, sprintf('public/%s', $imagePath));
             $lineVerify->temp_image_path = null;
             $lineVerify->saveOrFail();
         } else {
